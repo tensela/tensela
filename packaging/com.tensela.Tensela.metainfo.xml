@@ -113,6 +113,11 @@
   <content_rating type="oars-1.1"/>
 
   <releases>
+    <release version="0.9.2" date="2026-11-25">
+      <description>
+        <p>Its launcher now passes the checks of older systems, such as Ubuntu 22.04.</p>
+      </description>
+    </release>
     <release version="0.9.1" date="2026-11-25">
       <description>
         <p>The first update of the beta.</p>

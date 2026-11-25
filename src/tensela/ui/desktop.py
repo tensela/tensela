@@ -26,6 +26,8 @@ FILE_SIDES = (16, 32, 48, 64, 128, 256)
 #: The line of the launcher that says which AppImage it was made for.
 MARK = "X-Tensela-AppImage"
 
+#: Only keys that older validators know too (Ubuntu 22.04 refuses SingleMainWindow, and so did the catalogue of
+#: AppImages); the test lists them.
 ENTRY = """[Desktop Entry]
 Type=Application
 Name=Tensela
@@ -39,7 +41,6 @@ Terminal=false
 Categories=Graphics;3DGraphics;Engineering;
 MimeType=application/x-tensela;
 StartupWMClass=tensela
-SingleMainWindow=true
 Keywords=parametric;architecture;nodes;design;facade;
 Keywords[es]=paramétrico;arquitectura;nodos;diseño;fachada;
 """

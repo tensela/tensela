@@ -19,6 +19,17 @@ def test_the_exec_line_quotes_the_path():
     assert desktop.quote('/a/b"c$d') == '"/a/b\\\\"c\\\\$d"'
 
 
+#: The keys of the Desktop Entry Specification 1.3, which the validators of older systems know.
+KNOWN_KEYS = {"Type", "Version", "Name", "GenericName", "NoDisplay", "Comment", "Icon", "Hidden", "OnlyShowIn",
+              "NotShowIn", "DBusActivatable", "TryExec", "Exec", "Path", "Terminal", "Actions", "MimeType",
+              "Categories", "Implements", "Keywords", "StartupNotify", "StartupWMClass", "URL"}
+
+
+def test_the_launcher_has_only_keys_older_systems_know():
+    keys = {line.split("=", 1)[0].split("[", 1)[0] for line in desktop.entry().splitlines() if "=" in line}
+    assert keys and all(k in KNOWN_KEYS or k.startswith("X-") for k in keys), keys - KNOWN_KEYS
+
+
 @pytest.fixture
 def home(tmp_path, monkeypatch):
     monkeypatch.setenv("XDG_DATA_HOME", str(tmp_path / "share"))
