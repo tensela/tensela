@@ -1,9 +1,10 @@
 name: Check the AppImage
 
 # Opens a published AppImage on Ubuntu 22.04, the oldest system Tensela supports, the way the catalogue of AppImages
-# tests it: a virtual screen of 800 × 600, a window manager alone, no desktop and no network. It runs it twice, as
-# it is and inside firejail (as the catalogue does), and keeps a capture of the screen, the windows, the output of
-# Tensela and, while no window appears, where its Python is. Started by hand, on a release.
+# tests it: a virtual screen of 800 × 600, no window manager while it waits for the window, no desktop and no
+# network. It runs it twice, as it is and inside firejail (as the catalogue does), and keeps a capture of the screen,
+# the windows, the output of Tensela and, while no window appears, where its Python is. Started by hand, on a
+# release.
 
 on:
   workflow_dispatch:
@@ -26,7 +27,7 @@ jobs:
       - name: The tools of the test
         run: |
           sudo apt-get update -q
-          sudo apt-get install -y -q --no-install-recommends xvfb icewm x11-utils xdotool imagemagick \
+          sudo apt-get install -y -q --no-install-recommends xvfb x11-utils xdotool imagemagick \
             libgl1-mesa-dri mesa-utils fuse3 libfuse2 firejail
 
       - name: The AppImage of the release, checked
@@ -43,13 +44,9 @@ jobs:
           chmod +x Tensela-*.AppImage
           mv Tensela-*.AppImage ../Tensela.AppImage
 
-      - name: A screen of 800 × 600 with a window manager alone
+      - name: A screen of 800 × 600, without a window manager while it waits for the window (as the catalogue)
         run: |
-          mkdir -p "$HOME/.icewm"
-          printf 'ShowTaskBar = 0\nTaskBarAutoHide = 1\n' > "$HOME/.icewm/preferences"   # as the catalogue
           Xvfb :99 -screen 0 800x600x24 >/dev/null 2>&1 &
-          sleep 2
-          icewm >/dev/null 2>&1 &
           sleep 2
           glxinfo -B 2>/dev/null | grep -E "renderer|version" || true
           python3 -m pip install --quiet --user py-spy==0.4.1   # where a running Python is, without stopping it
@@ -89,7 +86,9 @@ jobs:
           echo; cat out/summary.txt
           for name in plain firejail; do
             echo; echo "==== $name: the last lines of its output"; tail -n 60 "out/$name.log"
-            for f in out/$name-*-python.txt; do [ -e "$f" ] && { echo "---- $f"; cat "$f"; }; done
+            for f in out/$name-*-python.txt; do
+              if [ -e "$f" ]; then echo "---- $f"; cat "$f"; fi
+            done
           done
 
       - name: What it saw
