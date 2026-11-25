@@ -211,3 +211,15 @@ def test_a_renderer_that_never_says_counts_as_a_graphics_card():
     for _ in range(3):
         Viewer._learn_renderer(v)
     assert v.software is False
+
+
+def test_the_sky_is_gathered_lightly_so_the_window_does_not_wait():
+    """VTK's own gathering of the light of the sky took 45 s without a graphics card (the window waited); Tensela
+    asks for a coarser one, which gives the same image."""
+    import pyvista as pv
+    from tensela.ui import studio
+    from tensela.ui.viewer import prepare
+    pl = pv.Plotter(off_screen=True)
+    prepare(pl)
+    assert pl.renderer.GetEnvMapIrradiance().GetIrradianceStep() == pytest.approx(studio.IRRADIANCE_STEP)
+    pl.close()

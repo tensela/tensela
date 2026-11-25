@@ -78,8 +78,24 @@ def sky_texture() -> pv.Texture:
     return texture
 
 
+#: How finely the light of the sky is gathered for the physical materials (VTK prepares it before the first image).
+#: The defaults of VTK (a step of 0.049 rad) took 45 s on a computer without a graphics card and two cores, and the
+#: window waited all that time; the sky is a soft gradient, so a coarser step gives the same image (at most 4 levels
+#: of 255 apart) in 5 s, and in a moment with a graphics card.
+IRRADIANCE_STEP = 0.2
+
+
+def gather_sky_lightly(renderer) -> None:
+    """The coarser gathering of the light of the sky (IRRADIANCE_STEP), on a VTK renderer that has it."""
+    try:
+        renderer.GetEnvMapIrradiance().SetIrradianceStep(IRRADIANCE_STEP)   # the rest, VTK sets from the sky
+    except AttributeError:                           # a renderer without physical materials: nothing to gather
+        pass
+
+
 def put_sky(plotter: pv.Plotter) -> None:
     """The sky lights the physical materials; it is not shown behind (the background stays the theme's)."""
+    gather_sky_lightly(plotter.renderer)
     try:
         plotter.set_environment_texture(sky_texture(), is_srgb=True, resample=1.0, show_background=False)
     except Exception:                                # an old graphics driver: the materials are lit by the lamps alone

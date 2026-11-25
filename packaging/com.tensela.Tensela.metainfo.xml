@@ -113,6 +113,11 @@
   <content_rating type="oars-1.1"/>
 
   <releases>
+    <release version="0.9.4" date="2026-11-25">
+      <description>
+        <p>Opens its window in seconds also on computers without a graphics card, where it took close to a minute.</p>
+      </description>
+    </release>
     <release version="0.9.3" date="2026-11-25">
       <description>
         <p>Opens its window also on systems without a desktop (a bare X11 session), which lack two libraries of the
