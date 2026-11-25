@@ -1,0 +1,99 @@
+name: Check the AppImage
+
+# Opens a published AppImage on Ubuntu 22.04, the oldest system Tensela supports, the way the catalogue of AppImages
+# tests it: a virtual screen of 800 × 600, a window manager alone, no desktop and no network. It runs it twice, as
+# it is and inside firejail (as the catalogue does), and keeps a capture of the screen, the windows, the output of
+# Tensela and, when no window appears, where its Python was at that moment. Started by hand, on a release.
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "The release to check (v0.9.3); empty: the newest"
+        required: false
+        default: ""
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 20
+    env:
+      DISPLAY: ":99"
+      PUBLIC_KEY: RWQ+0MFy5lTqwMoE7tnAN1SRaW+fR54C8xSVP6qlM7DL3KM8mWBUopcq
+    steps:
+      - name: The tools of the test
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y -q --no-install-recommends xvfb icewm x11-utils xdotool imagemagick \
+            libgl1-mesa-dri mesa-utils fuse3 libfuse2 minisign firejail
+
+      - name: The AppImage of the release, checked
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ inputs.tag }}
+        run: |
+          mkdir release && cd release
+          if [ -z "$TAG" ]; then TAG=$(gh release view -R "$GITHUB_REPOSITORY" --json tagName -q .tagName); fi
+          echo "Release: $TAG"
+          gh release download "$TAG" -R "$GITHUB_REPOSITORY" -p 'Tensela-*-x86_64.AppImage' -p SHA256SUMS \
+            -p SHA256SUMS.minisig
+          sha256sum -c SHA256SUMS --ignore-missing
+          minisign -Vm SHA256SUMS -P "$PUBLIC_KEY"
+          chmod +x Tensela-*.AppImage
+          mv Tensela-*.AppImage ../Tensela.AppImage
+
+      - name: A screen of 800 × 600 with a window manager alone
+        run: |
+          Xvfb :99 -screen 0 800x600x24 >/dev/null 2>&1 &
+          sleep 2
+          icewm >/dev/null 2>&1 &
+          sleep 2
+          glxinfo -B 2>/dev/null | grep -E "renderer|version" || true
+
+      - name: Open it, as it is and inside firejail
+        run: |
+          mkdir -p out
+          try() {   # try NAME COMMAND...: starts it, waits for a window (30 s at most), keeps what it saw
+            name=$1; shift
+            home=$(mktemp -d)
+            HOME=$home PYTHONFAULTHANDLER=1 "$@" > "out/$name.log" 2>&1 &
+            pid=$!
+            shown=""
+            for second in $(seq 1 30); do
+              sleep 1
+              kill -0 $pid 2>/dev/null || { echo "$name: it ended after $second s" | tee -a out/summary.txt; break; }
+              if timeout 5 xdotool search --onlyvisible --name '.' >/dev/null 2>&1; then
+                shown=$second; echo "$name: a window after $second s" | tee -a out/summary.txt; break
+              fi
+            done
+            sleep 3
+            import -window root "out/$name.png" || true
+            xwininfo -root -tree > "out/$name-windows.txt" 2>&1 || true
+            python=$(pgrep -f "tensela.ui.launch" | head -n 1)
+            if [ -z "$shown" ] && [ -n "$python" ]; then
+              echo "$name: no window in 30 s; where its Python is:" | tee -a out/summary.txt
+              kill -ABRT "$python" 2>/dev/null || true   # PYTHONFAULTHANDLER prints the stack of every thread
+              sleep 2
+            fi
+            pkill -f "tensela.ui.launch" 2>/dev/null || true
+            kill $pid 2>/dev/null || true
+            sleep 2
+            pkill -9 -f "tensela.ui.launch" 2>/dev/null || true
+            rm -rf "$home"
+          }
+          try plain ./Tensela.AppImage
+          try firejail firejail --quiet --noprofile --net=none --appimage ./Tensela.AppImage
+          echo; cat out/summary.txt
+          for name in plain firejail; do
+            echo; echo "==== $name: the last lines of its output"; tail -n 60 "out/$name.log"
+          done
+
+      - name: What it saw
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9   # v7.0.2
+        with:
+          name: check-appimage
+          path: out/
