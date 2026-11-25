@@ -3,7 +3,7 @@ name: Check the AppImage
 # Opens a published AppImage on Ubuntu 22.04, the oldest system Tensela supports, the way the catalogue of AppImages
 # tests it: a virtual screen of 800 × 600, a window manager alone, no desktop and no network. It runs it twice, as
 # it is and inside firejail (as the catalogue does), and keeps a capture of the screen, the windows, the output of
-# Tensela and, when no window appears, where its Python was at that moment. Started by hand, on a release.
+# Tensela and, while no window appears, where its Python is. Started by hand, on a release.
 
 on:
   workflow_dispatch:
@@ -45,37 +45,39 @@ jobs:
 
       - name: A screen of 800 × 600 with a window manager alone
         run: |
+          mkdir -p "$HOME/.icewm"
+          printf 'ShowTaskBar = 0\nTaskBarAutoHide = 1\n' > "$HOME/.icewm/preferences"   # as the catalogue
           Xvfb :99 -screen 0 800x600x24 >/dev/null 2>&1 &
           sleep 2
           icewm >/dev/null 2>&1 &
           sleep 2
           glxinfo -B 2>/dev/null | grep -E "renderer|version" || true
+          python3 -m pip install --quiet --user py-spy==0.4.1   # where a running Python is, without stopping it
+          echo "PYSPY=$HOME/.local/bin/py-spy" >> "$GITHUB_ENV"
 
       - name: Open it, as it is and inside firejail
         run: |
           mkdir -p out
-          try() {   # try NAME COMMAND...: starts it, waits for a window (30 s at most), keeps what it saw
+          try() {   # try NAME COMMAND...: starts it and looks for 90 s, keeping what it sees on the way
             name=$1; shift
             home=$(mktemp -d)
-            HOME=$home PYTHONFAULTHANDLER=1 "$@" > "out/$name.log" 2>&1 &
+            HOME=$home "$@" > "out/$name.log" 2>&1 &
             pid=$!
-            shown=""
-            for second in $(seq 1 30); do
+            for second in $(seq 1 90); do
               sleep 1
               kill -0 $pid 2>/dev/null || { echo "$name: it ended after $second s" | tee -a out/summary.txt; break; }
               if timeout 5 xdotool search --onlyvisible --name '.' >/dev/null 2>&1; then
-                shown=$second; echo "$name: a window after $second s" | tee -a out/summary.txt; break
+                echo "$name: a window after $second s" | tee -a out/summary.txt
+                sleep 3; import -window root "out/$name-shown.png" || true; break
+              fi
+              if [ $((second % 15)) = 0 ]; then   # every 15 s: the screen, the windows, where its Python is
+                import -window root "out/$name-$second.png" || true
+                xwininfo -root -tree > "out/$name-$second-windows.txt" 2>&1 || true
+                python=$(pgrep -f "tensela.ui.launch" | head -n 1)
+                [ -n "$python" ] && sudo "$PYSPY" dump --pid "$python" > "out/$name-$second-python.txt" 2>&1
+                echo "$name: nothing visible after $second s" | tee -a out/summary.txt
               fi
             done
-            sleep 3
-            import -window root "out/$name.png" || true
-            xwininfo -root -tree > "out/$name-windows.txt" 2>&1 || true
-            python=$(pgrep -f "tensela.ui.launch" | head -n 1)
-            if [ -z "$shown" ] && [ -n "$python" ]; then
-              echo "$name: no window in 30 s; where its Python is:" | tee -a out/summary.txt
-              kill -ABRT "$python" 2>/dev/null || true   # PYTHONFAULTHANDLER prints the stack of every thread
-              sleep 2
-            fi
             pkill -f "tensela.ui.launch" 2>/dev/null || true
             kill $pid 2>/dev/null || true
             sleep 2
@@ -87,6 +89,7 @@ jobs:
           echo; cat out/summary.txt
           for name in plain firejail; do
             echo; echo "==== $name: the last lines of its output"; tail -n 60 "out/$name.log"
+            for f in out/$name-*-python.txt; do [ -e "$f" ] && { echo "---- $f"; cat "$f"; }; done
           done
 
       - name: What it saw
