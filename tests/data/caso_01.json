@@ -1,0 +1,35 @@
+{
+  "parametrico": 1,
+  "description": "Case 01: a facade with sun fins that open near an attractor point.",
+  "nodes": {
+    "facade": {"type": "Rectangle", "width": 20, "height": 12, "plane": "elevation"},
+    "panels": {"type": "Grid", "rectangle": {"node": "facade"}, "cell_width": 1, "cell_height": 1},
+    "centres": {"type": "Centre", "geometry": {"node": "panels"}},
+    "attractor": {"type": "Point", "x": 4.5, "z": 6.5},
+    "distances": {"type": "Distance", "a": {"node": "centres"}, "b": {"node": "attractor"}},
+    "maximum distance": {"type": "Summarise", "data": {"node": "distances"}, "operation": "maximum"},
+    "angles": {"type": "Remap", "value": {"node": "distances"}, "from_min": 0, "from_max": {"node": "maximum distance"}, "to_min": 90, "to_max": 0},
+    "in front of the facade": {"type": "Move", "geometry": {"node": "centres"}, "vector": [0, -0.3, 0]},
+    "sun fin": {"type": "Box", "width": 0.4, "depth": 0.05, "height": 1.0},
+    "sun fins": {"type": "Place", "geometry": {"node": "sun fin"}, "at": {"node": "in front of the facade"}, "rotation": {"node": "angles"}},
+    "marker": {"type": "Box", "width": 0.3, "depth": 0.3, "height": 0.3},
+    "attractor marker": {"type": "Place", "geometry": {"node": "marker"}, "at": {"node": "attractor"}}
+  },
+  "export": ["facade", "sun fins", "attractor marker"],
+  "controls": [
+    {"value": "attractor.x", "min": 0, "max": 20, "step": 0.5, "unit": "m"},
+    {"value": "attractor.z", "min": 0, "max": 12, "step": 0.5, "unit": "m"},
+    {"value": "attractor.y", "min": -10, "max": 0, "step": 0.5, "unit": "m", "label": "y (front)"},
+    {"value": "angles.to_min", "min": 0, "max": 90, "step": 5, "unit": "°", "label": "angle near"},
+    {"value": "angles.to_max", "min": 0, "max": 90, "step": 5, "unit": "°", "label": "angle far"},
+    {"value": "facade.width", "min": 4, "max": 40, "step": 1, "unit": "m"},
+    {"value": "facade.height", "min": 3, "max": 30, "step": 1, "unit": "m"},
+    {"value": "sun fin.width", "min": 0.1, "max": 1, "step": 0.01, "unit": "m"},
+    {"value": "sun fin.depth", "min": 0.02, "max": 0.2, "step": 0.01, "unit": "m"}
+  ],
+  "view": {
+    "facade": {"color": "#c9d6e2", "opacity": 0.5},
+    "sun fins": {"color": "#7d8a96"},
+    "attractor marker": {"color": "#d9534f"}
+  }
+}

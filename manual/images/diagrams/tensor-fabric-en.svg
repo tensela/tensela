@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 400" width="1000" height="400">
+<rect width="1000" height="400" fill="#16151b"/>
+<rect x="88.0" y="94.0" width="39.0" height="39.0" rx="5" fill="#2a2740" stroke="#8a7dff" stroke-width="1" opacity="0.4"/>
+<rect x="132.0" y="94.0" width="39.0" height="39.0" rx="5" fill="#2a2740" stroke="#8a7dff" stroke-width="1" opacity="0.4"/>
+<rect x="176.0" y="94.0" width="39.0" height="39.0" rx="5" fill="#2a2740" stroke="#8a7dff" stroke-width="1" opacity="0.4"/>
+<rect x="220.0" y="94.0" width="39.0" height="39.0" rx="5" fill="#2a2740" stroke="#8a7dff" stroke-width="1" opacity="0.4"/>
+<rect x="88.0" y="138.0" width="39.0" height="39.0" rx="5" fill="#2a2740" stroke="#8a7dff" stroke-width="1" opacity="0.4"/>
+<rect x="132.0" y="138.0" width="39.0" height="39.0" rx="5" fill="#2a2740" stroke="#8a7dff" stroke-width="1" opacity="0.4"/>
+<rect x="176.0" y="138.0" width="39.0" height="39.0" rx="5" fill="#2a2740" stroke="#8a7dff" stroke-width="1" opacity="0.4"/>
+<rect x="220.0" y="138.0" width="39.0" height="39.0" rx="5" fill="#2a2740" stroke="#8a7dff" stroke-width="1" opacity="0.4"/>
+<rect x="88.0" y="182.0" width="39.0" height="39.0" rx="5" fill="#2a2740" stroke="#8a7dff" stroke-width="1" opacity="0.4"/>
+<rect x="132.0" y="182.0" width="39.0" height="39.0" rx="5" fill="#2a2740" stroke="#8a7dff" stroke-width="1" opacity="0.4"/>
+<rect x="176.0" y="182.0" width="39.0" height="39.0" rx="5" fill="#2a2740" stroke="#8a7dff" stroke-width="1" opacity="0.4"/>
+<rect x="220.0" y="182.0" width="39.0" height="39.0" rx="5" fill="#2a2740" stroke="#8a7dff" stroke-width="1" opacity="0.4"/>
+<rect x="88.0" y="226.0" width="39.0" height="39.0" rx="5" fill="#2a2740" stroke="#8a7dff" stroke-width="1" opacity="0.4"/>
+<rect x="132.0" y="226.0" width="39.0" height="39.0" rx="5" fill="#2a2740" stroke="#8a7dff" stroke-width="1" opacity="0.4"/>
+<rect x="176.0" y="226.0" width="39.0" height="39.0" rx="5" fill="#2a2740" stroke="#8a7dff" stroke-width="1" opacity="0.4"/>
+<rect x="220.0" y="226.0" width="39.0" height="39.0" rx="5" fill="#2a2740" stroke="#8a7dff" stroke-width="1" opacity="0.4"/>
+<rect x="70.0" y="110.0" width="39.0" height="39.0" rx="5" fill="#33305a" stroke="#8a7dff" stroke-width="1" opacity="1"/>
+<text x="89.5" y="136.0" font-family="'JetBrains Mono', 'DejaVu Sans Mono', monospace" font-size="11" font-weight="400" fill="#ecebf3" text-anchor="middle" opacity="1.0" xml:space="preserve" style="white-space:pre">0</text>
+<rect x="114.0" y="110.0" width="39.0" height="39.0" rx="5" fill="#33305a" stroke="#8a7dff" stroke-width="1" opacity="1"/>
+<text x="133.5" y="136.0" font-family="'JetBrains Mono', 'DejaVu Sans Mono', monospace" font-size="11" font-weight="400" fill="#ecebf3" text-anchor="middle" opacity="1.0" xml:space="preserve" style="white-space:pre">0.5</text>
+<rect x="158.0" y="110.0" width="39.0" height="39.0" rx="5" fill="#33305a" stroke="#8a7dff" stroke-width="1" opacity="1"/>
+<text x="177.5" y="136.0" font-family="'JetBrains Mono', 'DejaVu Sans Mono', monospace" font-size="11" font-weight="400" fill="#ecebf3" text-anchor="middle" opacity="1.0" xml:space="preserve" style="white-space:pre">1</text>
+<rect x="202.0" y="110.0" width="39.0" height="39.0" rx="5" fill="#33305a" stroke="#8a7dff" stroke-width="1" opacity="1"/>
+<text x="221.5" y="136.0" font-family="'JetBrains Mono', 'DejaVu Sans Mono', monospace" font-size="11" font-weight="400" fill="#ecebf3" text-anchor="middle" opacity="1.0" xml:space="preserve" style="white-space:pre">1.5</text>
+<rect x="70.0" y="154.0" width="39.0" height="39.0" rx="5" fill="#33305a" stroke="#8a7dff" stroke-width="1" opacity="1"/>
+<text x="89.5" y="180.0" font-family="'JetBrains Mono', 'DejaVu Sans Mono', monospace" font-size="11" font-weight="400" fill="#ecebf3" text-anchor="middle" opacity="1.0" xml:space="preserve" style="white-space:pre">2</text>
+<rect x="114.0" y="154.0" width="39.0" height="39.0" rx="5" fill="#33305a" stroke="#8a7dff" stroke-width="1" opacity="1"/>
+<text x="133.5" y="180.0" font-family="'JetBrains Mono', 'DejaVu Sans Mono', monospace" font-size="11" font-weight="400" fill="#ecebf3" text-anchor="middle" opacity="1.0" xml:space="preserve" style="white-space:pre">2.5</text>
+<rect x="158.0" y="154.0" width="39.0" height="39.0" rx="5" fill="#33305a" stroke="#8a7dff" stroke-width="1" opacity="1"/>
+<text x="177.5" y="180.0" font-family="'JetBrains Mono', 'DejaVu Sans Mono', monospace" font-size="11" font-weight="400" fill="#ecebf3" text-anchor="middle" opacity="1.0" xml:space="preserve" style="white-space:pre">3</text>
+<rect x="202.0" y="154.0" width="39.0" height="39.0" rx="5" fill="#33305a" stroke="#8a7dff" stroke-width="1" opacity="1"/>
+<text x="221.5" y="180.0" font-family="'JetBrains Mono', 'DejaVu Sans Mono', monospace" font-size="11" font-weight="400" fill="#ecebf3" text-anchor="middle" opacity="1.0" xml:space="preserve" style="white-space:pre">3.5</text>
+<rect x="70.0" y="198.0" width="39.0" height="39.0" rx="5" fill="#33305a" stroke="#8a7dff" stroke-width="1" opacity="1"/>
+<text x="89.5" y="224.0" font-family="'JetBrains Mono', 'DejaVu Sans Mono', monospace" font-size="11" font-weight="400" fill="#ecebf3" text-anchor="middle" opacity="1.0" xml:space="preserve" style="white-space:pre">4</text>
+<rect x="114.0" y="198.0" width="39.0" height="39.0" rx="5" fill="#33305a" stroke="#8a7dff" stroke-width="1" opacity="1"/>
+<text x="133.5" y="224.0" font-family="'JetBrains Mono', 'DejaVu Sans Mono', monospace" font-size="11" font-weight="400" fill="#ecebf3" text-anchor="middle" opacity="1.0" xml:space="preserve" style="white-space:pre">4.5</text>
+<rect x="158.0" y="198.0" width="39.0" height="39.0" rx="5" fill="#33305a" stroke="#8a7dff" stroke-width="1" opacity="1"/>
+<text x="177.5" y="224.0" font-family="'JetBrains Mono', 'DejaVu Sans Mono', monospace" font-size="11" font-weight="400" fill="#ecebf3" text-anchor="middle" opacity="1.0" xml:space="preserve" style="white-space:pre">5</text>
+<rect x="202.0" y="198.0" width="39.0" height="39.0" rx="5" fill="#33305a" stroke="#8a7dff" stroke-width="1" opacity="1"/>
+<text x="221.5" y="224.0" font-family="'JetBrains Mono', 'DejaVu Sans Mono', monospace" font-size="11" font-weight="400" fill="#ecebf3" text-anchor="middle" opacity="1.0" xml:space="preserve" style="white-space:pre">5.5</text>
+<rect x="70.0" y="242.0" width="39.0" height="39.0" rx="5" fill="#33305a" stroke="#8a7dff" stroke-width="1" opacity="1"/>
+<text x="89.5" y="268.0" font-family="'JetBrains Mono', 'DejaVu Sans Mono', monospace" font-size="11" font-weight="400" fill="#ecebf3" text-anchor="middle" opacity="1.0" xml:space="preserve" style="white-space:pre">6</text>
+<rect x="114.0" y="242.0" width="39.0" height="39.0" rx="5" fill="#33305a" stroke="#8a7dff" stroke-width="1" opacity="1"/>
+<text x="133.5" y="268.0" font-family="'JetBrains Mono', 'DejaVu Sans Mono', monospace" font-size="11" font-weight="400" fill="#ecebf3" text-anchor="middle" opacity="1.0" xml:space="preserve" style="white-space:pre">6.5</text>
+<rect x="158.0" y="242.0" width="39.0" height="39.0" rx="5" fill="#33305a" stroke="#8a7dff" stroke-width="1" opacity="1"/>
+<text x="177.5" y="268.0" font-family="'JetBrains Mono', 'DejaVu Sans Mono', monospace" font-size="11" font-weight="400" fill="#ecebf3" text-anchor="middle" opacity="1.0" xml:space="preserve" style="white-space:pre">7</text>
+<rect x="202.0" y="242.0" width="39.0" height="39.0" rx="5" fill="#33305a" stroke="#8a7dff" stroke-width="1" opacity="1"/>
+<text x="221.5" y="268.0" font-family="'JetBrains Mono', 'DejaVu Sans Mono', monospace" font-size="11" font-weight="400" fill="#ecebf3" text-anchor="middle" opacity="1.0" xml:space="preserve" style="white-space:pre">7.5</text>
+<text x="158.0" y="70.0" font-family="Inter, 'Inter Variable', 'DejaVu Sans', sans-serif" font-size="20" font-weight="650" fill="#8a7dff" text-anchor="middle" opacity="1.0" xml:space="preserve" style="white-space:pre">tensor</text>
+<text x="158.0" y="320.0" font-family="Inter, 'Inter Variable', 'DejaVu Sans', sans-serif" font-size="13" font-weight="400" fill="#9a98a8" text-anchor="middle" opacity="1.0" xml:space="preserve" style="white-space:pre">numbers in several directions</text>
+<text x="400.0" y="215.0" font-family="Inter, 'Inter Variable', 'DejaVu Sans', sans-serif" font-size="40" font-weight="400" fill="#9a98a8" text-anchor="middle" opacity="1.0" xml:space="preserve" style="white-space:pre">+</text>
+<rect x="460.0" y="115.0" width="200.0" height="20.0" rx="3" fill="#e0a44a" stroke="none" stroke-width="1.0" opacity="0.9"/>
+<rect x="460.0" y="145.0" width="200.0" height="20.0" rx="3" fill="#e0a44a" stroke="none" stroke-width="1.0" opacity="0.9"/>
+<rect x="460.0" y="175.0" width="200.0" height="20.0" rx="3" fill="#e0a44a" stroke="none" stroke-width="1.0" opacity="0.9"/>
+<rect x="460.0" y="205.0" width="200.0" height="20.0" rx="3" fill="#e0a44a" stroke="none" stroke-width="1.0" opacity="0.9"/>
+<rect x="460.0" y="235.0" width="200.0" height="20.0" rx="3" fill="#e0a44a" stroke="none" stroke-width="1.0" opacity="0.9"/>
+<rect x="460.0" y="265.0" width="200.0" height="20.0" rx="3" fill="#e0a44a" stroke="none" stroke-width="1.0" opacity="0.9"/>
+<rect x="475.0" y="100.0" width="20.0" height="200.0" rx="3" fill="#5fb3a6" stroke="none" stroke-width="1.0" opacity="0.95"/>
+<rect x="505.0" y="100.0" width="20.0" height="200.0" rx="3" fill="#5fb3a6" stroke="none" stroke-width="1.0" opacity="0.95"/>
+<rect x="535.0" y="100.0" width="20.0" height="200.0" rx="3" fill="#5fb3a6" stroke="none" stroke-width="1.0" opacity="0.95"/>
+<rect x="565.0" y="100.0" width="20.0" height="200.0" rx="3" fill="#5fb3a6" stroke="none" stroke-width="1.0" opacity="0.95"/>
+<rect x="595.0" y="100.0" width="20.0" height="200.0" rx="3" fill="#5fb3a6" stroke="none" stroke-width="1.0" opacity="0.95"/>
+<rect x="625.0" y="100.0" width="20.0" height="200.0" rx="3" fill="#5fb3a6" stroke="none" stroke-width="1.0" opacity="0.95"/>
+<rect x="469.5" y="115.0" width="31.0" height="20.0" rx="0" fill="#e0a44a" stroke="none" stroke-width="1.0" opacity="1"/>
+<rect x="529.5" y="115.0" width="31.0" height="20.0" rx="0" fill="#e0a44a" stroke="none" stroke-width="1.0" opacity="1"/>
+<rect x="589.5" y="115.0" width="31.0" height="20.0" rx="0" fill="#e0a44a" stroke="none" stroke-width="1.0" opacity="1"/>
+<rect x="499.5" y="145.0" width="31.0" height="20.0" rx="0" fill="#e0a44a" stroke="none" stroke-width="1.0" opacity="1"/>
+<rect x="559.5" y="145.0" width="31.0" height="20.0" rx="0" fill="#e0a44a" stroke="none" stroke-width="1.0" opacity="1"/>
+<rect x="619.5" y="145.0" width="31.0" height="20.0" rx="0" fill="#e0a44a" stroke="none" stroke-width="1.0" opacity="1"/>
+<rect x="469.5" y="175.0" width="31.0" height="20.0" rx="0" fill="#e0a44a" stroke="none" stroke-width="1.0" opacity="1"/>
+<rect x="529.5" y="175.0" width="31.0" height="20.0" rx="0" fill="#e0a44a" stroke="none" stroke-width="1.0" opacity="1"/>
+<rect x="589.5" y="175.0" width="31.0" height="20.0" rx="0" fill="#e0a44a" stroke="none" stroke-width="1.0" opacity="1"/>
+<rect x="499.5" y="205.0" width="31.0" height="20.0" rx="0" fill="#e0a44a" stroke="none" stroke-width="1.0" opacity="1"/>
+<rect x="559.5" y="205.0" width="31.0" height="20.0" rx="0" fill="#e0a44a" stroke="none" stroke-width="1.0" opacity="1"/>
+<rect x="619.5" y="205.0" width="31.0" height="20.0" rx="0" fill="#e0a44a" stroke="none" stroke-width="1.0" opacity="1"/>
+<rect x="469.5" y="235.0" width="31.0" height="20.0" rx="0" fill="#e0a44a" stroke="none" stroke-width="1.0" opacity="1"/>
+<rect x="529.5" y="235.0" width="31.0" height="20.0" rx="0" fill="#e0a44a" stroke="none" stroke-width="1.0" opacity="1"/>
+<rect x="589.5" y="235.0" width="31.0" height="20.0" rx="0" fill="#e0a44a" stroke="none" stroke-width="1.0" opacity="1"/>
+<rect x="499.5" y="265.0" width="31.0" height="20.0" rx="0" fill="#e0a44a" stroke="none" stroke-width="1.0" opacity="1"/>
+<rect x="559.5" y="265.0" width="31.0" height="20.0" rx="0" fill="#e0a44a" stroke="none" stroke-width="1.0" opacity="1"/>
+<rect x="619.5" y="265.0" width="31.0" height="20.0" rx="0" fill="#e0a44a" stroke="none" stroke-width="1.0" opacity="1"/>
+<text x="560.0" y="70.0" font-family="Inter, 'Inter Variable', 'DejaVu Sans', sans-serif" font-size="20" font-weight="650" fill="#e0a44a" text-anchor="middle" opacity="1.0" xml:space="preserve" style="white-space:pre">tela</text>
+<text x="560.0" y="320.0" font-family="Inter, 'Inter Variable', 'DejaVu Sans', sans-serif" font-size="13" font-weight="400" fill="#9a98a8" text-anchor="middle" opacity="1.0" xml:space="preserve" style="white-space:pre">two threads that cross (Spanish: tela)</text>
+<text x="740.0" y="215.0" font-family="Inter, 'Inter Variable', 'DejaVu Sans', sans-serif" font-size="40" font-weight="400" fill="#9a98a8" text-anchor="middle" opacity="1.0" xml:space="preserve" style="white-space:pre">=</text>
+<text x="870.0" y="222.0" font-family="Inter, 'Inter Variable', 'DejaVu Sans', sans-serif" font-size="30" font-weight="700" fill="#ecebf3" text-anchor="middle" opacity="1.0" xml:space="preserve" style="white-space:pre">Tensela</text>
+<text x="500.0" y="375.0" font-family="Inter, 'Inter Variable', 'DejaVu Sans', sans-serif" font-size="13" font-weight="400" fill="#9a98a8" text-anchor="middle" opacity="1.0" xml:space="preserve" style="white-space:pre">Each level of a list is a thread; each crossing, a piece. The named levels are the fabric.</text>
+</svg>

@@ -1,0 +1,46 @@
+{
+ "tensela": 1,
+ "description": "A facade skin of Voronoi cells with open joints between them.",
+ "nodes": {
+  "facade": {
+   "type": "Rectangle",
+   "width": 12,
+   "height": 8,
+   "plane": "elevation"
+  },
+  "seeds": {
+   "type": "Random points",
+   "region": {
+    "node": "facade"
+   },
+   "count": 60,
+   "seed": 3
+  },
+  "cells": {
+   "type": "Voronoi",
+   "points": {
+    "node": "seeds"
+   },
+   "boundary": {
+    "node": "facade"
+   }
+  },
+  "smaller": {
+   "type": "Scale",
+   "geometry": {
+    "node": "cells"
+   },
+   "factor": 0.88
+  },
+  "panels": {
+   "type": "Thicken",
+   "rectangle": {
+    "node": "smaller"
+   },
+   "thickness": 0.12
+  }
+ },
+ "export": [
+  "panels"
+ ]
+}

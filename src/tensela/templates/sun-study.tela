@@ -1,0 +1,61 @@
+{
+ "tensela": 1,
+ "description": "The winter sun on a building in Montevideo: shadows at 10, 12 and 14 h and the sun hours on each panel.",
+ "nodes": {
+  "building": {
+   "type": "Prism",
+   "width": 14,
+   "depth": 10,
+   "height": 30
+  },
+  "faces": {
+   "type": "Faces",
+   "volume": {
+    "node": "building"
+   },
+   "which": "all faces"
+  },
+  "panels": {
+   "type": "Grid",
+   "rectangle": {
+    "node": "faces"
+   },
+   "columns": 7,
+   "rows": 15
+  },
+  "sun": {
+   "type": "Sun",
+   "location": "Montevideo",
+   "month": 6,
+   "day": 21,
+   "hour": [
+    10,
+    12,
+    14
+   ],
+   "show": "ray"
+  },
+  "shadows": {
+   "type": "Shadow",
+   "geometry": {
+    "node": "building"
+   },
+   "ray": {
+    "node": "sun"
+   }
+  },
+  "sun hours": {
+   "type": "Insolation",
+   "faces": {
+    "node": "panels"
+   },
+   "location": "Montevideo",
+   "period": "winter",
+   "show": "sun hours"
+  }
+ },
+ "export": [
+  "building",
+  "shadows"
+ ]
+}

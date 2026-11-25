@@ -1,0 +1,40 @@
+---
+title: "A sun study"
+description: "The winter sun on a building in Montevideo: its shadows at three hours and the sun hours on each panel."
+---
+
+import { Steps } from '@astrojs/starlight/components';
+
+![A sun study](/images/manual/recipes/sun-study.png)
+
+A 14 × 10 m building, 30 m tall, in Montevideo on the 21st of June, the winter solstice there: where its shadow falls at 10, 12 and 14 h, and how many hours of sun each panel of its faces, roof included, gets over the winter.
+
+**6 nodes** · [Download `sun-study.tela`](/examples/recipes/sun-study.tela)
+
+## Step by step
+
+<Steps>
+
+1. **The building.** Add a **Prism**: **width** `14`, **depth** `10`, **height** `30`.
+
+2. **Its panels.** Add **Faces** with **which** *all faces* (the façades, the roof and the base), and a **Grid** on them with **columns** `7` and **rows** `15`.
+
+3. **The sun.** Add a **Sun**: **location** *Montevideo*, **month** `6`, **day** `21`, **hour** `10; 12; 14`, **show** *ray*.
+
+4. **The shadows.** Add a **Shadow**: the Prism to **geometry**, the Sun to **ray**.
+
+5. **The sun hours.** Add an **Insolation**: the Grid to **faces**, **location** *Montevideo*, **period** *winter*, **show** *sun hours*. Paint the Grid by this value in its panel (**Colour → by a value**).
+
+</Steps>
+
+## Play with it
+
+- Press the ▶ of the hour in the Sun to see the shadow move through the day.
+- Add the neighbouring buildings to **obstructions** of the Insolation.
+- Change **period** to *summer* and compare the north and south façades.
+
+A design study: for regulations or certificates, check it with a specialist.
+
+## Download the project
+
+[Download `sun-study.tela`](/examples/recipes/sun-study.tela) · Open it in Tensela: **File → Open**.

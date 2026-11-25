@@ -1,0 +1,136 @@
+{
+ "tensela": 1,
+ "description": "A wavy wall of timber ribs: three curves, a surface through them, and the ribs.",
+ "nodes": {
+  "bottom": {
+   "type": "Drawn curve",
+   "points": [
+    [
+     0,
+     -0.3,
+     0
+    ],
+    [
+     1.5,
+     -0.6,
+     0
+    ],
+    [
+     3,
+     -0.25,
+     0
+    ],
+    [
+     4.5,
+     -0.55,
+     0
+    ],
+    [
+     6,
+     -0.3,
+     0
+    ]
+   ]
+  },
+  "middle": {
+   "type": "Drawn curve",
+   "points": [
+    [
+     0,
+     -0.55,
+     0
+    ],
+    [
+     2,
+     -0.2,
+     0
+    ],
+    [
+     4,
+     -0.6,
+     0
+    ],
+    [
+     6,
+     -0.25,
+     0
+    ]
+   ]
+  },
+  "top": {
+   "type": "Drawn curve",
+   "points": [
+    [
+     0,
+     -0.25,
+     0
+    ],
+    [
+     1.2,
+     -0.5,
+     0
+    ],
+    [
+     3,
+     -0.65,
+     0
+    ],
+    [
+     4.8,
+     -0.25,
+     0
+    ],
+    [
+     6,
+     -0.45,
+     0
+    ]
+   ]
+  },
+  "middle up": {
+   "type": "Move",
+   "geometry": {
+    "node": "middle"
+   },
+   "distance": 1.5
+  },
+  "top up": {
+   "type": "Move",
+   "geometry": {
+    "node": "top"
+   },
+   "distance": 3
+  },
+  "sections": {
+   "type": "Merge",
+   "a": {
+    "node": "bottom"
+   },
+   "b": {
+    "node": "middle up"
+   },
+   "c": {
+    "node": "top up"
+   },
+   "level": "section"
+  },
+  "front": {
+   "type": "Loft",
+   "curves": {
+    "node": "sections"
+   },
+   "along": "section"
+  },
+  "ribs": {
+   "type": "Ribs",
+   "shape": {
+    "node": "front"
+   },
+   "count": 50,
+   "weight": 0.04
+  }
+ },
+ "export": [
+  "ribs"
+ ]
+}

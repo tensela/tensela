@@ -1,0 +1,35 @@
+{
+  "parametrico": 1,
+  "description": "Windows: opening → frame → leaves → panes; three nested levels (window × leaf × pane).",
+  "nodes": {
+    "windows": {"type": "Series", "count": 4, "level": "window"},
+    "axis spacing": {"type": "Number", "value": 2.4},
+    "x of each window": {"type": "Formula", "formula": "a * b", "a": {"node": "windows"}, "b": {"node": "axis spacing"}},
+    "corner of each opening": {"type": "Point", "x": {"node": "x of each window"}, "z": 0.9},
+    "openings": {"type": "Rectangle", "width": 1.6, "height": 1.4, "origin": {"node": "corner of each opening"}, "plane": "elevation"},
+    "frames": {"type": "Frame", "panel": {"node": "openings"}, "thickness": 0.1, "width": 0.07},
+    "span": {"type": "Frame", "panel": {"node": "openings"}, "width": 0.07, "output": "hole"},
+    "leaves": {"type": "Divide", "rectangle": {"node": "span"}, "parts": 2, "level": "leaf"},
+    "leaf frames": {"type": "Frame", "panel": {"node": "leaves"}, "thickness": 0.07, "width": 0.05},
+    "leaf span": {"type": "Frame", "panel": {"node": "leaves"}, "width": 0.05, "output": "hole"},
+    "glazing": {"type": "Divide", "rectangle": {"node": "leaf span"}, "parts": 3, "level": "glass", "direction": "height"},
+    "glazing beads": {"type": "Frame", "panel": {"node": "glazing"}, "thickness": 0.03, "width": 0.015},
+    "panes": {"type": "Frame", "panel": {"node": "glazing"}, "width": 0.015, "output": "hole"}
+  },
+  "export": ["frames", "leaf frames", "glazing beads", "panes"],
+  "controls": [
+    {"value": "windows.count", "min": 1, "max": 12, "step": 1, "label": "windows"},
+    {"value": "axis spacing.value", "min": 1.8, "max": 5, "step": 0.1, "unit": "m", "label": "axis spacing"},
+    {"value": "openings.width", "min": 0.6, "max": 3, "step": 0.05, "unit": "m", "label": "opening width"},
+    {"value": "openings.height", "min": 0.6, "max": 2.6, "step": 0.05, "unit": "m", "label": "opening height"},
+    {"value": "leaves.parts", "min": 1, "max": 4, "step": 1, "label": "leaves"},
+    {"value": "glazing.parts", "min": 1, "max": 6, "step": 1, "label": "panes per leaf"},
+    {"value": "frames.width", "min": 0.03, "max": 0.15, "step": 0.005, "unit": "m", "label": "frame width"}
+  ],
+  "view": {
+    "frames": {"color": "#5a5f66"},
+    "leaf frames": {"color": "#7d8a96"},
+    "glazing beads": {"color": "#9aa3ad"},
+    "panes": {"color": "#8fb8cf", "opacity": 0.45}
+  }
+}

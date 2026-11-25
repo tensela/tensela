@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 450" width="1240" height="450">
+<rect width="1240" height="450" fill="#16151b"/>
+<rect x="30.0" y="40.0" width="190.0" height="80.0" rx="9" fill="#1d1c23" stroke="#6e93c6" stroke-width="1.2" opacity="1.0"/>
+<path d="M39.0,40.0 h172.0 a9,9 0 0 1 9,9 v-5 h-190.0 v5 a9,9 0 0 1 9,-9 z" fill="#6e93c6" opacity="1.0"/>
+<text x="42.0" y="62.0" font-family="Inter, 'Inter Variable', 'DejaVu Sans', sans-serif" font-size="13" font-weight="650" fill="#ecebf3" text-anchor="start" opacity="1.0" xml:space="preserve" style="white-space:pre">Rectángulo</text>
+<text x="206.0" y="62.0" font-family="'JetBrains Mono', 'DejaVu Sans Mono', monospace" font-size="10.5" font-weight="400" fill="#9a98a8" text-anchor="end" opacity="1.0" xml:space="preserve" style="white-space:pre">rectángulo</text>
+<circle cx="220.0" cy="58.0" r="5" fill="#6b6976" stroke="#1d1c23" stroke-width="2" opacity="1.0"/>
+<circle cx="30.0" cy="85.0" r="4.5" fill="#6b6976" stroke="#1d1c23" stroke-width="2" opacity="1.0"/>
+<text x="42.0" y="89.0" font-family="Inter, 'Inter Variable', 'DejaVu Sans', sans-serif" font-size="11.5" font-weight="400" fill="#c4c2cf" text-anchor="start" opacity="1.0" xml:space="preserve" style="white-space:pre">ancho</text>
+<text x="208.0" y="89.0" font-family="'JetBrains Mono', 'DejaVu Sans Mono', monospace" font-size="10.5" font-weight="400" fill="#9a98a8" text-anchor="end" opacity="1.0" xml:space="preserve" style="white-space:pre">20</text>
+<circle cx="30.0" cy="106.0" r="4.5" fill="#6b6976" stroke="#1d1c23" stroke-width="2" opacity="1.0"/>
+<text x="42.0" y="110.0" font-family="Inter, 'Inter Variable', 'DejaVu Sans', sans-serif" font-size="11.5" font-weight="400" fill="#c4c2cf" text-anchor="start" opacity="1.0" xml:space="preserve" style="white-space:pre">alto</text>
+<text x="208.0" y="110.0" font-family="'JetBrains Mono', 'DejaVu Sans Mono', monospace" font-size="10.5" font-weight="400" fill="#9a98a8" text-anchor="end" opacity="1.0" xml:space="preserve" style="white-space:pre">12</text>
+<rect x="30.0" y="200.0" width="190.0" height="80.0" rx="9" fill="#1d1c23" stroke="#7fa36a" stroke-width="1.2" opacity="1.0"/>
+<path d="M39.0,200.0 h172.0 a9,9 0 0 1 9,9 v-5 h-190.0 v5 a9,9 0 0 1 9,-9 z" fill="#7fa36a" opacity="1.0"/>
+<text x="42.0" y="222.0" font-family="Inter, 'Inter Variable', 'DejaVu Sans', sans-serif" font-size="13" font-weight="650" fill="#ecebf3" text-anchor="start" opacity="1.0" xml:space="preserve" style="white-space:pre">Punto</text>
+<text x="206.0" y="222.0" font-family="'JetBrains Mono', 'DejaVu Sans Mono', monospace" font-size="10.5" font-weight="400" fill="#9a98a8" text-anchor="end" opacity="1.0" xml:space="preserve" style="white-space:pre">punto</text>
+<circle cx="220.0" cy="218.0" r="5" fill="#6b6976" stroke="#1d1c23" stroke-width="2" opacity="1.0"/>
+<circle cx="30.0" cy="245.0" r="4.5" fill="#6b6976" stroke="#1d1c23" stroke-width="2" opacity="1.0"/>
+<text x="42.0" y="249.0" font-family="Inter, 'Inter Variable', 'DejaVu Sans', sans-serif" font-size="11.5" font-weight="400" fill="#c4c2cf" text-anchor="start" opacity="1.0" xml:space="preserve" style="white-space:pre">x</text>
+<text x="208.0" y="249.0" font-family="'JetBrains Mono', 'DejaVu Sans Mono', monospace" font-size="10.5" font-weight="400" fill="#9a98a8" text-anchor="end" opacity="1.0" xml:space="preserve" style="white-space:pre">6</text>
+<circle cx="30.0" cy="266.0" r="4.5" fill="#6b6976" stroke="#1d1c23" stroke-width="2" opacity="1.0"/>
+<text x="42.0" y="270.0" font-family="Inter, 'Inter Variable', 'DejaVu Sans', sans-serif" font-size="11.5" font-weight="400" fill="#c4c2cf" text-anchor="start" opacity="1.0" xml:space="preserve" style="white-space:pre">z</text>
+<text x="208.0" y="270.0" font-family="'JetBrains Mono', 'DejaVu Sans Mono', monospace" font-size="10.5" font-weight="400" fill="#9a98a8" text-anchor="end" opacity="1.0" xml:space="preserve" style="white-space:pre">7</text>
+<rect x="30.0" y="320.0" width="190.0" height="80.0" rx="9" fill="#1d1c23" stroke="#6e93c6" stroke-width="1.2" opacity="1.0"/>
+<path d="M39.0,320.0 h172.0 a9,9 0 0 1 9,9 v-5 h-190.0 v5 a9,9 0 0 1 9,-9 z" fill="#6e93c6" opacity="1.0"/>
+<text x="42.0" y="342.0" font-family="Inter, 'Inter Variable', 'DejaVu Sans', sans-serif" font-size="13" font-weight="650" fill="#ecebf3" text-anchor="start" opacity="1.0" xml:space="preserve" style="white-space:pre">Caja</text>
+<text x="206.0" y="342.0" font-family="'JetBrains Mono', 'DejaVu Sans Mono', monospace" font-size="10.5" font-weight="400" fill="#9a98a8" text-anchor="end" opacity="1.0" xml:space="preserve" style="white-space:pre">caja</text>
+<circle cx="220.0" cy="338.0" r="5" fill="#6b6976" stroke="#1d1c23" stroke-width="2" opacity="1.0"/>
+<circle cx="30.0" cy="365.0" r="4.5" fill="#6b6976" stroke="#1d1c23" stroke-width="2" opacity="1.0"/>
+<text x="42.0" y="369.0" font-family="Inter, 'Inter Variable', 'DejaVu Sans', sans-serif" font-size="11.5" font-weight="400" fill="#c4c2cf" text-anchor="start" opacity="1.0" xml:space="preserve" style="white-space:pre">ancho</text>
+<text x="208.0" y="369.0" font-family="'JetBrains Mono', 'DejaVu Sans Mono', monospace" font-size="10.5" font-weight="400" fill="#9a98a8" text-anchor="end" opacity="1.0" xml:space="preserve" style="white-space:pre">0.4</text>
+<circle cx="30.0" cy="386.0" r="4.5" fill="#6b6976" stroke="#1d1c23" stroke-width="2" opacity="1.0"/>
+<text x="42.0" y="390.0" font-family="Inter, 'Inter Variable', 'DejaVu Sans', sans-serif" font-size="11.5" font-weight="400" fill="#c4c2cf" text-anchor="start" opacity="1.0" xml:space="preserve" style="white-space:pre">alto</text>
+<text x="208.0" y="390.0" font-family="'JetBrains Mono', 'DejaVu Sans Mono', monospace" font-size="10.5" font-weight="400" fill="#9a98a8" text-anchor="end" opacity="1.0" xml:space="preserve" style="white-space:pre">1</text>
+<rect x="290.0" y="40.0" width="190.0" height="80.0" rx="9" fill="#1d1c23" stroke="#c9a15c" stroke-width="1.2" opacity="1.0"/>
+<path d="M299.0,40.0 h172.0 a9,9 0 0 1 9,9 v-5 h-190.0 v5 a9,9 0 0 1 9,-9 z" fill="#c9a15c" opacity="1.0"/>
+<text x="302.0" y="62.0" font-family="Inter, 'Inter Variable', 'DejaVu Sans', sans-serif" font-size="13" font-weight="650" fill="#ecebf3" text-anchor="start" opacity="1.0" xml:space="preserve" style="white-space:pre">Retícula</text>
+<text x="466.0" y="62.0" font-family="'JetBrains Mono', 'DejaVu Sans Mono', monospace" font-size="10.5" font-weight="400" fill="#9a98a8" text-anchor="end" opacity="1.0" xml:space="preserve" style="white-space:pre">rectángulo</text>
+<circle cx="480.0" cy="58.0" r="5" fill="#6b6976" stroke="#1d1c23" stroke-width="2" opacity="1.0"/>
+<circle cx="290.0" cy="85.0" r="4.5" fill="#6b6976" stroke="#1d1c23" stroke-width="2" opacity="1.0"/>
+<text x="302.0" y="89.0" font-family="Inter, 'Inter Variable', 'DejaVu Sans', sans-serif" font-size="11.5" font-weight="400" fill="#c4c2cf" text-anchor="start" opacity="1.0" xml:space="preserve" style="white-space:pre">rectángulo</text>
+<circle cx="290.0" cy="106.0" r="4.5" fill="#6b6976" stroke="#1d1c23" stroke-width="2" opacity="1.0"/>
+<text x="302.0" y="110.0" font-family="Inter, 'Inter Variable', 'DejaVu Sans', sans-serif" font-size="11.5" font-weight="400" fill="#c4c2cf" text-anchor="start" opacity="1.0" xml:space="preserve" style="white-space:pre">ancho celda</text>
+<text x="468.0" y="110.0" font-family="'JetBrains Mono', 'DejaVu Sans Mono', monospace" font-size="10.5" font-weight="400" fill="#9a98a8" text-anchor="end" opacity="1.0" xml:space="preserve" style="white-space:pre">1</text>
+<rect x="550.0" y="40.0" width="170.0" height="59.0" rx="9" fill="#1d1c23" stroke="#c9a15c" stroke-width="1.2" opacity="1.0"/>
+<path d="M559.0,40.0 h152.0 a9,9 0 0 1 9,9 v-5 h-170.0 v5 a9,9 0 0 1 9,-9 z" fill="#c9a15c" opacity="1.0"/>
+<text x="562.0" y="62.0" font-family="Inter, 'Inter Variable', 'DejaVu Sans', sans-serif" font-size="13" font-weight="650" fill="#ecebf3" text-anchor="start" opacity="1.0" xml:space="preserve" style="white-space:pre">Centro</text>
+<text x="706.0" y="62.0" font-family="'JetBrains Mono', 'DejaVu Sans Mono', monospace" font-size="10.5" font-weight="400" fill="#9a98a8" text-anchor="end" opacity="1.0" xml:space="preserve" style="white-space:pre">punto</text>
+<circle cx="720.0" cy="58.0" r="5" fill="#6b6976" stroke="#1d1c23" stroke-width="2" opacity="1.0"/>
+<circle cx="550.0" cy="85.0" r="4.5" fill="#6b6976" stroke="#1d1c23" stroke-width="2" opacity="1.0"/>
+<text x="562.0" y="89.0" font-family="Inter, 'Inter Variable', 'DejaVu Sans', sans-serif" font-size="11.5" font-weight="400" fill="#c4c2cf" text-anchor="start" opacity="1.0" xml:space="preserve" style="white-space:pre">geometría</text>
+<rect x="780.0" y="170.0" width="190.0" height="101.0" rx="9" fill="#1d1c23" stroke="#a88bd0" stroke-width="1.2" opacity="1.0"/>
+<path d="M789.0,170.0 h172.0 a9,9 0 0 1 9,9 v-5 h-190.0 v5 a9,9 0 0 1 9,-9 z" fill="#a88bd0" opacity="1.0"/>
+<text x="792.0" y="192.0" font-family="Inter, 'Inter Variable', 'DejaVu Sans', sans-serif" font-size="13" font-weight="650" fill="#ecebf3" text-anchor="start" opacity="1.0" xml:space="preserve" style="white-space:pre">Atractor</text>
+<text x="956.0" y="192.0" font-family="'JetBrains Mono', 'DejaVu Sans Mono', monospace" font-size="10.5" font-weight="400" fill="#9a98a8" text-anchor="end" opacity="1.0" xml:space="preserve" style="white-space:pre">valor</text>
+<circle cx="970.0" cy="188.0" r="5" fill="#6b6976" stroke="#1d1c23" stroke-width="2" opacity="1.0"/>
+<circle cx="780.0" cy="215.0" r="4.5" fill="#6b6976" stroke="#1d1c23" stroke-width="2" opacity="1.0"/>
+<text x="792.0" y="219.0" font-family="Inter, 'Inter Variable', 'DejaVu Sans', sans-serif" font-size="11.5" font-weight="400" fill="#c4c2cf" text-anchor="start" opacity="1.0" xml:space="preserve" style="white-space:pre">dónde</text>
+<circle cx="780.0" cy="236.0" r="4.5" fill="#6b6976" stroke="#1d1c23" stroke-width="2" opacity="1.0"/>
+<text x="792.0" y="240.0" font-family="Inter, 'Inter Variable', 'DejaVu Sans', sans-serif" font-size="11.5" font-weight="400" fill="#c4c2cf" text-anchor="start" opacity="1.0" xml:space="preserve" style="white-space:pre">atractores</text>
+<circle cx="780.0" cy="257.0" r="4.5" fill="#6b6976" stroke="#1d1c23" stroke-width="2" opacity="1.0"/>
+<text x="792.0" y="261.0" font-family="Inter, 'Inter Variable', 'DejaVu Sans', sans-serif" font-size="11.5" font-weight="400" fill="#c4c2cf" text-anchor="start" opacity="1.0" xml:space="preserve" style="white-space:pre">alcance</text>
+<text x="958.0" y="261.0" font-family="'JetBrains Mono', 'DejaVu Sans Mono', monospace" font-size="10.5" font-weight="400" fill="#9a98a8" text-anchor="end" opacity="1.0" xml:space="preserve" style="white-space:pre">8</text>
+<rect x="1040.0" y="100.0" width="170.0" height="101.0" rx="9" fill="#1d1c23" stroke="#d08a7c" stroke-width="1.2" opacity="1.0"/>
+<path d="M1049.0,100.0 h152.0 a9,9 0 0 1 9,9 v-5 h-170.0 v5 a9,9 0 0 1 9,-9 z" fill="#d08a7c" opacity="1.0"/>
+<text x="1052.0" y="122.0" font-family="Inter, 'Inter Variable', 'DejaVu Sans', sans-serif" font-size="13" font-weight="650" fill="#ecebf3" text-anchor="start" opacity="1.0" xml:space="preserve" style="white-space:pre">Colocar</text>
+<text x="1196.0" y="122.0" font-family="'JetBrains Mono', 'DejaVu Sans Mono', monospace" font-size="10.5" font-weight="400" fill="#9a98a8" text-anchor="end" opacity="1.0" xml:space="preserve" style="white-space:pre">geometría</text>
+<circle cx="1210.0" cy="118.0" r="5" fill="#6b6976" stroke="#1d1c23" stroke-width="2" opacity="1.0"/>
+<circle cx="1040.0" cy="145.0" r="4.5" fill="#6b6976" stroke="#1d1c23" stroke-width="2" opacity="1.0"/>
+<text x="1052.0" y="149.0" font-family="Inter, 'Inter Variable', 'DejaVu Sans', sans-serif" font-size="11.5" font-weight="400" fill="#c4c2cf" text-anchor="start" opacity="1.0" xml:space="preserve" style="white-space:pre">geometría</text>
+<circle cx="1040.0" cy="166.0" r="4.5" fill="#6b6976" stroke="#1d1c23" stroke-width="2" opacity="1.0"/>
+<text x="1052.0" y="170.0" font-family="Inter, 'Inter Variable', 'DejaVu Sans', sans-serif" font-size="11.5" font-weight="400" fill="#c4c2cf" text-anchor="start" opacity="1.0" xml:space="preserve" style="white-space:pre">en</text>
+<circle cx="1040.0" cy="187.0" r="4.5" fill="#6b6976" stroke="#1d1c23" stroke-width="2" opacity="1.0"/>
+<text x="1052.0" y="191.0" font-family="Inter, 'Inter Variable', 'DejaVu Sans', sans-serif" font-size="11.5" font-weight="400" fill="#c4c2cf" text-anchor="start" opacity="1.0" xml:space="preserve" style="white-space:pre">giro</text>
+<path d="M220.0,58.0 C260.0,58.0 250.0,85.0 290.0,85.0" stroke="#6e93c6" stroke-width="2.0" fill="none" opacity="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M480.0,58.0 C520.0,58.0 510.0,85.0 550.0,85.0" stroke="#c9a15c" stroke-width="2.0" fill="none" opacity="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="419.3" y="10.0" width="191.3" height="20.0" rx="10" fill="#16151b" stroke="#34323e" stroke-width="1.0" opacity="1.0"/>
+<text x="515.0" y="24.0" font-family="'JetBrains Mono', 'DejaVu Sans Mono', monospace" font-size="11" font-weight="400" fill="#ecebf3" text-anchor="middle" opacity="1.0" xml:space="preserve" style="white-space:pre">fila 12 × columna 20 = 240</text>
+<path d="M720.0,58.0 C760.0,58.0 740.0,215.0 780.0,215.0" stroke="#c9a15c" stroke-width="2.0" fill="none" opacity="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M220.0,218.0 C472.0,218.0 528.0,236.0 780.0,236.0" stroke="#7fa36a" stroke-width="2.0" fill="none" opacity="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M720.0,58.0 C864.0,58.0 896.0,166.0 1040.0,166.0" stroke="#c9a15c" stroke-width="2.0" fill="none" opacity="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="838.9" y="102.0" width="82.2" height="20.0" rx="10" fill="#16151b" stroke="#34323e" stroke-width="1.0" opacity="1.0"/>
+<text x="880.0" y="116.0" font-family="'JetBrains Mono', 'DejaVu Sans Mono', monospace" font-size="11" font-weight="400" fill="#9a98a8" text-anchor="middle" opacity="1.0" xml:space="preserve" style="white-space:pre">240 puntos</text>
+<path d="M970.0,188.0 C1010.0,188.0 1000.0,187.0 1040.0,187.0" stroke="#a88bd0" stroke-width="2.0" fill="none" opacity="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="960.5" y="177.5" width="89.0" height="20.0" rx="10" fill="#16151b" stroke="#34323e" stroke-width="1.0" opacity="1.0"/>
+<text x="1005.0" y="191.5" font-family="'JetBrains Mono', 'DejaVu Sans Mono', monospace" font-size="11" font-weight="400" fill="#9a98a8" text-anchor="middle" opacity="1.0" xml:space="preserve" style="white-space:pre">240 ángulos</text>
+<path d="M220.0,338.0 C589.0,338.0 671.0,145.0 1040.0,145.0" stroke="#6e93c6" stroke-width="2.0" fill="none" opacity="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="499.1" y="273.6" width="54.9" height="20.0" rx="10" fill="#16151b" stroke="#34323e" stroke-width="1.0" opacity="1.0"/>
+<text x="526.6" y="287.6" font-family="'JetBrains Mono', 'DejaVu Sans Mono', monospace" font-size="11" font-weight="400" fill="#9a98a8" text-anchor="middle" opacity="1.0" xml:space="preserve" style="white-space:pre">1 caja</text>
+<text x="30.0" y="438.0" font-family="Inter, 'Inter Variable', 'DejaVu Sans', sans-serif" font-size="13" font-weight="400" fill="#9a98a8" text-anchor="start" opacity="1.0" xml:space="preserve" style="white-space:pre">Cada tarjeta hace una sola cosa; cada cable lleva una sola cosa, y dice su tamaño.</text>
+</svg>

@@ -1,0 +1,38 @@
+---
+title: "Un muro de costillas"
+description: "Un muro ondulado de costillas de madera a partir de tres curvas dibujadas a mano."
+---
+
+import { Steps } from '@astrojs/starlight/components';
+
+![Un muro de costillas](/images/manual/recipes/rib-wall.png)
+
+Un muro de 6 m de largo y 3 m de alto hecho con 50 costillas de madera. La onda sale de tres curvas dibujadas a mano: sin fórmulas. Es la idea de [Dibuja la forma y después córtala](/es/manual/key-ideas/draw-then-cut/).
+
+**8 nodos** · [Descargar `rib-wall.tela`](/examples/recipes/rib-wall.tela)
+
+## Paso a paso
+
+<Steps>
+
+1. **Tres curvas.** Añade tres **Curvas dibujadas** y dibuja cada una en la vista en planta: cinco puntos a lo largo de x, de `0` a `6` m, un poco delante de la línea del muro (y entre `-0,2` y `-0,6`). Que cada una ondule distinto.
+
+2. **A sus alturas.** Añade dos **Mover**: uno sube la segunda curva una **distancia** de `1,5`, el otro sube la tercera `3`.
+
+3. **En orden.** Añade un **Juntar**. Conecta la primera curva a **a**, la segunda (movida) a **b** y la tercera a **c**. Ponle a su **nivel** `sección`.
+
+4. **El frente del muro.** Añade una **Superficie por secciones**: conecta el Juntar a **curvas** y escribe **sobre** `sección`.
+
+5. **Las costillas.** Añade **Costillas**: conecta la Superficie a **forma**, y escribe **cantidad** `50` y **grosor** `0,04` (tablas de 4 cm).
+
+</Steps>
+
+## Ahora juega
+
+- Arrastra los puntos de cualquier curva: todas las costillas la siguen.
+- Cambia **cantidad** y **grosor**.
+- Añade un **Volumen** y un **Resumir** para saber los m³ de madera.
+
+## Descarga el proyecto
+
+[Descargar `rib-wall.tela`](/examples/recipes/rib-wall.tela) · Ábrelo en Tensela: **Archivo → Abrir**.

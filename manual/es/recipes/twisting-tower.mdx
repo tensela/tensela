@@ -1,0 +1,40 @@
+---
+title: "Una torre que gira"
+description: "Veinticuatro pisos, cada uno un poco más girado que el de abajo."
+---
+
+import { Steps } from '@astrojs/starlight/components';
+
+![Una torre que gira](/images/manual/recipes/twisting-tower.png)
+
+Una torre de 24 pisos cada 3,5 m. Cada piso es la misma planta redondeada, girada 6° más que la de abajo: 138° del suelo a la cima.
+
+**7 nodos** · [Descargar `twisting-tower.tela`](/examples/recipes/twisting-tower.tela)
+
+## Paso a paso
+
+<Steps>
+
+1. **Los pisos.** Añade una **Serie**: **cantidad** `24`, paso `1`, **nivel** `piso`.
+
+2. **Sus alturas.** Añade una **Fórmula** `a * 3,5` con la Serie como **a**.
+
+3. **Sus giros.** Añade otra **Fórmula** `a * 6` con la Serie como **a**: los grados de cada piso.
+
+4. **La planta.** Añade un **Rectángulo redondeado**: **ancho** `24`, **alto** `16`, **radio** `4`, **origen** `-12 -8 0` (centrado en el eje).
+
+5. **Arriba y alrededor.** Añade un **Mover** con las alturas como **distancia**, y después un **Girar** con los giros como **grados**.
+
+6. **Las losas.** Añade un **Extruir** con **vector** `0 0 0,35` y **tapas** encendido.
+
+</Steps>
+
+## Ahora juega
+
+- Cambia el `6` de los giros: una torre tranquila o una espiral.
+- Haz que el giro crezca hacia arriba con `a * a * 0,25`.
+- Escala cada piso con una tercera Fórmula para una torre que se afina.
+
+## Descarga el proyecto
+
+[Descargar `twisting-tower.tela`](/examples/recipes/twisting-tower.tela) · Ábrelo en Tensela: **Archivo → Abrir**.

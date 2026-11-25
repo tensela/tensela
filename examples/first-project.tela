@@ -1,0 +1,13 @@
+{
+  "tensela": 1,
+  "description": "Your first project: a facade with sun fins that open near a point.",
+  "nodes": {
+    "facade": {"type": "Rectangle", "width": 20, "height": 12, "plane": "elevation"},
+    "panels": {"type": "Grid", "rectangle": {"node": "facade"}, "cell_width": 1, "cell_height": 1},
+    "centres": {"type": "Centre", "geometry": {"node": "panels"}},
+    "point": {"type": "Point", "x": 6, "z": 7},
+    "attractor": {"type": "Attractor", "where": {"node": "centres"}, "attractors": {"node": "point"}, "reach": 8, "near": 90, "far": 0},
+    "fin": {"type": "Box", "width": 0.4, "depth": 0.05, "height": 1.0},
+    "fins": {"type": "Place", "geometry": {"node": "fin"}, "at": {"node": "centres"}, "rotation": {"node": "attractor"}}
+  }
+}

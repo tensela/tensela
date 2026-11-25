@@ -1,0 +1,36 @@
+---
+title: "A vault that finds its own shape"
+description: "A membrane hung from its corners and turned upside down: a vault that works mainly in compression."
+---
+
+import { Steps } from '@astrojs/starlight/components';
+
+![A vault that finds its own shape](/images/manual/recipes/hanging-vault.png)
+
+A 12 × 12 m membrane held at its four corners hangs under its own weight. Turned upside down, that shape is a vault that works mainly in compression: the method of the hanging models of Gaudí and Isler.
+
+It is a form study, not a structural calculation: an engineer has to check it before it is built.
+
+**3 nodes** · [Download `hanging-vault.tela`](/examples/recipes/hanging-vault.tela)
+
+## Step by step
+
+<Steps>
+
+1. **The plan.** Add a **Rectangle**: **width** `12`, **height** `12`.
+
+2. **The membrane.** Add a **Mesh surface** with **count u** `16` and **count v** `16`.
+
+3. **The vault.** Add an **Equilibrium**: the mesh to **shape**, **self weight** `300`, **gravity** `0 0 1` (upwards: the hanging shape turned over).
+
+</Steps>
+
+## Play with it
+
+- Change **supports** to *border*: a vault resting on its four edges.
+- Add **more supports** inside: a vault on columns.
+- Set **show** to *forces* to see the compression in each span.
+
+## Download the project
+
+[Download `hanging-vault.tela`](/examples/recipes/hanging-vault.tela) · Open it in Tensela: **File → Open**.

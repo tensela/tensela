@@ -1,0 +1,40 @@
+---
+title: "Una maqueta waffle lista para cortar"
+description: "La maqueta de una colina como dos familias de tablas que encastran, acostadas en planchas para la cortadora láser."
+---
+
+import { Steps } from '@astrojs/starlight/components';
+
+![Una maqueta waffle lista para cortar](/images/manual/recipes/waffle-model.png)
+
+Una maqueta de 30 × 20 cm de una colina en tablero de 3 mm: tablas en x y en y, ranuradas hasta la mitad para que entren unas en otras, acostadas en planchas de 600 × 400 mm con sus números. Todas las medidas en metros.
+
+**11 nodos** · [Descargar `waffle-model.tela`](/examples/recipes/waffle-model.tela)
+
+## Paso a paso
+
+<Steps>
+
+1. **La colina.** Arma una retícula de puntos: dos **Series** (`13` valores desde `-0,15` con paso `0,025`, nivel `u`; `13` desde `-0,1` con paso `0,0167`, nivel `v`), una **Función** *colina* con ellas como **x** e **y**, **altura** `0,08` y **ancho** `0,3`, y un **Punto** con x, y y z de ellas. Únelos con una **Superficie por puntos**, **suave** encendido.
+
+2. **Tablas en x.** Añade **Secciones**: la superficie a **forma**, **espesor** `0,003`, **separación** `0,025`, **cortes** *x*, **trozo** *hasta la base*, **fondo** `0,02`.
+
+3. **Tablas en y.** Lo mismo con **cortes** *y*.
+
+4. **Los encastres.** Añade **Encastres** con las tablas en x como **primero** y en y como **segundo**, **espesor** `0,003`: da la primera familia, ranurada. Añade otro igual con **mostrar** *segundo* para la otra familia, y un tercero con **mostrar** *tablas* para verlas encastradas.
+
+5. **En planchas.** Añade **Acostar en planchas**: los dos primeros Encastres, el primero a **trozos** y el segundo a **más**, **ancho** `0,6`, **alto** `0,4`.
+
+6. **El archivo.** **Archivo → Exportar → Archivo de corte**: un archivo por plancha, rojo para cortar, azul para grabar los números.
+
+</Steps>
+
+## Ahora juega
+
+- Cambia la **separación** entre tablas: pocas tablas firmes, o muchas delgadas.
+- Cambia la colina con la **altura** de la Función.
+- Usa la **holgura** de Encastres si tu láser quema más.
+
+## Descarga el proyecto
+
+[Descargar `waffle-model.tela`](/examples/recipes/waffle-model.tela) · Ábrelo en Tensela: **Archivo → Abrir**.

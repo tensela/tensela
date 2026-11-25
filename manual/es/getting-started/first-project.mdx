@@ -1,0 +1,73 @@
+---
+title: Tu primer proyecto
+description: Una fachada con quiebrasoles que se abren cerca de un punto, en siete nodos y unos diez minutos.
+---
+
+import { Steps } from '@astrojs/starlight/components';
+
+Vas a hacer una **fachada de 20 × 12 m**, partida en paneles de 1 m, con **un quiebrasol vertical en cada panel**.
+Los quiebrasoles cerca de un punto giran y se abren; los que están lejos quedan cerrados. Siete nodos, sin fórmulas.
+
+## Antes de empezar: dos gestos
+
+- **Añadir un nodo:** doble clic en un lugar vacío del lienzo, o la tecla **Tab**. Escribe su nombre y pulsa
+  **Enter**.
+- **Conectar dos nodos:** arrastra desde el circulito a la **derecha** de una tarjeta (lo que da el nodo) hasta una
+  entrada de otra tarjeta.
+
+## Paso a paso
+
+<Steps>
+
+1. **La fachada.** Añade un **Rectángulo**. En su tarjeta escribe **ancho** `20`, **alto** `12` y elige **plano:
+   alzado**. En la vista aparece un rectángulo de pie. Si no lo ves, enciende el ojo de la tarjeta.
+
+2. **Los paneles.** Añade una **Retícula** y conecta el Rectángulo a su entrada **rectángulo**. Escribe **ancho
+   celda** `1` y **alto celda** `1`. El cable ahora dice `fila 12 × columna 20 = 240`: 240 paneles.
+
+3. **El centro de cada panel.** Añade un **Centro** y conecta la Retícula a su entrada **geometría**. Salen 240
+   puntos, uno en medio de cada panel.
+
+4. **El punto que atrae.** Añade un **Punto** con **x** `6`, **y** `0` y **z** `7`: un lugar de la fachada, a 6 m
+   de la izquierda y 7 m de altura.
+
+5. **Un ángulo para cada panel.** Añade un **Atractor**. Conecta el Centro a **dónde** y el Punto a **atractores**.
+   Escribe **alcance** `8`, **cerca** `90` y **lejos** `0`. Ahora cada panel tiene un ángulo: 90° justo al lado del
+   punto, 0° a 8 m o más.
+
+6. **El quiebrasol.** Añade una **Caja** con **ancho** `0,4`, **fondo** `0,05` y **alto** `1`: una lama delgada y
+   vertical.
+
+7. **Un quiebrasol en cada panel.** Añade un **Colocar**. Conecta la Caja a **geometría**, el Centro a **en** y el
+   Atractor a **giro**. Aparecen 240 quiebrasoles: abiertos alrededor del punto, cerrados lejos de él.
+
+</Steps>
+
+![Los 240 quiebrasoles, pintados según cuánto gira cada uno: abiertos cerca del punto, cerrados lejos](/images/manual/app/first-project-result-es.png)
+
+*Aquí los quiebrasoles están pintados según su ángulo (**Color → según un valor**), para ver cuáles se abren.*
+
+## Ahora juega
+
+Aquí es donde el diseño paramétrico rinde. Cambia cualquier número y toda la fachada responde:
+
+- Mueve el **Punto**: cambia su **x** o su **z** y mira cómo la abertura recorre la fachada.
+- Cambia el **alcance** del Atractor: con poco alcance se abren pocos quiebrasoles; con mucho, casi todos.
+- Intercambia **cerca** y **lejos**: los quiebrasoles se cierran alrededor del punto y se abren en el resto.
+- Cambia el **ancho celda** de la Retícula a `0,5`: el doble de quiebrasoles, sin tocar nada más.
+
+## Trucos
+
+- **Ver solo lo que importa.** Apaga el ojo del Rectángulo, la Retícula y el Centro, para que la vista muestre solo
+  los quiebrasoles.
+- **Quiebrasoles delante de la fachada.** Los quiebrasoles quedan en el plano de la fachada. Para sacarlos 30 cm
+  hacia adelante, pon un **Mover** entre el Centro y el Colocar, con **vector** `0; -0,3; 0`.
+- **Guarda** tu proyecto con **Archivo → Guardar**. Los proyectos de Tensela terminan en `.tela`.
+
+## Lo que acabas de aprender
+
+- Un diseño es una cadena de pasos pequeños, cada uno un nodo. [Nodos y cables](/es/manual/key-ideas/nodes-and-cables/)
+- La Retícula hizo una lista de 240 paneles, y cada nodo después de ella trabajó con los 240 a la vez.
+  [Listas con nombre](/es/manual/key-ideas/named-lists/)
+- El Atractor hizo cada panel distinto a propósito.
+  [Condiciones y atractores](/es/manual/key-ideas/conditions-and-attractors/)

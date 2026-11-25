@@ -1,0 +1,38 @@
+---
+title: "A facade that breathes"
+description: "Frames whose openings grow near a point and close far from it."
+---
+
+import { Steps } from '@astrojs/starlight/components';
+
+![A facade that breathes](/images/manual/recipes/breathing-facade.png)
+
+A 24 × 12 m facade of 128 frames. Near a point the openings are wide; far from it they almost close. Move the point and the facade breathes with it.
+
+**5 nodes** · [Download `breathing-facade.tela`](/examples/recipes/breathing-facade.tela)
+
+## Step by step
+
+<Steps>
+
+1. **The facade.** Add a **Rectangle**: **width** `24`, **height** `12`, **plane** *elevation*.
+
+2. **The panels.** Add a **Grid** and connect the Rectangle to **rectangle**. Write **columns** `16` and **rows** `8`: 128 panels of 1.5 m.
+
+3. **The point.** Add a **Point** with **x** `8` and **z** `6`.
+
+4. **How open each panel is.** Add an **Attractor**. Connect the Grid to **where** and the Point to **attractors**. Write **reach** `10`, **near** `0.85` and **far** `0.15`.
+
+5. **The frames.** Add a **Frame**. Connect the Grid to **panel** and the Attractor to **opening**. Write **thickness** `0.12`.
+
+</Steps>
+
+## Play with it
+
+- Move the **Point** across the facade.
+- Swap **near** and **far**: closed around the point, open everywhere else.
+- Add a second Point and connect it to **more** of the Attractor.
+
+## Download the project
+
+[Download `breathing-facade.tela`](/examples/recipes/breathing-facade.tela) · Open it in Tensela: **File → Open**.

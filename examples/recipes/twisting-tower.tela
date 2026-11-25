@@ -1,0 +1,71 @@
+{
+ "tensela": 1,
+ "description": "A tower whose floors turn a little more on each level.",
+ "nodes": {
+  "floor": {
+   "type": "Series",
+   "count": 24,
+   "start": 0,
+   "step": 1,
+   "level": "floor"
+  },
+  "height": {
+   "type": "Formula",
+   "formula": "a * 3.5",
+   "a": {
+    "node": "floor"
+   }
+  },
+  "turn": {
+   "type": "Formula",
+   "formula": "a * 6",
+   "a": {
+    "node": "floor"
+   }
+  },
+  "plan": {
+   "type": "Rounded rectangle",
+   "width": 24,
+   "height": 16,
+   "radius": 4,
+   "origin": [
+    -12,
+    -8,
+    0
+   ]
+  },
+  "raised": {
+   "type": "Move",
+   "geometry": {
+    "node": "plan"
+   },
+   "distance": {
+    "node": "height"
+   }
+  },
+  "turned": {
+   "type": "Rotate",
+   "geometry": {
+    "node": "raised"
+   },
+   "degrees": {
+    "node": "turn"
+   }
+  },
+  "slabs": {
+   "type": "Extrude",
+   "curve": {
+    "node": "turned"
+   },
+   "vector": [
+    0,
+    0,
+    0.35
+   ],
+   "caps": true
+  }
+ },
+ "export": [
+  "slabs"
+ ]
+}

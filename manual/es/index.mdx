@@ -1,0 +1,30 @@
+---
+title: Bienvenido al manual
+description: Cómo está ordenado este manual y por dónde empezar.
+sidebar:
+  label: Bienvenida
+---
+
+import { CardGrid, LinkCard } from '@astrojs/starlight/components';
+import SectionCards from '@site/components/SectionCards.astro';
+
+Este manual está escrito para arquitectos, no para programadores. Cada página intenta responder primero **para
+qué**, después **cómo**, y solo al final **cómo funciona por dentro**.
+
+<CardGrid>
+	<LinkCard title="Qué es Tensela" description="Empieza aquí: qué hace y qué no es." href="/es/manual/getting-started/what-is-tensela/" />
+	<LinkCard title="Tu primer proyecto" description="Una fachada con quiebrasoles en unos diez minutos." href="/es/manual/getting-started/first-project/" />
+	<LinkCard title="Si vienes de otro programa" description="Grasshopper, Dynamo o Geometry Nodes: qué cambia." href="/es/manual/getting-started/coming-from-other-programs/" />
+	<LinkCard title="Descargar este manual" description="Como página web para guardar, o como PDF." href="/es/manual/download-this-manual/" />
+</CardGrid>
+
+## Cómo está ordenado
+
+<SectionCards items={[
+	{ title: 'Primeros pasos', icon: 'rocket', art: 'facade', href: '/es/manual/getting-started/what-is-tensela/', text: 'Qué es Tensela, cómo instalarla y un primer proyecto.' },
+	{ title: 'Ideas clave', icon: 'puzzle', art: 'weave', href: '/es/manual/key-ideas/nodes-and-cables/', text: 'Seis ideas que explican cómo funciona todo lo demás.' },
+	{ title: 'La ventana', icon: 'laptop', art: 'window', href: '/es/manual/window/', text: 'El lienzo, la vista 3D, los paneles, exportar y las preferencias.' },
+	{ title: 'Recetas', icon: 'open-book', art: 'recipe', href: '/es/manual/recipes/', text: 'Cómo lograr un resultado: una fachada, una cubierta, una estructura, un archivo de corte.' },
+	{ title: 'Los nodos', icon: 'list-format', art: 'nodes', href: '/es/manual/nodes/', text: 'Cada nodo, siempre en el mismo orden: para qué, cómo, qué hace y trucos.' },
+	{ title: 'Teoría', icon: 'information', art: 'theory', href: '/es/manual/theory/', text: 'Cómo funciona por dentro, para quien quiera saber más.' },
+]} />

@@ -1,0 +1,487 @@
+{
+  "downloads": {
+    "python": {
+      "what": "python-build-standalone 3.13.18 (release 20261110), install_only, x86_64 Linux",
+      "url": "https://github.com/astral-sh/python-build-standalone/releases/download/20261110/cpython-3.13.18%2B20261110-x86_64-unknown-linux-gnu-install_only.tar.gz",
+      "sha256": "50c774f6674740739f791c05a9177ed03e2fe02abebda9bca3512eb7309b37cc",
+      "published": "2026-11-11",
+      "checked": "2026-11-22: the digest GitHub gives the asset, and the SLSA provenance attestation of the release (Sigstore, transparency log) names this file with this digest"
+    },
+    "appimagetool": {
+      "what": "appimagetool 1.9.1, x86_64",
+      "url": "https://github.com/AppImage/appimagetool/releases/download/1.9.1/appimagetool-x86_64.AppImage",
+      "sha256": "ed4ce84f0d9caff66f50bcca6ff6f35aae54ce8135408b3fa33abfc3cb384eb0",
+      "published": "2025-11-18",
+      "checked": "2026-11-22: the digest GitHub gives the asset of the release"
+    },
+    "xcb_cursor": {
+      "what": "libxcb-cursor0 0.1.1-4ubuntu1 of Ubuntu 22.04 (jammy, universe), x86_64: Qt needs it to open its windows on X11; many systems do not have it installed. It asks for glibc 2.8",
+      "url": "http://archive.ubuntu.com/ubuntu/pool/universe/x/xcb-util-cursor/libxcb-cursor0_0.1.1-4ubuntu1_amd64.deb",
+      "sha256": "c9b5d1ad4af57397b1bd77e0a92750e34419def134c0282a0836ae9efc07cf64",
+      "file": "usr/lib/x86_64-linux-gnu/libxcb-cursor.so.0.0.0",
+      "file_sha256": "729297e66519bdb0df3ac8d5a2950e2e09b1e8d0b9eeea33250fce57a27aafa3",
+      "published": "2022-03-24",
+      "checked": "2026-11-22: the SHA-256 in the Packages index of jammy universe, signed by Ubuntu (its InRelease, checked by apt)",
+      "soname": "libxcb-cursor.so.0"
+    },
+    "xcb_icccm": {
+      "what": "libxcb-icccm4 0.4.1-1.1build2 of Ubuntu 22.04 (jammy, main), x86_64: Qt needs it on X11 (the hints of the windows (title, size)). It asks for glibc 2.2.5",
+      "url": "http://archive.ubuntu.com/ubuntu/pool/main/x/xcb-util-wm/libxcb-icccm4_0.4.1-1.1build2_amd64.deb",
+      "sha256": "4dfe14a0ce681b823b740dabb3de84b3ce0958c9a404af61823b11f64047b0ef",
+      "file": "usr/lib/x86_64-linux-gnu/libxcb-icccm.so.4.0.0",
+      "file_sha256": "bba23d0d7e19f602113032e351035aa7968514fc85a9f30b152c363f153ccb6a",
+      "soname": "libxcb-icccm.so.4",
+      "published": "2022-03-24",
+      "checked": "2026-11-23: the SHA-256 in the Packages index of jammy main, signed by Ubuntu (its InRelease, checked by apt)"
+    },
+    "xcb_image": {
+      "what": "libxcb-image0 0.4.0-2 of Ubuntu 22.04 (jammy, main), x86_64: Qt needs it on X11 (images on X11 (the pointer, the icons)). It asks for glibc 2.14",
+      "url": "http://archive.ubuntu.com/ubuntu/pool/main/x/xcb-util-image/libxcb-image0_0.4.0-2_amd64.deb",
+      "sha256": "b52babc3b4f2aa5241cac3a7888ce3b37d25a7f18867cae180e8cd11ec945cb9",
+      "file": "usr/lib/x86_64-linux-gnu/libxcb-image.so.0.0.0",
+      "file_sha256": "2ae417d723f9ad4e68951fa7890c8b50b2a386bee16c4ad5491da24addd67f13",
+      "soname": "libxcb-image.so.0",
+      "published": "2022-03-24",
+      "checked": "2026-11-23: the SHA-256 in the Packages index of jammy main, signed by Ubuntu (its InRelease, checked by apt)"
+    },
+    "xcb_keysyms": {
+      "what": "libxcb-keysyms1 0.4.0-1build3 of Ubuntu 22.04 (jammy, main), x86_64: Qt needs it on X11 (the keys of the keyboard). It asks for glibc 2.2.5",
+      "url": "http://archive.ubuntu.com/ubuntu/pool/main/x/xcb-util-keysyms/libxcb-keysyms1_0.4.0-1build3_amd64.deb",
+      "sha256": "1d62f96a793cc1aa0df860de3f7d83edea2fa461d97e2b3d4d7f7e7a10e55f42",
+      "file": "usr/lib/x86_64-linux-gnu/libxcb-keysyms.so.1.0.0",
+      "file_sha256": "46afa09b0cce49e33792b8527bc714cf23832c67eb2e436c372fcf5ff708be1d",
+      "soname": "libxcb-keysyms.so.1",
+      "published": "2022-03-24",
+      "checked": "2026-11-23: the SHA-256 in the Packages index of jammy main, signed by Ubuntu (its InRelease, checked by apt)"
+    },
+    "xcb_render_util": {
+      "what": "libxcb-render-util0 0.3.9-1build3 of Ubuntu 22.04 (jammy, main), x86_64: Qt needs it on X11 (drawing on X11). It asks for glibc 2.4",
+      "url": "http://archive.ubuntu.com/ubuntu/pool/main/x/xcb-util-renderutil/libxcb-render-util0_0.3.9-1build3_amd64.deb",
+      "sha256": "f87659a2369430ed2acb1cdae54a06fa9d60727a6545594e213173ddb4377727",
+      "file": "usr/lib/x86_64-linux-gnu/libxcb-render-util.so.0.0.0",
+      "file_sha256": "2a6dd5e6d3062be2874691c93392765f1d9ef224e2097fc22bc73906070de7bb",
+      "soname": "libxcb-render-util.so.0",
+      "published": "2022-03-24",
+      "checked": "2026-11-23: the SHA-256 in the Packages index of jammy main, signed by Ubuntu (its InRelease, checked by apt)"
+    },
+    "xcb_util": {
+      "what": "libxcb-util1 0.4.0-1build2 of Ubuntu 22.04 (jammy, main), x86_64: Qt needs it on X11 (what the others share). It asks for glibc 2.8",
+      "url": "http://archive.ubuntu.com/ubuntu/pool/main/x/xcb-util/libxcb-util1_0.4.0-1build2_amd64.deb",
+      "sha256": "237d51a378b93c1669ff193084ebeb6422fe1e2ea96c2e9a0099eac40992a345",
+      "file": "usr/lib/x86_64-linux-gnu/libxcb-util.so.1.0.0",
+      "file_sha256": "d05e3f95b9fdc2264c28f3df6aa735c2942e39d6a7184e42bc092fd637ea6c80",
+      "soname": "libxcb-util.so.1",
+      "published": "2022-03-24",
+      "checked": "2026-11-23: the SHA-256 in the Packages index of jammy main, signed by Ubuntu (its InRelease, checked by apt)"
+    }
+  },
+  "libraries": {
+    "attrs": {
+      "version": "26.1.0",
+      "tags": [
+        "py3-none-any"
+      ],
+      "files": "a5b3f60f21490436ecc04f1eacfcc61bd494a10d859aab0da5b0bd15221f7f3c",
+      "wheel": "attrs-26.1.0-py3-none-any.whl",
+      "sha256": "c647aa4a12dfbad9333ca4e71fe62ddc36f4e63b2d260a37a8b83d2f043ac309",
+      "published": "2026-03-19"
+    },
+    "certifi": {
+      "version": "2026.10.23",
+      "tags": [
+        "py3-none-any"
+      ],
+      "files": "0a517044b2bd93ea74fd57ff2a9186373f7320513d87d342808eb69e07b9848f",
+      "wheel": "certifi-2026.10.23-py3-none-any.whl",
+      "sha256": "e9b54de76e530bb6cf0ccd036787103acb58fd42ba930ea8bf948ddbaa2f61d1",
+      "published": "2026-10-23"
+    },
+    "charset-normalizer": {
+      "version": "3.5.2",
+      "tags": [
+        "cp313-cp313-manylinux_2_17_x86_64",
+        "cp313-cp313-manylinux2014_x86_64",
+        "cp313-cp313-manylinux_2_28_x86_64"
+      ],
+      "files": "4a4f6a8c3471dffbcf13aec0150e34f65514de667e3feebbf740ef7253e4ab24",
+      "wheel": "charset_normalizer-3.5.2-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+      "sha256": "7218e8f32b0956cfcd048fd42d9d5779809745ca1d86113ca56f66e7ae1549c4",
+      "published": "2026-09-30"
+    },
+    "contourpy": {
+      "version": "1.4.0",
+      "tags": [
+        "cp313-cp313-manylinux_2_27_x86_64",
+        "cp313-cp313-manylinux_2_28_x86_64"
+      ],
+      "files": "8841a4be626f91248c8b7e94c7e9c005117d4c893fef6a2f367a7b147b475dd0",
+      "wheel": "contourpy-1.4.0-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+      "sha256": "f1219a8898523cba821085f2da8a1b962cc696325763f09d7f93538ba43b2d70",
+      "published": "2026-09-11"
+    },
+    "cycler": {
+      "version": "0.12.1",
+      "tags": [
+        "py3-none-any"
+      ],
+      "files": "622e25d919916acc5fb640f3313969c401b664658632a3819a7cd8064f4fa1a7",
+      "wheel": "cycler-0.12.1-py3-none-any.whl",
+      "sha256": "85cef7cff222d8644161529808465972e51340599459b8ac3ccbac5a854e0d30",
+      "published": "2023-10-07"
+    },
+    "cyclopts": {
+      "version": "5.3.2",
+      "tags": [
+        "py3-none-any"
+      ],
+      "files": "44e3e4355b5082b6319e854e1bb35e4560d08ea76d191833bcadd29aa8c999fe",
+      "wheel": "cyclopts-5.3.2-py3-none-any.whl",
+      "sha256": "0e1a1615b42da7af1c9cebd285578fa003f4d6bef8b65de9e77c2faf645c2df7",
+      "published": "2026-10-27"
+    },
+    "docstring_parser": {
+      "version": "0.18.0",
+      "tags": [
+        "py3-none-any"
+      ],
+      "files": "c2ab2a46dd62221f816d654fbd009c71c6065b8cc2f9849583719322b8efdc42",
+      "wheel": "docstring_parser-0.18.0-py3-none-any.whl",
+      "sha256": "b3fcbed555c47d8479be0796ef7e19c2670d428d72e96da63f3a40122860374b",
+      "published": "2026-04-14"
+    },
+    "ezdxf": {
+      "version": "1.4.5",
+      "tags": [
+        "cp313-cp313-manylinux_2_17_x86_64",
+        "cp313-cp313-manylinux2014_x86_64"
+      ],
+      "files": "21ef7089656c65b7341854ade8c83d31acc6469ed8726d905ce537cd30fe2b75",
+      "wheel": "ezdxf-1.4.5-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+      "sha256": "d22fd3bad579b6a190f620540df06c4fe5b6283442662041ddd104d568fa0d0b",
+      "published": "2026-10-16"
+    },
+    "fonttools": {
+      "version": "4.68.0",
+      "tags": [
+        "cp313-cp313-manylinux_2_17_x86_64",
+        "cp313-cp313-manylinux2014_x86_64"
+      ],
+      "files": "bc03035b5706d5b6be77a00d43c80686f9964cbaaeccaae9476d5a1218f83051",
+      "wheel": "fonttools-4.68.0-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+      "sha256": "08851f7d2b983412f490b73a7c56f17cbda1d4d85d2ad3f857564bf15b5d9475",
+      "published": "2026-10-27"
+    },
+    "idna": {
+      "version": "3.20",
+      "tags": [
+        "py3-none-any"
+      ],
+      "files": "907b7a0e7876d794f1443dd0285324c844e18a6d1f7f27729cf86a69fd2b5348",
+      "wheel": "idna-3.20-py3-none-any.whl",
+      "sha256": "ab7ae7122974553370f0bdb919e1a960b2cd1bc1ef0276416d896db81c14582c",
+      "published": "2026-09-17"
+    },
+    "kiwisolver": {
+      "version": "1.5.1",
+      "tags": [
+        "cp313-cp313-manylinux_2_17_x86_64",
+        "cp313-cp313-manylinux2014_x86_64"
+      ],
+      "files": "7afc1b3c5c9134ec4d08a24ef2527f63450ea27a838cd275c0d828eaf9ce1f6c",
+      "wheel": "kiwisolver-1.5.1-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+      "sha256": "74ad5c3dad54a4641b4c28cd15ded70899d04459c6c7aeacafea716be97cce6d",
+      "published": "2026-08-28"
+    },
+    "manifold3d": {
+      "version": "3.5.4",
+      "tags": [
+        "cp313-cp313-manylinux_2_27_x86_64",
+        "cp313-cp313-manylinux_2_28_x86_64"
+      ],
+      "files": "e20d3029956b1869cdd87f5afb466fe388a6c7475e63752e4a8401ec3693cc63",
+      "wheel": "manifold3d-3.5.4-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+      "sha256": "7a5469641713f1bc291fea873cb134c435704df36828d134190fc2475b304259",
+      "published": "2026-09-25"
+    },
+    "markdown-it-py": {
+      "version": "4.2.0",
+      "tags": [
+        "py3-none-any"
+      ],
+      "files": "4cb94bf3fa6a93c05c729fc7d08bafc89895aabda0826633d35525b84cf1bf5f",
+      "wheel": "markdown_it_py-4.2.0-py3-none-any.whl",
+      "sha256": "9f7ebbcd14fe59494226453aed97c1070d83f8d24b6fc3a3bcf9a38092641c4a",
+      "published": "2026-05-07"
+    },
+    "matplotlib": {
+      "version": "3.11.2",
+      "tags": [
+        "cp313-cp313-manylinux_2_17_x86_64",
+        "cp313-cp313-manylinux2014_x86_64"
+      ],
+      "files": "3ae66b193a982e3ec806e5224b05c1d598ca473a9cbef74e6dc0fa1ef40fcb9d",
+      "wheel": "matplotlib-3.11.2-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+      "sha256": "1944895967f87c84c9b4bad29a707b31f5b36df4a3a2339ea1f8ea3ce5105539",
+      "published": "2026-09-11"
+    },
+    "mdurl": {
+      "version": "0.1.2",
+      "tags": [
+        "py3-none-any"
+      ],
+      "files": "346bbd0fa2a587c4c21c84e847fb05c00956ce6d7c4e637b805d087f72eda299",
+      "wheel": "mdurl-0.1.2-py3-none-any.whl",
+      "sha256": "84008a41e51615a49fc9966191ff91509e3c40b939176e643fd50a5c2196b8f8",
+      "published": "2022-08-14"
+    },
+    "numpy": {
+      "version": "2.5.3",
+      "tags": [
+        "cp313-cp313-manylinux_2_27_x86_64",
+        "cp313-cp313-manylinux_2_28_x86_64"
+      ],
+      "files": "38473dfac5cb74e9415d093d33c4f339d8dab76559e457b8c3f1ecca385d95d8",
+      "wheel": "numpy-2.5.3-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+      "sha256": "a5fa86b80fd24bcd1aff83ad23be44ea323de3f787be8f8b15d4a65621e25321",
+      "published": "2026-09-06"
+    },
+    "packaging": {
+      "version": "26.3",
+      "tags": [
+        "py3-none-any"
+      ],
+      "files": "bbcbe5db0a8e440c4131218c8f225f6f16622072001d140f8abee915f57e0167",
+      "wheel": "packaging-26.3-py3-none-any.whl",
+      "sha256": "d7193f7c8e4e93f444fde0262bf90af30e16fa0ad0ad44cb553c87339b23cd1c",
+      "published": "2026-08-04"
+    },
+    "pillow": {
+      "version": "13.0.0",
+      "tags": [
+        "cp313-cp313-manylinux_2_27_x86_64",
+        "cp313-cp313-manylinux_2_28_x86_64"
+      ],
+      "files": "26137ab2409cb10f30b64b2ead54df9471318b8cb072707ddf24a85a0755d145",
+      "wheel": "pillow-13.0.0-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+      "sha256": "5f56499c1a74d2b862beb0c33b8016f99d095858455df9d21583bbbc1c15b582",
+      "published": "2026-10-16"
+    },
+    "platformdirs": {
+      "version": "4.14.0",
+      "tags": [
+        "py3-none-any"
+      ],
+      "files": "585ab85664907c1047342378d5119fd06be29c61dd3f82893f5755766b6759a5",
+      "wheel": "platformdirs-4.14.0-py3-none-any.whl",
+      "sha256": "1dadfc59a8a5d7565b3d9270ae8fa71c065595352c4277b41c11ee6c222c4b91",
+      "published": "2026-10-28"
+    },
+    "pooch": {
+      "version": "1.9.0",
+      "tags": [
+        "py3-none-any"
+      ],
+      "files": "1a742f976be88c2dbd9d68eb3e01479586337a43a3433605049bdb3eb74bd953",
+      "wheel": "pooch-1.9.0-py3-none-any.whl",
+      "sha256": "f265597baa9f760d25ceb29d0beb8186c243d6607b0f60b83ecf14078dbc703b",
+      "published": "2026-01-30"
+    },
+    "Pygments": {
+      "version": "2.21.0",
+      "tags": [
+        "py3-none-any"
+      ],
+      "files": "1e18688446f3bd862843c84576cee2d1d88b5629351951759443b7375b493710",
+      "wheel": "pygments-2.21.0-py3-none-any.whl",
+      "sha256": "2363c69b61c4a97c838da3b130dcd6468f4848992b21a82f2a63ec34377137d9",
+      "published": "2026-08-17"
+    },
+    "pyparsing": {
+      "version": "3.3.3",
+      "tags": [
+        "py3-none-any"
+      ],
+      "files": "2c83b1f53b12b72a4ef1f5cedfe5c8050884bfad4c0803b4f863eaa6712a96a2",
+      "wheel": "pyparsing-3.3.3-py3-none-any.whl",
+      "sha256": "ece8c00a69cf01b45d0b1dedabb469c90d8caf996d4fda40f147627a122849a4",
+      "published": "2026-09-20"
+    },
+    "PySide6": {
+      "version": "6.12.0",
+      "tags": [
+        "cp310-abi3-manylinux_2_34_x86_64"
+      ],
+      "files": "d8a96f9551173cde3b8fd8b5edc1f67815e447b74a1e592d25086fa884d6dc3c",
+      "wheel": "pyside6-6.12.0-cp310-abi3-manylinux_2_34_x86_64.whl",
+      "sha256": "d13ed4d0053cc20f3e4e0fdbf12790a9b7f958d7e22c0843411ecfa8c799e2a9",
+      "published": "2026-10-08"
+    },
+    "PySide6_Essentials": {
+      "version": "6.12.0",
+      "tags": [
+        "cp310-abi3-manylinux_2_34_x86_64"
+      ],
+      "files": "16a5ffaf5cf231db0a5d014990c2c305c3072af35560b87599aa921e93c36307",
+      "wheel": "pyside6_essentials-6.12.0-cp310-abi3-manylinux_2_34_x86_64.whl",
+      "sha256": "16f4b5e41daf49235ae048458243da9efe5f3d8040f9cc5aa454ce69893d3bd9",
+      "published": "2026-10-08"
+    },
+    "python-dateutil": {
+      "version": "3.0.0",
+      "tags": [
+        "py2-none-any",
+        "py3-none-any"
+      ],
+      "files": "6c0fe1e60e79d06a8bffe1aed4c83b85bc51bf112c39f8d9b851f5a6305dc761",
+      "wheel": "python_dateutil-3.0.0-py2.py3-none-any.whl",
+      "sha256": "3c79630202e4152c6add678446984236efe4f57e84d8e892aab0637bab82e9fd",
+      "published": "2026-10-21"
+    },
+    "pyvista": {
+      "version": "0.49.2",
+      "tags": [
+        "py3-none-any"
+      ],
+      "files": "b432692464c0894905ba6637beabbceb2202ae0273d5d61c9b60befc88997008",
+      "wheel": "pyvista-0.49.2-py3-none-any.whl",
+      "sha256": "63f78495b30e146c9d1debeca7fa44c7a3935cc9f9ded8638b809ef955fc167a",
+      "published": "2026-10-28"
+    },
+    "pyvista-validation": {
+      "version": "0.2.2",
+      "tags": [
+        "cp310-abi3-manylinux_2_17_x86_64",
+        "cp310-abi3-manylinux2014_x86_64",
+        "cp310-abi3-manylinux_2_28_x86_64"
+      ],
+      "files": "9e33d87203d55c83c238bc40ec2bea57c9922d1a0faba9b3f38ee5cb1e105928",
+      "wheel": "pyvista_validation-0.2.2-cp310-abi3-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+      "sha256": "a45b633b89d843329db1608ba2bbed75d075ab63c5a7427c8dfa9ad9c23eadb4",
+      "published": "2026-09-06"
+    },
+    "pyvistaqt": {
+      "version": "0.13.1",
+      "tags": [
+        "py3-none-any"
+      ],
+      "files": "ba35ffab43db5ee836b255689da58d9d6fd1929f161e852c253d91be77650aa1",
+      "wheel": "pyvistaqt-0.13.1-py3-none-any.whl",
+      "sha256": "8ec3c40d2bb5de2b90b73cc47bc9179ae1d3d169078c7b7e84514cdde9f268be",
+      "published": "2026-09-08"
+    },
+    "QtPy": {
+      "version": "2.4.3",
+      "tags": [
+        "py3-none-any"
+      ],
+      "files": "4d0e8c8447b2940d75773cd64849dad8ad782b31381628bd4210ad25612e2963",
+      "wheel": "QtPy-2.4.3-py3-none-any.whl",
+      "sha256": "72095afe13673e017946cc258b8d5da43314197b741ed2890e563cf384b51aa1",
+      "published": "2025-02-11"
+    },
+    "requests": {
+      "version": "2.34.2",
+      "tags": [
+        "py3-none-any"
+      ],
+      "files": "3eedacb48bd69edccbe829b5f0c6518e0ba78e2d843a28ddcedcced223565650",
+      "wheel": "requests-2.34.2-py3-none-any.whl",
+      "sha256": "2a0d60c172f83ac6ab31e4554906c0f3b3588d37b5cb939b1c061f4907e278e0",
+      "published": "2026-05-14"
+    },
+    "rich": {
+      "version": "15.0.0",
+      "tags": [
+        "py3-none-any"
+      ],
+      "files": "9136a66c483f74ee5df1de90f0c8792da1ee5447ebecfcf1b73c018d0e4e7181",
+      "wheel": "rich-15.0.0-py3-none-any.whl",
+      "sha256": "33bd4ef74232fb73fe9279a257718407f169c09b78a87ad3d296f548e27de0bb",
+      "published": "2026-04-12"
+    },
+    "rich-rst": {
+      "version": "2.2.0",
+      "tags": [
+        "py3-none-any"
+      ],
+      "files": "56d8c9fcb3e2387232e6d98d62f1548767f715723899a4ff826c468356e3da43",
+      "wheel": "rich_rst-2.2.0-py3-none-any.whl",
+      "sha256": "1ea1c43813dc4a8d86475fce27ffb74e0ada3d4656c9f8130ba2a59868055fe9",
+      "published": "2026-09-27"
+    },
+    "scooby": {
+      "version": "0.12.1",
+      "tags": [
+        "py3-none-any"
+      ],
+      "files": "8edc2f0338e423534fa230e12c695f7012ce8a1e56198ccb8961b77a7e43084a",
+      "wheel": "scooby-0.12.1-py3-none-any.whl",
+      "sha256": "4e3e474a3542fd1d19d775cea70d19ce58a005102c0206955dddbbd33f07eb4e",
+      "published": "2026-10-27"
+    },
+    "shiboken6": {
+      "version": "6.12.0",
+      "tags": [
+        "cp310-abi3-manylinux_2_34_x86_64"
+      ],
+      "files": "1bb43050d13312d66ca9dc0347cfa06e7631a5e16b9dc575091ad2b917814b28",
+      "wheel": "shiboken6-6.12.0-cp310-abi3-manylinux_2_34_x86_64.whl",
+      "sha256": "3bde565bb0890044b5c7f63808adddede5abc241e9395a2bfed61919884d6240",
+      "published": "2026-10-08"
+    },
+    "six": {
+      "version": "1.17.0",
+      "tags": [
+        "py2-none-any",
+        "py3-none-any"
+      ],
+      "files": "c7f96fd9a85aea6401b7f0b0d0d0f31fa131d0f17908c17535c129aa268f78f3",
+      "wheel": "six-1.17.0-py2.py3-none-any.whl",
+      "sha256": "4721f391ed90541fddacab5acf947aa0d3dc7d27b2e1e8eda2be8970586c3274",
+      "published": "2024-12-04"
+    },
+    "typing_extensions": {
+      "version": "4.16.0",
+      "tags": [
+        "py3-none-any"
+      ],
+      "files": "eaf338882c6fc7d2e033ae57bdca36fe5730941cb0ae19702b8479521d8d0370",
+      "wheel": "typing_extensions-4.16.0-py3-none-any.whl",
+      "sha256": "481caa481374e813c1b176ada14e97f1f67a4539ce9cfeb3f350d78d6370c2e8",
+      "published": "2026-07-02"
+    },
+    "tzdata": {
+      "version": "2026.6",
+      "tags": [
+        "py2-none-any",
+        "py3-none-any"
+      ],
+      "files": "139a357d53da07c3c6cc66153e9b29e391780a7653973dec0272297ffb692acb",
+      "wheel": "tzdata-2026.6-py2.py3-none-any.whl",
+      "sha256": "0a10eec6e13ef16b627fabed9a5f2ba61a62b1c67f327305f4e7e412a70b4aec",
+      "published": "2026-10-28"
+    },
+    "urllib3": {
+      "version": "2.8.0",
+      "tags": [
+        "py3-none-any"
+      ],
+      "files": "a0baca74c58337a4bd05a7170d743a0a79293b156332c47d764107683b28e84f",
+      "wheel": "urllib3-2.8.0-py3-none-any.whl",
+      "sha256": "0cf3cae568d36aa9576b28dfb35f11328f1cb974ca7647d9475ebb86c75ac6e3",
+      "published": "2026-09-15"
+    },
+    "vtk": {
+      "version": "9.7.1",
+      "tags": [
+        "cp313-cp313-manylinux_2_17_x86_64",
+        "cp313-cp313-manylinux2014_x86_64"
+      ],
+      "files": "cd92bfd2d6fcf809e811dcf071971c5958ceece2ed64a94b17644d9b3f10a550",
+      "wheel": "vtk-9.7.1-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+      "sha256": "22e4912ee5fc36c212baf8c179c7cdc16aef6540ace3ca8eb0669395f2791fc0",
+      "published": "2026-09-28"
+    }
+  },
+  "written": "2026-11-22"
+}

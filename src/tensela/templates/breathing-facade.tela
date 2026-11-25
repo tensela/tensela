@@ -1,0 +1,50 @@
+{
+ "tensela": 1,
+ "description": "A facade whose frames open near a point and close far from it.",
+ "nodes": {
+  "facade": {
+   "type": "Rectangle",
+   "width": 24,
+   "height": 12,
+   "plane": "elevation"
+  },
+  "panels": {
+   "type": "Grid",
+   "rectangle": {
+    "node": "facade"
+   },
+   "columns": 16,
+   "rows": 8
+  },
+  "point": {
+   "type": "Point",
+   "x": 8,
+   "z": 6
+  },
+  "opening": {
+   "type": "Attractor",
+   "where": {
+    "node": "panels"
+   },
+   "attractors": {
+    "node": "point"
+   },
+   "reach": 10,
+   "near": 0.85,
+   "far": 0.15
+  },
+  "frames": {
+   "type": "Frame",
+   "panel": {
+    "node": "panels"
+   },
+   "opening": {
+    "node": "opening"
+   },
+   "thickness": 0.12
+  }
+ },
+ "export": [
+  "frames"
+ ]
+}

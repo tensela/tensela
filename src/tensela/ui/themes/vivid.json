@@ -1,0 +1,86 @@
+{
+  "name": "Vivid",
+  "hint": "Like Sober, but the node categories in vivid colours and the whole header in colour: the graph reads from afar.",
+  "radius": {
+    "control": 8,
+    "panel": 14,
+    "card": 10
+  },
+  "control_height": 30,
+  "dark": {
+    "background": "#111216",
+    "surface": "#191b21",
+    "field": "#0e0f13",
+    "border": "#2a2d36",
+    "text": "#ecedf2",
+    "text_2": "#9ca1b0",
+    "disabled": "#5b6070",
+    "accent": "#8a7dff",
+    "on_accent": "#0e0f13",
+    "accent_soft": "#2c2852",
+    "danger": "#ff6b81",
+    "viewer": "#16181d",
+    "tensela": {
+      "canvas": "#0f1014",
+      "grid": "#1c1e24",
+      "card": "#1e2027",
+      "card_border": "#2c2f38",
+      "wire": "#6b7183",
+      "header_text": "#ffffff",
+      "header": "filled",
+      "recomputed": "#7bd88f",
+      "categories": {
+        "Values": "#278248",
+        "Shapes": "#2072dc",
+        "Curves": "#0e837c",
+        "Surfaces": "#1679b0",
+        "Meshes": "#b65c1e",
+        "Divide": "#a66616",
+        "Measure": "#9751df",
+        "Transform": "#dc2f3a",
+        "Fabrication": "#6b6d0e",
+        "Simulation": "#b02f6e",
+        "Environment": "#946500",
+        "Groups": "#a35d8c"
+      }
+    }
+  },
+  "light": {
+    "background": "#edeff3",
+    "surface": "#ffffff",
+    "field": "#f4f5f8",
+    "border": "#dfe2e9",
+    "text": "#161821",
+    "text_2": "#5d6374",
+    "disabled": "#a9aebb",
+    "accent": "#5b4bf0",
+    "on_accent": "#ffffff",
+    "accent_soft": "#e7e4ff",
+    "danger": "#d92d4c",
+    "viewer": "#f3f4f7",
+    "tensela": {
+      "canvas": "#f3f4f7",
+      "grid": "#e3e6ec",
+      "card": "#ffffff",
+      "card_border": "#dadde5",
+      "wire": "#848a99",
+      "header_text": "#ffffff",
+      "header": "filled",
+      "recomputed": "#2e8b4e",
+      "categories": {
+        "Values": "#278248",
+        "Shapes": "#2072dc",
+        "Curves": "#0e837c",
+        "Surfaces": "#1679b0",
+        "Meshes": "#b65c1e",
+        "Divide": "#a66616",
+        "Measure": "#9751df",
+        "Transform": "#dc2f3a",
+        "Fabrication": "#6b6d0e",
+        "Simulation": "#b02f6e",
+        "Environment": "#946500",
+        "Groups": "#a35d8c"
+      }
+    }
+  }
+}

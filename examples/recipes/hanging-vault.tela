@@ -1,0 +1,34 @@
+{
+ "tensela": 1,
+ "description": "A vault that finds its own shape: a hanging membrane turned upside down.",
+ "nodes": {
+  "plan": {
+   "type": "Rectangle",
+   "width": 12,
+   "height": 12
+  },
+  "membrane": {
+   "type": "Mesh surface",
+   "surface": {
+    "node": "plan"
+   },
+   "count_u": 16,
+   "count_v": 16
+  },
+  "vault": {
+   "type": "Equilibrium",
+   "shape": {
+    "node": "membrane"
+   },
+   "self_weight": 300,
+   "gravity": [
+    0,
+    0,
+    1
+   ]
+  }
+ },
+ "export": [
+  "vault"
+ ]
+}

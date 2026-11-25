@@ -1,0 +1,86 @@
+{
+  "name": "Sober",
+  "hint": "Tensela's own: cool graphite, indigo accent, rounded corners, cards on the background. The node categories in muted tones, as a band on the card.",
+  "radius": {
+    "control": 8,
+    "panel": 14,
+    "card": 10
+  },
+  "control_height": 30,
+  "dark": {
+    "background": "#111216",
+    "surface": "#191b21",
+    "field": "#0e0f13",
+    "border": "#2a2d36",
+    "text": "#ecedf2",
+    "text_2": "#9ca1b0",
+    "disabled": "#5b6070",
+    "accent": "#8a7dff",
+    "on_accent": "#0e0f13",
+    "accent_soft": "#2c2852",
+    "danger": "#ff6b81",
+    "viewer": "#16181d",
+    "tensela": {
+      "canvas": "#0f1014",
+      "grid": "#1c1e24",
+      "card": "#1e2027",
+      "card_border": "#2c2f38",
+      "wire": "#6b7183",
+      "header_text": "#ecedf2",
+      "header": "band",
+      "recomputed": "#7bd88f",
+      "categories": {
+        "Values": "#7fa36a",
+        "Shapes": "#6e93c6",
+        "Curves": "#5fb3a6",
+        "Surfaces": "#5c9ac0",
+        "Meshes": "#c79a7a",
+        "Divide": "#c9a15c",
+        "Measure": "#a88bd0",
+        "Transform": "#d08a7c",
+        "Fabrication": "#b3b56f",
+        "Simulation": "#cc8aa9",
+        "Environment": "#d4b05a",
+        "Groups": "#c08ab0"
+      }
+    }
+  },
+  "light": {
+    "background": "#edeff3",
+    "surface": "#ffffff",
+    "field": "#f4f5f8",
+    "border": "#dfe2e9",
+    "text": "#161821",
+    "text_2": "#5d6374",
+    "disabled": "#a9aebb",
+    "accent": "#5b4bf0",
+    "on_accent": "#ffffff",
+    "accent_soft": "#e7e4ff",
+    "danger": "#d92d4c",
+    "viewer": "#f3f4f7",
+    "tensela": {
+      "canvas": "#f3f4f7",
+      "grid": "#e3e6ec",
+      "card": "#ffffff",
+      "card_border": "#dadde5",
+      "wire": "#848a99",
+      "header_text": "#161821",
+      "header": "band",
+      "recomputed": "#2e8b4e",
+      "categories": {
+        "Values": "#6a8f55",
+        "Shapes": "#4f78b0",
+        "Curves": "#3e9585",
+        "Surfaces": "#3f82a8",
+        "Meshes": "#a8724c",
+        "Divide": "#b08433",
+        "Measure": "#8d6cbf",
+        "Transform": "#be6e5e",
+        "Fabrication": "#878a3f",
+        "Simulation": "#9c5577",
+        "Environment": "#94741c",
+        "Groups": "#a35d8c"
+      }
+    }
+  }
+}

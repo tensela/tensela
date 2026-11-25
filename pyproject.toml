@@ -1,0 +1,32 @@
+[project]
+name = "tensela"
+version = "0.9.0"
+description = "Parametric design an architect understands."
+readme = "README.md"
+license = "GPL-3.0-or-later"
+license-files = ["LICENSE"]
+authors = [{ name = "Victor Crespo" }]
+requires-python = ">=3.11"
+dependencies = ["numpy", "manifold3d", "pillow"]
+
+[project.urls]
+Homepage = "https://tensela.com"
+Manual = "https://tensela.com/manual/"
+Source = "https://github.com/tensela/tensela"
+Issues = "https://github.com/tensela/tensela/issues"
+
+[project.scripts]
+tensela = "tensela.cli:run"
+tensela-app = "tensela.ui.launch:main"
+
+[project.optional-dependencies]
+dev = ["pytest", "ezdxf"]
+ui = ["PySide6", "pyvista", "pyvistaqt", "ezdxf"]
+dxf = ["ezdxf"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

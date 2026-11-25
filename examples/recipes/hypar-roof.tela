@@ -1,0 +1,60 @@
+{
+ "tensela": 1,
+ "description": "A roof of hyperbolic paraboloids on columns: each bay folded along its diagonal.",
+ "nodes": {
+  "plan": {
+   "type": "Rectangle",
+   "width": 18,
+   "height": 12,
+   "origin": [
+    0,
+    0,
+    4
+   ]
+  },
+  "bays": {
+   "type": "Grid",
+   "rectangle": {
+    "node": "plan"
+   },
+   "columns": 3,
+   "rows": 2
+  },
+  "roof": {
+   "type": "Hypar",
+   "panels": {
+    "node": "bays"
+   },
+   "lift": 1.5
+  },
+  "corners": {
+   "type": "Vertices",
+   "geometry": {
+    "node": "bays"
+   }
+  },
+  "axes": {
+   "type": "Line by direction",
+   "from": {
+    "node": "corners"
+   },
+   "direction": [
+    0,
+    0,
+    -1
+   ],
+   "length": 4
+  },
+  "columns": {
+   "type": "Pipe",
+   "curves": {
+    "node": "axes"
+   },
+   "radius": 0.15
+  }
+ },
+ "export": [
+  "roof",
+  "columns"
+ ]
+}

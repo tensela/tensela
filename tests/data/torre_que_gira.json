@@ -1,0 +1,37 @@
+{
+  "parametrico": 1,
+  "description": "Rotating tower: each floor rotates, rises and shrinks a little.",
+  "nodes": {
+    "plan": {"type": "Rectangle", "width": 24, "height": 24, "origin": [-12, -12, 0]},
+    "floors": {"type": "Series", "count": 30, "level": "floor"},
+    "how many floors": {"type": "Summarise", "data": {"node": "floors"}, "operation": "tally"},
+    "floor height": {"type": "Number", "value": 3.5},
+    "rotation per floor": {"type": "Number", "value": 2},
+    "narrowing": {"type": "Number", "value": 0.35},
+    "level marks": {"type": "Formula", "formula": "a * b", "a": {"node": "floors"}, "b": {"node": "floor height"}},
+    "rotations": {"type": "Formula", "formula": "a * b", "a": {"node": "floors"}, "b": {"node": "rotation per floor"}},
+    "scale": {"type": "Formula", "formula": "1 - a / b * c", "a": {"node": "floors"}, "b": {"node": "how many floors"}, "c": {"node": "narrowing"}},
+    "scaled plan": {"type": "Scale", "geometry": {"node": "plan"}, "factor": {"node": "scale"}},
+    "rotated plan": {"type": "Rotate", "geometry": {"node": "scaled plan"}, "degrees": {"node": "rotations"}},
+    "raise": {"type": "Point", "z": {"node": "level marks"}},
+    "plans": {"type": "Move", "geometry": {"node": "rotated plan"}, "vector": {"node": "raise"}},
+    "slabs": {"type": "Thicken", "rectangle": {"node": "plans"}, "thickness": 0.3},
+    "glass setback": {"type": "Scale", "geometry": {"node": "plans"}, "factor": 0.96},
+    "on the slab": {"type": "Move", "geometry": {"node": "glass setback"}, "vector": [0, 0, 0.3]},
+    "glass height": {"type": "Formula", "formula": "b - 0,3", "b": {"node": "floor height"}},
+    "glass": {"type": "Thicken", "rectangle": {"node": "on the slab"}, "thickness": {"node": "glass height"}}
+  },
+  "export": ["slabs", "glass"],
+  "controls": [
+    {"value": "floors.count", "min": 3, "max": 80, "step": 1, "label": "floors"},
+    {"value": "floor height.value", "min": 2.5, "max": 6, "step": 0.1, "unit": "m", "label": "floor height"},
+    {"value": "rotation per floor.value", "min": -10, "max": 10, "step": 0.5, "unit": "°", "label": "rotation per floor"},
+    {"value": "narrowing.value", "min": 0, "max": 0.8, "step": 0.05, "label": "narrowing at the top"},
+    {"value": "plan.width", "min": 8, "max": 60, "step": 1, "unit": "m"},
+    {"value": "plan.height", "min": 8, "max": 60, "step": 1, "unit": "m", "label": "depth"}
+  ],
+  "view": {
+    "slabs": {"color": "#d6d6d6", "edges": true},
+    "glass": {"color": "#8fb8cf", "opacity": 0.45}
+  }
+}

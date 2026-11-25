@@ -1,0 +1,13 @@
+node_modules/
+dist/
+.astro/
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
+.pytest_cache/
+*.egg-info/
+# The manual that comes with the app, copied from the site by tools/bundle_manual.py (built, not kept)
+src/tensela/help/tensela-manual-*.html
+# The weather files of the tests (from climate.onebuilding.org; see tests/data/clima/README.md)
+tests/data/clima/*.zip

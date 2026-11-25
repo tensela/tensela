@@ -1,0 +1,38 @@
+---
+title: "A Voronoi skin"
+description: "A facade of irregular cells with open joints between them."
+---
+
+import { Steps } from '@astrojs/starlight/components';
+
+![A Voronoi skin](/images/manual/recipes/voronoi-skin.png)
+
+A 12 × 8 m facade covered with 60 irregular panels, each one a Voronoi cell, shrunk a little to leave an open joint, and given a thickness.
+
+**5 nodes** · [Download `voronoi-skin.tela`](/examples/recipes/voronoi-skin.tela)
+
+## Step by step
+
+<Steps>
+
+1. **The facade.** Add a **Rectangle**: **width** `12`, **height** `8`, **plane** *elevation*.
+
+2. **The seeds.** Add **Random points** with the Rectangle as **region**, **count** `60`.
+
+3. **The cells.** Add a **Voronoi**: the points to **points**, the Rectangle to **boundary**.
+
+4. **The joints.** Add a **Scale** with **factor** `0.88`: each cell shrinks about its own centre.
+
+5. **The panels.** Add a **Thicken** with **thickness** `0.12`.
+
+</Steps>
+
+## Play with it
+
+- Try other values of **seed** in Random points until you like the pattern.
+- More **count**, smaller cells.
+- Drive the **factor** of Scale with an **Attractor**: wider joints near a point.
+
+## Download the project
+
+[Download `voronoi-skin.tela`](/examples/recipes/voronoi-skin.tela) · Open it in Tensela: **File → Open**.

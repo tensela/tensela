@@ -1,0 +1,36 @@
+---
+title: "Una bóveda que encuentra su forma"
+description: "Una membrana colgada de sus esquinas e invertida: una bóveda que trabaja sobre todo a compresión."
+---
+
+import { Steps } from '@astrojs/starlight/components';
+
+![Una bóveda que encuentra su forma](/images/manual/recipes/hanging-vault.png)
+
+Una membrana de 12 × 12 m sostenida en sus cuatro esquinas cuelga bajo su propio peso. Invertida, esa forma es una bóveda que trabaja sobre todo a compresión: el método de las maquetas colgantes de Gaudí e Isler.
+
+Es un estudio de forma, no un cálculo estructural: antes de construirla tiene que revisarla un ingeniero.
+
+**3 nodos** · [Descargar `hanging-vault.tela`](/examples/recipes/hanging-vault.tela)
+
+## Paso a paso
+
+<Steps>
+
+1. **La planta.** Añade un **Rectángulo**: **ancho** `12`, **alto** `12`.
+
+2. **La membrana.** Añade una **Malla de superficie** con **cantidad u** `16` y **cantidad v** `16`.
+
+3. **La bóveda.** Añade un **Equilibrio**: la malla a **forma**, **peso propio** `300`, **gravedad** `0 0 1` (hacia arriba: la forma colgante invertida).
+
+</Steps>
+
+## Ahora juega
+
+- Cambia **apoyos** a *borde*: una bóveda apoyada en sus cuatro bordes.
+- Añade **más apoyos** adentro: una bóveda sobre columnas.
+- Pon **mostrar** en *fuerzas* para ver la compresión de cada tramo.
+
+## Descarga el proyecto
+
+[Descargar `hanging-vault.tela`](/examples/recipes/hanging-vault.tela) · Ábrelo en Tensela: **Archivo → Abrir**.

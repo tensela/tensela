@@ -1,0 +1,38 @@
+---
+title: "A rib wall"
+description: "A wavy wall of timber ribs from three hand-drawn curves."
+---
+
+import { Steps } from '@astrojs/starlight/components';
+
+![A rib wall](/images/manual/recipes/rib-wall.png)
+
+A wall 6 m long and 3 m high made of 50 timber ribs. The wave comes from three curves drawn by hand: no formulas. This is the idea of [Draw the form, then cut it](/manual/key-ideas/draw-then-cut/).
+
+**8 nodes** · [Download `rib-wall.tela`](/examples/recipes/rib-wall.tela)
+
+## Step by step
+
+<Steps>
+
+1. **Three curves.** Add three **Drawn curves** and draw each one in the plan view: five points along x, from `0` to `6` m, a little in front of the wall line (y between `-0.2` and `-0.6`). Make them wave differently.
+
+2. **At their heights.** Add two **Move** nodes: one takes the second curve up a **distance** of `1.5`, the other takes the third up `3`.
+
+3. **In order.** Add a **Merge**. Connect the first curve to **a**, the second (moved) to **b** and the third to **c**. Name its **level** `section`.
+
+4. **The front of the wall.** Add a **Loft**: connect the Merge to **curves** and write **along** `section`.
+
+5. **The ribs.** Add **Ribs**: connect the Loft to **shape**, and write **count** `50` and **weight** `0.04` (4 cm boards).
+
+</Steps>
+
+## Play with it
+
+- Drag the points of any curve: all the ribs follow.
+- Change **count** and **weight**.
+- Add a **Volume** and a **Summarise** to know the m³ of timber.
+
+## Download the project
+
+[Download `rib-wall.tela`](/examples/recipes/rib-wall.tela) · Open it in Tensela: **File → Open**.

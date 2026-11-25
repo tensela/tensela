@@ -1,0 +1,38 @@
+---
+title: "Una piel Voronoi"
+description: "Una fachada de celdas irregulares con juntas abiertas entre ellas."
+---
+
+import { Steps } from '@astrojs/starlight/components';
+
+![Una piel Voronoi](/images/manual/recipes/voronoi-skin.png)
+
+Una fachada de 12 × 8 m cubierta con 60 paneles irregulares, cada uno una celda Voronoi, achicada un poco para dejar una junta abierta, y con espesor.
+
+**5 nodos** · [Descargar `voronoi-skin.tela`](/examples/recipes/voronoi-skin.tela)
+
+## Paso a paso
+
+<Steps>
+
+1. **La fachada.** Añade un **Rectángulo**: **ancho** `12`, **alto** `8`, **plano** *alzado*.
+
+2. **Las semillas.** Añade **Puntos al azar** con el Rectángulo como **región**, **cantidad** `60`.
+
+3. **Las celdas.** Añade un **Voronoi**: los puntos a **puntos**, el Rectángulo a **borde**.
+
+4. **Las juntas.** Añade un **Escalar** con **factor** `0,88`: cada celda se achica sobre su propio centro.
+
+5. **Los paneles.** Añade un **Engrosar** con **espesor** `0,12`.
+
+</Steps>
+
+## Ahora juega
+
+- Prueba otros valores de **semilla** en Puntos al azar hasta que te guste el dibujo.
+- Más **cantidad**, celdas más pequeñas.
+- Controla el **factor** de Escalar con un **Atractor**: juntas más anchas cerca de un punto.
+
+## Descarga el proyecto
+
+[Descargar `voronoi-skin.tela`](/examples/recipes/voronoi-skin.tela) · Ábrelo en Tensela: **Archivo → Abrir**.

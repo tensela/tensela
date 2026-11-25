@@ -1,0 +1,119 @@
+{
+ "tensela": 1,
+ "description": "A model of a hill as a waffle of boards that slot into each other, laid on sheets to cut.",
+ "nodes": {
+  "u": {
+   "type": "Series",
+   "count": 13,
+   "start": -0.15,
+   "step": 0.025,
+   "level": "u"
+  },
+  "v": {
+   "type": "Series",
+   "count": 13,
+   "start": -0.1,
+   "step": 0.0167,
+   "level": "v"
+  },
+  "height": {
+   "type": "Function",
+   "shape": "hill",
+   "x": {
+    "node": "u"
+   },
+   "y": {
+    "node": "v"
+   },
+   "amplitude": 0.08,
+   "width": 0.3
+  },
+  "points": {
+   "type": "Point",
+   "x": {
+    "node": "u"
+   },
+   "y": {
+    "node": "v"
+   },
+   "z": {
+    "node": "height"
+   }
+  },
+  "hill": {
+   "type": "Surface from points",
+   "points": {
+    "node": "points"
+   },
+   "smooth": true
+  },
+  "across x": {
+   "type": "Sections",
+   "shape": {
+    "node": "hill"
+   },
+   "thickness": 0.003,
+   "gap": 0.025,
+   "cuts": "x",
+   "piece": "to base",
+   "depth": 0.02
+  },
+  "across y": {
+   "type": "Sections",
+   "shape": {
+    "node": "hill"
+   },
+   "thickness": 0.003,
+   "gap": 0.025,
+   "cuts": "y",
+   "piece": "to base",
+   "depth": 0.02
+  },
+  "slotted x": {
+   "type": "Slots",
+   "first": {
+    "node": "across x"
+   },
+   "second": {
+    "node": "across y"
+   },
+   "thickness": 0.003
+  },
+  "slotted y": {
+   "type": "Slots",
+   "first": {
+    "node": "across x"
+   },
+   "second": {
+    "node": "across y"
+   },
+   "thickness": 0.003,
+   "show": "second"
+  },
+  "boards": {
+   "type": "Slots",
+   "first": {
+    "node": "across x"
+   },
+   "second": {
+    "node": "across y"
+   },
+   "thickness": 0.003,
+   "show": "boards"
+  },
+  "sheets": {
+   "type": "Lay flat",
+   "pieces": {
+    "node": "slotted x"
+   },
+   "more": {
+    "node": "slotted y"
+   },
+   "width": 0.6,
+   "height": 0.4
+  }
+ },
+ "export": [
+  "sheets"
+ ]
+}

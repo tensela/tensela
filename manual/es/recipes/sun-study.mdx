@@ -1,0 +1,40 @@
+---
+title: "Un estudio de sol"
+description: "El sol de invierno sobre un edificio en Montevideo: sus sombras a tres horas y las horas de sol de cada panel."
+---
+
+import { Steps } from '@astrojs/starlight/components';
+
+![Un estudio de sol](/images/manual/recipes/sun-study.png)
+
+Un edificio de 14 × 10 m y 30 m de alto, en Montevideo el 21 de junio, el solsticio de invierno allá: dónde cae su sombra a las 10, 12 y 14 h, y cuántas horas de sol recibe cada panel de sus caras, cubierta incluida, durante el invierno.
+
+**6 nodos** · [Descargar `sun-study.tela`](/examples/recipes/sun-study.tela)
+
+## Paso a paso
+
+<Steps>
+
+1. **El edificio.** Añade un **Prisma**: **ancho** `14`, **fondo** `10`, **alto** `30`.
+
+2. **Sus paneles.** Añade **Caras** con **cuáles** *todas* (las fachadas, la cubierta y la base), y una **Retícula** sobre ellas con **columnas** `7` y **filas** `15`.
+
+3. **El sol.** Añade un **Sol**: **lugar** *Montevideo*, **mes** `6`, **día** `21`, **hora** `10; 12; 14`, **mostrar** *rayo*.
+
+4. **Las sombras.** Añade una **Sombra**: el Prisma a **geometría**, el Sol a **rayo**.
+
+5. **Las horas de sol.** Añade un **Asoleamiento**: la Retícula a **caras**, **lugar** *Montevideo*, **período** *invierno*, **mostrar** *horas de sol*. Pinta la Retícula según este valor en su panel (**Color → según un valor**).
+
+</Steps>
+
+## Ahora juega
+
+- Pulsa el ▶ de la hora en el Sol para ver la sombra moverse durante el día.
+- Suma los edificios vecinos a **obstrucciones** del Asoleamiento.
+- Cambia el **período** a *verano* y compara las fachadas norte y sur.
+
+Es un estudio de diseño: para normativa o certificados, revísalo con un especialista.
+
+## Descarga el proyecto
+
+[Descargar `sun-study.tela`](/examples/recipes/sun-study.tela) · Ábrelo en Tensela: **Archivo → Abrir**.

@@ -1,0 +1,28 @@
+id = "spiral"
+name = "Spiral"
+version = "1.1.0"
+author = "Tensela"
+description = "An example: a node that draws a spiral, an action that says hello, an entry in the right-click menu of a node and a panel that hears what happens."
+tensela = "0.9"
+licence = "GPL-3.0-or-later"
+website = "https://tensela.com/extensions/spiral/"
+issues = "https://github.com/tensela/tensela/issues"
+source = "https://github.com/tensela/tensela/tree/main/tests/data/extension-spiral"
+
+[es]
+name = "Espiral"
+description = "Un ejemplo: un nodo que dibuja una espiral, una acción que saluda, una entrada en el clic derecho de un nodo y un panel que escucha lo que pasa."
+
+[translations.es]
+"Spiral" = "Espiral"
+"turns" = "vueltas"
+"Say hello" = "Saludar"
+"A spiral that climbs: its turns, its radius and its height." = "Una espiral que sube: sus vueltas, su radio y su altura."
+"Hello from an extension!" = "¡Hola desde una extensión!"
+"An example action" = "Una acción de ejemplo"
+"What is this node?" = "¿Qué es este nodo?"
+"An example entry of the right-click menu" = "Una entrada de ejemplo del clic derecho"
+"«{node}» is a {kind}." = "«{node}» es un {kind}."
+"An example panel: what the window tells the extensions" = "Un panel de ejemplo: lo que la ventana les cuenta a las extensiones"
+"Nothing heard yet." = "Todavía no escuchó nada."
+"Computed {n} times since it was opened. Node chosen: {node}." = "Calculó {n} veces desde que se abrió. Nodo elegido: {node}."

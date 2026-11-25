@@ -1,0 +1,38 @@
+---
+title: "Una cubierta de paraboloides hiperbólicos"
+description: "Seis paños de una cubierta, cada uno plegado en una silla de montar de rectas, sobre columnas."
+---
+
+import { Steps } from '@astrojs/starlight/components';
+
+![Una cubierta de paraboloides hiperbólicos](/images/manual/recipes/hypar-roof.png)
+
+Una cubierta de 18 × 12 m a 4 m de altura en seis paños. Cada paño sube en dos esquinas opuestas y se vuelve un paraboloide hiperbólico, una silla de montar hecha solo de rectas, como las cáscaras de Félix Candela.
+
+**6 nodos** · [Descargar `hypar-roof.tela`](/examples/recipes/hypar-roof.tela)
+
+## Paso a paso
+
+<Steps>
+
+1. **La planta de la cubierta.** Añade un **Rectángulo**: **ancho** `18`, **alto** `12`, **origen** `0 0 4`.
+
+2. **Los paños.** Añade una **Retícula** con **columnas** `3` y **filas** `2`.
+
+3. **Las sillas.** Añade un **Hypar**: la Retícula a **paneles**, **elevación** `1,5`.
+
+4. **Dónde van las columnas.** Añade **Vértices** con la Retícula: las esquinas de cada paño.
+
+5. **Las columnas.** Añade una **Línea por dirección** desde las esquinas, **dirección** `0 0 -1`, **largo** `4`, y un **Tubo** alrededor de esas líneas con **radio** `0,15`.
+
+</Steps>
+
+## Ahora juega
+
+- Cambia la **elevación**: plana en `0`, dramática en `3`.
+- Elige las otras dos **esquinas** para subir.
+- Con **mostrar** *pieza desplegada*, cada paño abierto por su pliegue en dos triángulos, para cortarlo de una plancha en una maqueta.
+
+## Descarga el proyecto
+
+[Descargar `hypar-roof.tela`](/examples/recipes/hypar-roof.tela) · Ábrelo en Tensela: **Archivo → Abrir**.

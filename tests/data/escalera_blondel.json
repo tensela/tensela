@@ -1,0 +1,38 @@
+{
+  "parametrico": 1,
+  "description": "Blondel stair: the floor to floor height decides the steps; 2R + T = 63 cm gives the tread.",
+  "nodes": {
+    "floor to floor height": {"type": "Number", "value": 3.0},
+    "width": {"type": "Number", "value": 1.2},
+    "target riser": {"type": "Number", "value": 0.175},
+    "Blondel step": {"type": "Number", "value": 0.63},
+    "steps": {"type": "Formula", "formula": "round(a / b)", "a": {"node": "floor to floor height"}, "b": {"node": "target riser"}},
+    "riser": {"type": "Formula", "formula": "a / b", "a": {"node": "floor to floor height"}, "b": {"node": "steps"}},
+    "tread": {"type": "Formula", "formula": "d - 2 * a", "a": {"node": "riser"}, "d": {"node": "Blondel step"}},
+    "stair length": {"type": "Formula", "formula": "a * b", "a": {"node": "steps"}, "b": {"node": "tread"}},
+    "each step": {"type": "Series", "count": {"node": "steps"}, "level": "tread"},
+    "block height": {"type": "Formula", "formula": "(a + 1) * b", "a": {"node": "each step"}, "b": {"node": "riser"}},
+    "step y": {"type": "Formula", "formula": "(a + 0,5) * b", "a": {"node": "each step"}, "b": {"node": "tread"}},
+    "step z": {"type": "Formula", "formula": "(a + 1) * b / 2", "a": {"node": "each step"}, "b": {"node": "riser"}},
+    "block": {"type": "Box", "width": {"node": "width"}, "depth": {"node": "tread"}, "height": {"node": "block height"}},
+    "centres": {"type": "Point", "y": {"node": "step y"}, "z": {"node": "step z"}},
+    "solid steps": {"type": "Place", "geometry": {"node": "block"}, "at": {"node": "centres"}},
+    "departure floor": {"type": "Rectangle", "height": 2, "origin": [-2, -2, 0]},
+    "departure slab": {"type": "Thicken", "rectangle": {"node": "departure floor"}, "thickness": -0.2},
+    "where it lands": {"type": "Point", "x": -2, "y": {"node": "stair length"}, "z": {"node": "floor to floor height"}},
+    "arrival floor": {"type": "Rectangle", "height": 2, "origin": {"node": "where it lands"}},
+    "arrival slab": {"type": "Thicken", "rectangle": {"node": "arrival floor"}, "thickness": -0.2}
+  },
+  "export": ["solid steps", "departure slab", "arrival slab"],
+  "controls": [
+    {"value": "floor to floor height.value", "min": 2.4, "max": 5, "step": 0.05, "unit": "m", "label": "floor to floor height"},
+    {"value": "width.value", "min": 0.8, "max": 2.5, "step": 0.05, "unit": "m", "label": "width"},
+    {"value": "target riser.value", "min": 0.15, "max": 0.19, "step": 0.005, "unit": "m", "label": "target riser"},
+    {"value": "Blondel step.value", "min": 0.6, "max": 0.66, "step": 0.005, "unit": "m", "label": "2R + T"}
+  ],
+  "view": {
+    "solid steps": {"color": "#c9b79c", "edges": true},
+    "departure slab": {"color": "#d6d6d6"},
+    "arrival slab": {"color": "#d6d6d6"}
+  }
+}

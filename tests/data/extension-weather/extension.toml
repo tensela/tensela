@@ -1,0 +1,21 @@
+id = "weather"
+name = "Weather (example)"
+version = "0.1.0"
+author = "Tensela"
+description = "An example of an extension that asks for permissions: it says it downloads the weather of the place. It does nothing: it is only to see how an extension that asks for something looks."
+tensela = "0.9"
+licence = "GPL-3.0-or-later"
+website = "https://tensela.com/extensions/"
+issues = "https://github.com/tensela/tensela/issues"
+
+[permissions]
+network = "To download the weather file of the place (an example: it does not really connect)."
+files = "To keep the downloaded files in a folder of its own."
+
+[es]
+name = "Clima (ejemplo)"
+description = "Un ejemplo de extensión que pide permisos: dice que baja el clima del lugar. No hace nada: es solo para ver cómo se ve una extensión que pide algo."
+
+[es.permissions]
+network = "Para bajar el archivo del clima del lugar (un ejemplo: no se conecta de verdad)."
+files = "Para guardar los archivos bajados en una carpeta propia."

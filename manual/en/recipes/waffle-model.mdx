@@ -1,0 +1,40 @@
+---
+title: "A waffle model ready to cut"
+description: "A model of a hill as two families of boards that slot into each other, laid on sheets for the laser cutter."
+---
+
+import { Steps } from '@astrojs/starlight/components';
+
+![A waffle model ready to cut](/images/manual/recipes/waffle-model.png)
+
+A 30 × 20 cm model of a hill in 3 mm board: boards across x and across y, slotted halfway so they slide into each other, laid on 600 × 400 mm sheets with their numbers. All measures in metres.
+
+**11 nodes** · [Download `waffle-model.tela`](/examples/recipes/waffle-model.tela)
+
+## Step by step
+
+<Steps>
+
+1. **The hill.** Make a grid of points: two **Series** (`13` values from `-0.15` step `0.025`, level `u`; `13` from `-0.1` step `0.0167`, level `v`), a **Function** *hill* with them as **x** and **y**, **amplitude** `0.08` and **width** `0.3`, and a **Point** with x, y and z from them. Join them with a **Surface from points**, **smooth** on.
+
+2. **Boards across x.** Add **Sections**: the surface to **shape**, **thickness** `0.003`, **gap** `0.025`, **cuts** *x*, **piece** *to base*, **depth** `0.02`.
+
+3. **Boards across y.** The same with **cuts** *y*.
+
+4. **The slots.** Add **Slots** with the boards across x as **first** and across y as **second**, **thickness** `0.003`: it gives the first family, slotted. Add a second one the same with **show** *second* for the other family, and a third with **show** *boards* to see them fitted.
+
+5. **On sheets.** Add **Lay flat**: the first two Slots, the first to **pieces** and the second to **more**, **width** `0.6`, **height** `0.4`.
+
+6. **The file.** **File → Export → Cutting file**: one file per sheet, red to cut, blue to engrave the numbers.
+
+</Steps>
+
+## Play with it
+
+- Change the **gap** between boards: fewer, sturdier boards, or many thin ones.
+- Change the hill with the **amplitude** of the Function.
+- Use **clearance** in Slots if your laser burns more.
+
+## Download the project
+
+[Download `waffle-model.tela`](/examples/recipes/waffle-model.tela) · Open it in Tensela: **File → Open**.

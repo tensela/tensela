@@ -1,0 +1,40 @@
+---
+title: "A tower that turns"
+description: "Twenty-four floors, each turned a little more than the one below."
+---
+
+import { Steps } from '@astrojs/starlight/components';
+
+![A tower that turns](/images/manual/recipes/twisting-tower.png)
+
+A tower of 24 floors, 3.5 m apart. Every floor is the same rounded plan, turned 6° more than the one below: 138° from the ground to the top.
+
+**7 nodes** · [Download `twisting-tower.tela`](/examples/recipes/twisting-tower.tela)
+
+## Step by step
+
+<Steps>
+
+1. **The floors.** Add a **Series**: **count** `24`, step `1`, **level** `floor`.
+
+2. **Their heights.** Add a **Formula** `a * 3.5` with the Series as **a**.
+
+3. **Their turns.** Add another **Formula** `a * 6` with the Series as **a**: degrees for each floor.
+
+4. **The plan.** Add a **Rounded rectangle**: **width** `24`, **height** `16`, **radius** `4`, **origin** `-12 -8 0` (centred on the axis).
+
+5. **Up and around.** Add a **Move** with the heights as **distance**, then a **Rotate** with the turns as **degrees**.
+
+6. **The slabs.** Add an **Extrude** with **vector** `0 0 0.35` and **caps** on.
+
+</Steps>
+
+## Play with it
+
+- Change the `6` of the turns: a calm tower or a spiral.
+- Make the turn grow towards the top with `a * a * 0.25`.
+- Scale each floor with a third Formula for a tower that tapers.
+
+## Download the project
+
+[Download `twisting-tower.tela`](/examples/recipes/twisting-tower.tela) · Open it in Tensela: **File → Open**.

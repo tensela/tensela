@@ -1,0 +1,30 @@
+---
+title: Welcome to the manual
+description: How this manual is organised and where to start.
+sidebar:
+  label: Welcome
+---
+
+import { CardGrid, LinkCard } from '@astrojs/starlight/components';
+import SectionCards from '@site/components/SectionCards.astro';
+
+This manual is written for architects, not for programmers. Every page tries to answer first **what for**, then
+**how**, and only at the end **how it works inside**.
+
+<CardGrid>
+	<LinkCard title="What is Tensela" description="Start here: what it does and what it is not." href="/manual/getting-started/what-is-tensela/" />
+	<LinkCard title="Your first project" description="A facade with sun fins in about ten minutes." href="/manual/getting-started/first-project/" />
+	<LinkCard title="Coming from other programs" description="Grasshopper, Dynamo or Geometry Nodes: what changes." href="/manual/getting-started/coming-from-other-programs/" />
+	<LinkCard title="Download this manual" description="As a web page to keep, or as a PDF." href="/manual/download-this-manual/" />
+</CardGrid>
+
+## How the manual is organised
+
+<SectionCards items={[
+	{ title: 'Getting started', icon: 'rocket', art: 'facade', href: '/manual/getting-started/what-is-tensela/', text: 'What Tensela is, how to install it and a first project.' },
+	{ title: 'Key ideas', icon: 'puzzle', art: 'weave', href: '/manual/key-ideas/nodes-and-cables/', text: 'Six ideas that explain how everything else works.' },
+	{ title: 'The window', icon: 'laptop', art: 'window', href: '/manual/window/', text: 'The canvas, the 3D view, the panels, exporting and the preferences.' },
+	{ title: 'Recipes', icon: 'open-book', art: 'recipe', href: '/manual/recipes/', text: 'How to get a result: a facade, a roof, a structure, a cut file.' },
+	{ title: 'Nodes', icon: 'list-format', art: 'nodes', href: '/manual/nodes/', text: 'Every node, in the same order: what for, how, what it does, and tips.' },
+	{ title: 'Theory', icon: 'information', art: 'theory', href: '/manual/theory/', text: 'How it works inside, for whoever wants to know more.' },
+]} />

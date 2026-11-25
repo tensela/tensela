@@ -1,0 +1,36 @@
+{
+  "parametrico": 1,
+  "description": "Lattice tower: the same nodes, joined by ring or by member; each ring rotates.",
+  "nodes": {
+    "rings": {"type": "Series", "count": 13, "level": "ring"},
+    "waist ring": {"type": "Number", "value": 6},
+    "spacing": {"type": "Number", "value": 1.5},
+    "waist radius": {"type": "Number", "value": 2.5},
+    "level marks": {"type": "Formula", "formula": "a * b", "a": {"node": "rings"}, "b": {"node": "spacing"}},
+    "radii": {"type": "Formula", "formula": "c * sqrt(1 + ((a - b) / 3,5) ^ 2)", "a": {"node": "rings"}, "b": {"node": "waist ring"}, "c": {"node": "waist radius"}},
+    "centres": {"type": "Point", "z": {"node": "level marks"}},
+    "hoops": {"type": "Circle", "centre": {"node": "centres"}, "radius": {"node": "radii"}},
+    "nodes": {"type": "Points on curve", "curve": {"node": "hoops"}, "count": 16, "level": "member"},
+    "rotation per ring": {"type": "Number", "value": 8},
+    "rotations": {"type": "Formula", "formula": "a * b", "a": {"node": "rings"}, "b": {"node": "rotation per ring"}},
+    "counter rotations": {"type": "Formula", "formula": "-a * b", "a": {"node": "rings"}, "b": {"node": "rotation per ring"}},
+    "rotated nodes": {"type": "Rotate", "geometry": {"node": "nodes"}, "degrees": {"node": "rotations"}},
+    "counter-rotated nodes": {"type": "Rotate", "geometry": {"node": "nodes"}, "degrees": {"node": "counter rotations"}},
+    "members": {"type": "Curve through points", "points": {"node": "rotated nodes"}, "along": "ring"},
+    "counter members": {"type": "Curve through points", "points": {"node": "counter-rotated nodes"}, "along": "ring"}
+  },
+  "export": ["hoops", "members", "counter members"],
+  "controls": [
+    {"value": "rings.count", "min": 3, "max": 40, "step": 1, "label": "rings"},
+    {"value": "spacing.value", "min": 0.5, "max": 4, "step": 0.1, "unit": "m", "label": "spacing"},
+    {"value": "waist radius.value", "min": 0.5, "max": 8, "step": 0.1, "unit": "m", "label": "waist radius"},
+    {"value": "waist ring.value", "min": 0, "max": 40, "step": 1, "label": "waist ring"},
+    {"value": "rotation per ring.value", "min": -30, "max": 30, "step": 1, "unit": "°", "label": "rotation per ring"},
+    {"value": "nodes.count", "min": 4, "max": 48, "step": 1, "label": "members"}
+  ],
+  "view": {
+    "hoops": {"color": "#7d8a96"},
+    "members": {"color": "#3a8a80"},
+    "counter members": {"color": "#c2703d"}
+  }
+}

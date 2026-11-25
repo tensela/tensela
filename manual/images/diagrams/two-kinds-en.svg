@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 330" width="1000" height="330">
+<rect width="1000" height="330" fill="#16151b"/>
+<text x="40.0" y="40.0" font-family="Inter, 'Inter Variable', 'DejaVu Sans', sans-serif" font-size="16" font-weight="650" fill="#ecebf3" text-anchor="start" opacity="1.0" xml:space="preserve" style="white-space:pre">They make geometry</text>
+<rect x="40.0" y="80.0" width="230.0" height="59.0" rx="9" fill="#1d1c23" stroke="#5c9ac0" stroke-width="1.2" opacity="1.0"/>
+<path d="M49.0,80.0 h212.0 a9,9 0 0 1 9,9 v-5 h-230.0 v5 a9,9 0 0 1 9,-9 z" fill="#5c9ac0" opacity="1.0"/>
+<text x="52.0" y="102.0" font-family="Inter, 'Inter Variable', 'DejaVu Sans', sans-serif" font-size="13" font-weight="650" fill="#ecebf3" text-anchor="start" opacity="1.0" xml:space="preserve" style="white-space:pre">Loft</text>
+<circle cx="270.0" cy="98.0" r="5" fill="#6b6976" stroke="#1d1c23" stroke-width="2" opacity="1.0"/>
+<circle cx="40.0" cy="125.0" r="4.5" fill="#6b6976" stroke="#1d1c23" stroke-width="2" opacity="1.0"/>
+<text x="52.0" y="129.0" font-family="Inter, 'Inter Variable', 'DejaVu Sans', sans-serif" font-size="11.5" font-weight="400" fill="#c4c2cf" text-anchor="start" opacity="1.0" xml:space="preserve" style="white-space:pre">curves</text>
+<path d="M234,98 q10,-9 20,0 q-10,9 -20,0 z" stroke="#ecebf3" stroke-width="1.4" fill="none" opacity="1.0" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="244.0" cy="98.0" r="2.6" fill="#ecebf3" stroke="none" stroke-width="1.0" opacity="1.0"/>
+<line x1="285.0" y1="110.0" x2="325.0" y2="110.0" stroke="#9a98a8" stroke-width="2.0" stroke-linecap="round" opacity="1.0"/>
+<line x1="325.0" y1="110.0" x2="317.1" y2="114.3" stroke="#9a98a8" stroke-width="2.0" stroke-linecap="round" opacity="1.0"/>
+<line x1="325.0" y1="110.0" x2="317.1" y2="105.7" stroke="#9a98a8" stroke-width="2.0" stroke-linecap="round" opacity="1.0"/>
+<path d="M420.0,44.0 L429.0,43.1 L438.1,43.2 L447.1,45.1 L456.2,49.2 L465.2,55.8 L474.3,64.7 L483.3,75.2 L492.4,86.5 L501.4,97.7 L510.5,107.8" stroke="#5c9ac0" stroke-width="1.4" fill="none" opacity="1.0" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M406.4,47.2 L415.5,47.0 L424.5,48.3 L433.6,51.8 L442.6,57.8 L451.7,66.2 L460.7,76.3 L469.8,87.6 L478.8,98.9 L487.9,109.3 L496.9,118.1" stroke="#5c9ac0" stroke-width="1.4" fill="none" opacity="1.0" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M392.9,50.8 L401.9,51.7 L411.0,54.6 L420.0,60.0 L429.0,67.8 L438.1,77.6 L447.1,88.6 L456.2,100.0 L465.2,110.7 L474.3,120.0 L483.3,127.1" stroke="#5c9ac0" stroke-width="1.4" fill="none" opacity="1.0" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M379.3,55.2 L388.3,57.6 L397.4,62.3 L406.4,69.5 L415.5,78.9 L424.5,89.7 L433.6,101.1 L442.6,112.1 L451.7,121.8 L460.7,129.4 L469.8,134.7" stroke="#5c9ac0" stroke-width="1.4" fill="none" opacity="1.0" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M365.7,60.7 L374.8,64.8 L383.8,71.4 L392.9,80.3 L401.9,90.8 L411.0,102.1 L420.0,113.3 L429.0,123.4 L438.1,131.6 L447.1,137.5 L456.2,141.0" stroke="#5c9ac0" stroke-width="1.4" fill="none" opacity="1.0" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M352.1,67.4 L361.2,73.4 L370.2,81.8 L379.3,91.9 L388.3,103.2 L397.4,114.5 L406.4,124.9 L415.5,133.7 L424.5,140.2 L433.6,144.2 L442.6,146.0" stroke="#5c9ac0" stroke-width="1.4" fill="none" opacity="1.0" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M338.6,75.6 L347.6,83.4 L356.7,93.2 L365.7,104.2 L374.8,115.6 L383.8,126.3 L392.9,135.6 L401.9,142.7 L411.0,147.4 L420.0,149.7 L429.0,150.0" stroke="#5c9ac0" stroke-width="1.4" fill="none" opacity="1.0" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="420.0" y="250.0" font-family="Inter, 'Inter Variable', 'DejaVu Sans', sans-serif" font-size="13" font-weight="400" fill="#9a98a8" text-anchor="middle" opacity="1.0" xml:space="preserve" style="white-space:pre">in the 3D view</text>
+<line x1="540.0" y1="30.0" x2="540.0" y2="290.0" stroke="#34323e" stroke-width="1.0" stroke-linecap="round" opacity="1.0"/>
+<text x="580.0" y="40.0" font-family="Inter, 'Inter Variable', 'DejaVu Sans', sans-serif" font-size="16" font-weight="650" fill="#ecebf3" text-anchor="start" opacity="1.0" xml:space="preserve" style="white-space:pre">They only calculate</text>
+<rect x="580.0" y="80.0" width="220.0" height="59.0" rx="9" fill="#1d1c23" stroke="#a88bd0" stroke-width="1.2" opacity="1.0"/>
+<path d="M589.0,80.0 h202.0 a9,9 0 0 1 9,9 v-5 h-220.0 v5 a9,9 0 0 1 9,-9 z" fill="#a88bd0" opacity="1.0"/>
+<text x="592.0" y="102.0" font-family="Inter, 'Inter Variable', 'DejaVu Sans', sans-serif" font-size="13" font-weight="650" fill="#ecebf3" text-anchor="start" opacity="1.0" xml:space="preserve" style="white-space:pre">Area</text>
+<text x="786.0" y="102.0" font-family="'JetBrains Mono', 'DejaVu Sans Mono', monospace" font-size="10.5" font-weight="400" fill="#9a98a8" text-anchor="end" opacity="1.0" xml:space="preserve" style="white-space:pre">area</text>
+<circle cx="800.0" cy="98.0" r="5" fill="#6b6976" stroke="#1d1c23" stroke-width="2" opacity="1.0"/>
+<circle cx="580.0" cy="125.0" r="4.5" fill="#6b6976" stroke="#1d1c23" stroke-width="2" opacity="1.0"/>
+<text x="592.0" y="129.0" font-family="Inter, 'Inter Variable', 'DejaVu Sans', sans-serif" font-size="11.5" font-weight="400" fill="#c4c2cf" text-anchor="start" opacity="1.0" xml:space="preserve" style="white-space:pre">geometry</text>
+<circle cx="782.0" cy="140.0" r="7" fill="none" stroke="#ecebf3" stroke-width="1.3" opacity="1.0"/>
+<text x="782.0" y="144.0" font-family="Inter, 'Inter Variable', 'DejaVu Sans', sans-serif" font-size="10" font-weight="650" fill="#ecebf3" text-anchor="middle" opacity="1.0" xml:space="preserve" style="white-space:pre">i</text>
+<rect x="580.0" y="165.0" width="220.0" height="96.0" rx="8" fill="#1f1e26" stroke="#34323e" stroke-width="1.0" opacity="1.0"/>
+<text x="596.0" y="188.0" font-family="'JetBrains Mono', 'DejaVu Sans Mono', monospace" font-size="11.5" font-weight="400" fill="#c4c2cf" text-anchor="start" opacity="1.0" xml:space="preserve" style="white-space:pre">0   12.00 m²</text>
+<text x="596.0" y="208.0" font-family="'JetBrains Mono', 'DejaVu Sans Mono', monospace" font-size="11.5" font-weight="400" fill="#c4c2cf" text-anchor="start" opacity="1.0" xml:space="preserve" style="white-space:pre">1    8.50 m²</text>
+<text x="596.0" y="228.0" font-family="'JetBrains Mono', 'DejaVu Sans Mono', monospace" font-size="11.5" font-weight="400" fill="#c4c2cf" text-anchor="start" opacity="1.0" xml:space="preserve" style="white-space:pre">2    9.75 m²</text>
+<text x="596.0" y="248.0" font-family="'JetBrains Mono', 'DejaVu Sans Mono', monospace" font-size="11.5" font-weight="400" fill="#c4c2cf" text-anchor="start" opacity="1.0" xml:space="preserve" style="white-space:pre">…</text>
+<text x="690.0" y="285.0" font-family="Inter, 'Inter Variable', 'DejaVu Sans', sans-serif" font-size="13" font-weight="400" fill="#9a98a8" text-anchor="middle" opacity="1.0" xml:space="preserve" style="white-space:pre">on the card</text>
+<text x="40.0" y="318.0" font-family="Inter, 'Inter Variable', 'DejaVu Sans', sans-serif" font-size="13" font-weight="400" fill="#9a98a8" text-anchor="start" opacity="1.0" xml:space="preserve" style="white-space:pre">The eye shows or hides the geometry; the ⓘ unfolds the values.</text>
+</svg>

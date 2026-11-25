@@ -1,0 +1,38 @@
+---
+title: "Una fachada que respira"
+description: "Marcos cuyas aberturas crecen cerca de un punto y se cierran lejos de él."
+---
+
+import { Steps } from '@astrojs/starlight/components';
+
+![Una fachada que respira](/images/manual/recipes/breathing-facade.png)
+
+Una fachada de 24 × 12 m con 128 marcos. Cerca de un punto las aberturas son grandes; lejos, casi se cierran. Mueves el punto y la fachada respira con él.
+
+**5 nodos** · [Descargar `breathing-facade.tela`](/examples/recipes/breathing-facade.tela)
+
+## Paso a paso
+
+<Steps>
+
+1. **La fachada.** Añade un **Rectángulo**: **ancho** `24`, **alto** `12`, **plano** *alzado*.
+
+2. **Los paneles.** Añade una **Retícula** y conecta el Rectángulo a **rectángulo**. Escribe **columnas** `16` y **filas** `8`: 128 paneles de 1,5 m.
+
+3. **El punto.** Añade un **Punto** con **x** `8` y **z** `6`.
+
+4. **Cuánto se abre cada panel.** Añade un **Atractor**. Conecta la Retícula a **dónde** y el Punto a **atractores**. Escribe **alcance** `10`, **cerca** `0,85` y **lejos** `0,15`.
+
+5. **Los marcos.** Añade un **Marco**. Conecta la Retícula a **panel** y el Atractor a **abertura**. Escribe **espesor** `0,12`.
+
+</Steps>
+
+## Ahora juega
+
+- Mueve el **Punto** por la fachada.
+- Intercambia **cerca** y **lejos**: cerrado alrededor del punto, abierto en el resto.
+- Añade un segundo Punto y conéctalo a **más** del Atractor.
+
+## Descarga el proyecto
+
+[Descargar `breathing-facade.tela`](/examples/recipes/breathing-facade.tela) · Ábrelo en Tensela: **Archivo → Abrir**.
