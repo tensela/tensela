@@ -73,6 +73,106 @@
       "soname": "libxcb-util.so.1",
       "published": "2022-03-24",
       "checked": "2026-11-23: the SHA-256 in the Packages index of jammy main, signed by Ubuntu (its InRelease, checked by apt)"
+    },
+    "xkbcommon": {
+      "what": "libxkbcommon0 1.4.0-1 of Ubuntu 22.04 (jammy, main), x86_64: the keyboard of Qt; only with its x11 part, on systems without libxkbcommon-x11 (they must be the same version). It asks for glibc 2.33",
+      "url": "http://archive.ubuntu.com/ubuntu/pool/main/libx/libxkbcommon/libxkbcommon0_1.4.0-1_amd64.deb",
+      "sha256": "a0470edb237d52b71ad41f755c043164abed01423585ed5ea19525b3baaf84f7",
+      "file": "usr/lib/x86_64-linux-gnu/libxkbcommon.so.0.0.0",
+      "file_sha256": "26773f54626af26f5f26f0279a9748ea2445c1adcfef50a7d572c9b54575bd86",
+      "soname": "libxkbcommon.so.0",
+      "published": "2022-04-21",
+      "checked": "2026-11-25: the SHA-256 in the Packages index of jammy main, whose own SHA-256 is in its InRelease, signed by Ubuntu (checked with gpgv and ubuntu-archive-keyring); no newer version in jammy-updates or jammy-security"
+    },
+    "xkbcommon_x11": {
+      "what": "libxkbcommon-x11-0 1.4.0-1 of Ubuntu 22.04 (jammy, main), x86_64: the keyboard of Qt on X11, for systems without it (a bare X11 session). It asks for glibc 2.4",
+      "url": "http://archive.ubuntu.com/ubuntu/pool/main/libx/libxkbcommon/libxkbcommon-x11-0_1.4.0-1_amd64.deb",
+      "sha256": "e29c40fab6e0f055218aee4c7e60cd61ea82283229d7ac7ac02e226e92a5b0d5",
+      "file": "usr/lib/x86_64-linux-gnu/libxkbcommon-x11.so.0.0.0",
+      "file_sha256": "18144e8476746721512f4a23a2670fa4b3c0683715db0ed16f12e6bad39cc298",
+      "soname": "libxkbcommon-x11.so.0",
+      "published": "2022-04-21",
+      "checked": "2026-11-25: the SHA-256 in the Packages index of jammy main, whose own SHA-256 is in its InRelease, signed by Ubuntu (checked with gpgv and ubuntu-archive-keyring); no newer version in jammy-updates or jammy-security"
+    },
+    "xcb_xkb": {
+      "what": "libxcb-xkb1 1.14-3ubuntu3 of Ubuntu 22.04 (jammy, main), x86_64: Qt needs it on X11, for systems without it. It asks for glibc 2.14",
+      "url": "http://archive.ubuntu.com/ubuntu/pool/main/libx/libxcb/libxcb-xkb1_1.14-3ubuntu3_amd64.deb",
+      "sha256": "4cf69af3ff6a60b63f9f6ea6e7d27471114c6bcbcf3f981f7b88f361029e5eb8",
+      "file": "usr/lib/x86_64-linux-gnu/libxcb-xkb.so.1.0.0",
+      "file_sha256": "05db2c686a9d76722d4e2a433286b266ee39286e0eef87782431a10d2e16c5a1",
+      "soname": "libxcb-xkb.so.1",
+      "published": "2022-04-21",
+      "checked": "2026-11-25: the SHA-256 in the Packages index of jammy main, whose own SHA-256 is in its InRelease, signed by Ubuntu (checked with gpgv and ubuntu-archive-keyring); no newer version in jammy-updates or jammy-security"
+    },
+    "xcb_randr": {
+      "what": "libxcb-randr0 1.14-3ubuntu3 of Ubuntu 22.04 (jammy, main), x86_64: Qt needs it on X11, for systems without it. It asks for glibc 2.4",
+      "url": "http://archive.ubuntu.com/ubuntu/pool/main/libx/libxcb/libxcb-randr0_1.14-3ubuntu3_amd64.deb",
+      "sha256": "39dc0f73fa3bd43f3f7755cb7d12bfd1cd59dd8966f747d66fba47dfc8652f62",
+      "file": "usr/lib/x86_64-linux-gnu/libxcb-randr.so.0.1.0",
+      "file_sha256": "942a242b33c80ab4a5ce6d3db62d12f8856589860fa1986248b046850e58a80e",
+      "soname": "libxcb-randr.so.0",
+      "published": "2022-04-21",
+      "checked": "2026-11-25: the SHA-256 in the Packages index of jammy main, whose own SHA-256 is in its InRelease, signed by Ubuntu (checked with gpgv and ubuntu-archive-keyring); no newer version in jammy-updates or jammy-security"
+    },
+    "xcb_render": {
+      "what": "libxcb-render0 1.14-3ubuntu3 of Ubuntu 22.04 (jammy, main), x86_64: Qt needs it on X11, for systems without it. It asks for glibc 2.14",
+      "url": "http://archive.ubuntu.com/ubuntu/pool/main/libx/libxcb/libxcb-render0_1.14-3ubuntu3_amd64.deb",
+      "sha256": "26d331ed6e1219485dbd6a35b7c9cf552e1470f41bf2158b44a1331405f05250",
+      "file": "usr/lib/x86_64-linux-gnu/libxcb-render.so.0.0.0",
+      "file_sha256": "116b70d1eef6cbad17bec65091b19fce427dc009a6213cee796935fa6a9ce520",
+      "soname": "libxcb-render.so.0",
+      "published": "2022-04-21",
+      "checked": "2026-11-25: the SHA-256 in the Packages index of jammy main, whose own SHA-256 is in its InRelease, signed by Ubuntu (checked with gpgv and ubuntu-archive-keyring); no newer version in jammy-updates or jammy-security"
+    },
+    "xcb_shape": {
+      "what": "libxcb-shape0 1.14-3ubuntu3 of Ubuntu 22.04 (jammy, main), x86_64: Qt needs it on X11, for systems without it. It asks for glibc 2.4",
+      "url": "http://archive.ubuntu.com/ubuntu/pool/main/libx/libxcb/libxcb-shape0_1.14-3ubuntu3_amd64.deb",
+      "sha256": "71666977d7aa11877d7af663231cabf4bde60b033947b83358522c6f43873b3d",
+      "file": "usr/lib/x86_64-linux-gnu/libxcb-shape.so.0.0.0",
+      "file_sha256": "db29fddf057f86d4561cd54c843efd34ec17af3471ca2ab32e8f3031aa3aad33",
+      "soname": "libxcb-shape.so.0",
+      "published": "2022-04-21",
+      "checked": "2026-11-25: the SHA-256 in the Packages index of jammy main, whose own SHA-256 is in its InRelease, signed by Ubuntu (checked with gpgv and ubuntu-archive-keyring); no newer version in jammy-updates or jammy-security"
+    },
+    "xcb_shm": {
+      "what": "libxcb-shm0 1.14-3ubuntu3 of Ubuntu 22.04 (jammy, main), x86_64: Qt needs it on X11, for systems without it. It asks for glibc 2.4",
+      "url": "http://archive.ubuntu.com/ubuntu/pool/main/libx/libxcb/libxcb-shm0_1.14-3ubuntu3_amd64.deb",
+      "sha256": "6d86c9ea2666276c862e64e8a1daa6cb1dd3e4da5ad9165eeb2507311c8a09bd",
+      "file": "usr/lib/x86_64-linux-gnu/libxcb-shm.so.0.0.0",
+      "file_sha256": "722e13a0a26551dd9f11b930c4632c9e51d2e9f743315d45c1b665356950d42d",
+      "soname": "libxcb-shm.so.0",
+      "published": "2022-04-21",
+      "checked": "2026-11-25: the SHA-256 in the Packages index of jammy main, whose own SHA-256 is in its InRelease, signed by Ubuntu (checked with gpgv and ubuntu-archive-keyring); no newer version in jammy-updates or jammy-security"
+    },
+    "xcb_sync": {
+      "what": "libxcb-sync1 1.14-3ubuntu3 of Ubuntu 22.04 (jammy, main), x86_64: Qt needs it on X11, for systems without it. It asks for glibc 2.14",
+      "url": "http://archive.ubuntu.com/ubuntu/pool/main/libx/libxcb/libxcb-sync1_1.14-3ubuntu3_amd64.deb",
+      "sha256": "81281149575a3e2cfee5629150bd5a7e52b2c16ed0d6c86b96108b520ab154b8",
+      "file": "usr/lib/x86_64-linux-gnu/libxcb-sync.so.1.0.0",
+      "file_sha256": "bfc92d901bfa11f61e3b921631676e0cd4a553dc825943d378e9997218345440",
+      "soname": "libxcb-sync.so.1",
+      "published": "2022-04-21",
+      "checked": "2026-11-25: the SHA-256 in the Packages index of jammy main, whose own SHA-256 is in its InRelease, signed by Ubuntu (checked with gpgv and ubuntu-archive-keyring); no newer version in jammy-updates or jammy-security"
+    },
+    "xcb_xfixes": {
+      "what": "libxcb-xfixes0 1.14-3ubuntu3 of Ubuntu 22.04 (jammy, main), x86_64: Qt needs it on X11, for systems without it. It asks for glibc 2.4",
+      "url": "http://archive.ubuntu.com/ubuntu/pool/main/libx/libxcb/libxcb-xfixes0_1.14-3ubuntu3_amd64.deb",
+      "sha256": "c5fdfad628e4ccdc663fcb391d72a2510a8788dc680c070c76cea3e501791756",
+      "file": "usr/lib/x86_64-linux-gnu/libxcb-xfixes.so.0.0.0",
+      "file_sha256": "e3d14d45bd5208e7b146627f8a6d8918c52846face02cfc4418690c32534bc42",
+      "soname": "libxcb-xfixes.so.0",
+      "published": "2022-04-21",
+      "checked": "2026-11-25: the SHA-256 in the Packages index of jammy main, whose own SHA-256 is in its InRelease, signed by Ubuntu (checked with gpgv and ubuntu-archive-keyring); no newer version in jammy-updates or jammy-security"
+    },
+    "xcb_glx": {
+      "what": "libxcb-glx0 1.14-3ubuntu3 of Ubuntu 22.04 (jammy, main), x86_64: Qt needs it on X11, for systems without it. It asks for glibc 2.4",
+      "url": "http://archive.ubuntu.com/ubuntu/pool/main/libx/libxcb/libxcb-glx0_1.14-3ubuntu3_amd64.deb",
+      "sha256": "395855609f1ff02208b12aea1ef82f5018c6a262825bda8c9a49ec8cab9deacb",
+      "file": "usr/lib/x86_64-linux-gnu/libxcb-glx.so.0.0.0",
+      "file_sha256": "3ae585380e28079862b4a9928b2ca8798efe806e566ba5ba8d1bdc1c951e1d1f",
+      "soname": "libxcb-glx.so.0",
+      "published": "2022-04-21",
+      "checked": "2026-11-25: the SHA-256 in the Packages index of jammy main, whose own SHA-256 is in its InRelease, signed by Ubuntu (checked with gpgv and ubuntu-archive-keyring); no newer version in jammy-updates or jammy-security"
     }
   },
   "libraries": {

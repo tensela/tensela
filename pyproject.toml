@@ -1,6 +1,6 @@
 [project]
 name = "tensela"
-version = "0.9.2"
+version = "0.9.3"
 description = "Parametric design an architect understands."
 readme = "README.md"
 license = "GPL-3.0-or-later"

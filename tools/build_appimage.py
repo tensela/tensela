@@ -31,7 +31,10 @@ The result, in build/appimage/:
 Besides the Python libraries, six small libraries of the system go in: those Qt needs to open its windows on X11
 (libxcb-cursor, -icccm, -image, -keysyms, -render-util and -util), which many systems do not have installed
 (Ubuntu 22.04 lacks libxcb-cursor). They come from the packages of Ubuntu 22.04 (they ask for an old glibc), each
-pinned in the lock like the rest, found in the folder `--packages` and unpacked with dpkg-deb.
+pinned in the lock like the rest, found in the folder `--packages` and unpacked with dpkg-deb. Ten more, from the
+same packages, are kept apart in usr/lib/fallback for the systems that lack them (a bare X11 session, without a
+desktop): the keyboard of X11 (libxkbcommon with its x11 part, which must be of the same version) and the extensions
+of xcb that Qt asks for. AppRun uses each folder only when the system does not have the library it is named after.
 """
 from __future__ import annotations
 
@@ -87,6 +90,30 @@ export PATH="$HERE/usr/bin:$PATH"
 if [ -z "$APPIMAGE" ]; then
     export TENSELA_PORTABLE="$HERE/tensela"      # the portable folder: its launcher, for the menu and the AI bridge
 fi
+# The libraries for systems that lack them (usr/lib/fallback): each folder only if the system does not have the
+# library it is named after (a plain sh: no local variables, so each loop has its own name). Tensela gives the
+# programs it opens the LD_LIBRARY_PATH they would have had.
+has_library() {
+    for ldconfig in ldconfig /sbin/ldconfig /usr/sbin/ldconfig; do
+        if command -v "$ldconfig" >/dev/null 2>&1; then
+            "$ldconfig" -p 2>/dev/null | grep -q "[[:space:]]$1 (libc6,x86-64)" && return 0
+            break
+        fi
+    done
+    for system in /usr/lib/x86_64-linux-gnu /lib/x86_64-linux-gnu /usr/lib64 /lib64 /usr/lib /lib; do
+        [ -e "$system/$1" ] && return 0
+    done
+    return 1
+}
+EXTRA=""
+for folder in "$HERE"/usr/lib/fallback/*; do
+    [ -d "$folder" ] || continue
+    has_library "$(basename "$folder")" || EXTRA="$EXTRA${EXTRA:+:}$folder"
+done
+if [ -n "$EXTRA" ]; then
+    export TENSELA_HOST_LIBRARY_PATH="${LD_LIBRARY_PATH:-}"
+    export LD_LIBRARY_PATH="$EXTRA${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+fi
 if [ "$1" = "--cli" ]; then
     shift
     exec "$HERE/usr/bin/python3" -s -m tensela "$@"
@@ -115,25 +142,46 @@ def verified(path: Path, key: str) -> Path:
 
 #: The libraries of the system that go in (the keys of the lock): what Qt needs to open its windows on X11.
 SYSTEM_LIBRARIES = ["xcb_cursor", "xcb_icccm", "xcb_image", "xcb_keysyms", "xcb_render_util", "xcb_util"]
+#: Those kept apart, for the systems that lack them: {folder in usr/lib/fallback, named after the library whose absence
+#: turns it on: keys of the lock}. libxkbcommon goes only with its x11 part: the two must be of the same version.
+FALLBACK_LIBRARIES = {
+    "libxkbcommon-x11.so.0": ["xkbcommon", "xkbcommon_x11"],
+    "libxcb-xkb.so.1": ["xcb_xkb"],
+    "libxcb-randr.so.0": ["xcb_randr"],
+    "libxcb-render.so.0": ["xcb_render"],
+    "libxcb-shape.so.0": ["xcb_shape"],
+    "libxcb-shm.so.0": ["xcb_shm"],
+    "libxcb-sync.so.1": ["xcb_sync"],
+    "libxcb-xfixes.so.0": ["xcb_xfixes"],
+    "libxcb-glx.so.0": ["xcb_glx"],
+}
+
+
+def unpack(packages: Path, key: str, into: Path) -> None:
+    """One library of the system, from its package (pinned in the lock), into a folder."""
+    import tempfile
+    pinned = appimage_lock.read()["downloads"][key]
+    deb = verified(packages / pinned["url"].rsplit("/", 1)[1], key)
+    with tempfile.TemporaryDirectory() as folder:
+        subprocess.run(["dpkg-deb", "-x", str(deb), folder], check=True)
+        library = Path(folder) / pinned["file"]
+        found = appimage_lock.sha256_file(library)
+        if found != pinned["file_sha256"]:
+            raise Refused(f"{library.name} inside {deb.name}: SHA-256 {found}, the lock says {pinned['file_sha256']}")
+        into.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(library, into / pinned["soname"])
 
 
 def system_libraries(packages: Path, site: Path) -> None:
-    """The libraries of SYSTEM_LIBRARIES, from their packages (pinned in the lock), beside those of Qt (they look for
-    them there)."""
-    import tempfile
-    downloads = appimage_lock.read()["downloads"]
+    """The libraries of SYSTEM_LIBRARIES beside those of Qt (they look for them there), and those of
+    FALLBACK_LIBRARIES in usr/lib/fallback, for AppRun."""
     for key in SYSTEM_LIBRARIES:
-        pinned = downloads[key]
-        deb = verified(packages / pinned["url"].rsplit("/", 1)[1], key)
-        with tempfile.TemporaryDirectory() as folder:
-            subprocess.run(["dpkg-deb", "-x", str(deb), folder], check=True)
-            library = Path(folder) / pinned["file"]
-            found = appimage_lock.sha256_file(library)
-            if found != pinned["file_sha256"]:
-                raise Refused(f"{library.name} inside {deb.name}: SHA-256 {found}, the lock says "
-                              f"{pinned['file_sha256']}")
-            shutil.copy2(library, site / "PySide6" / "Qt" / "lib" / pinned["soname"])
-    say(f"{len(SYSTEM_LIBRARIES)} libraries of the system, for the windows on X11")
+        unpack(packages, key, site / "PySide6" / "Qt" / "lib")
+    for folder, keys in FALLBACK_LIBRARIES.items():
+        for key in keys:
+            unpack(packages, key, APPDIR / "usr" / "lib" / "fallback" / folder)
+    say(f"{len(SYSTEM_LIBRARIES)} libraries of the system, for the windows on X11, and "
+        f"{sum(map(len, FALLBACK_LIBRARIES.values()))} for the systems that lack them")
 
 
 def requirements(dist) -> list[str]:
