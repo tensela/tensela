@@ -54,8 +54,10 @@ def contrast(a: str, b: str) -> float:
 
 
 def mode_system() -> str:
+    """Dark when the desktop asks for dark; light otherwise, also when it says nothing (a plain X session, a desktop
+    without that setting), as the desktops and the catalogues of applications expect."""
     scheme = QGuiApplication.styleHints().colorScheme()
-    return "light" if scheme == Qt.ColorScheme.Light else "dark"
+    return "dark" if scheme == Qt.ColorScheme.Dark else "light"
 
 
 def load(name: str = DEFAULT_BY, mode: str | None = None) -> dict:

@@ -56,6 +56,8 @@ ROOT = Path(__file__).resolve().parent.parent
 BUILD = ROOT / "build" / "appimage"
 APPDIR = BUILD / "Tensela.AppDir"
 BRAND = ROOT / "src" / "tensela" / "ui" / "brand"
+#: What the software centres show of Tensela (AppStream), in the AppImage at usr/share/metainfo.
+METAINFO = ROOT / "packaging" / "com.tensela.Tensela.metainfo.xml"
 PYVER = "3.13"
 
 #: Where the libraries start from; the rest are what these need, found in the environment.
@@ -324,7 +326,14 @@ def desktop() -> None:
     shutil.copy2(BRAND / "application-x-tensela.svg", scalable / "mimetypes" / "application-x-tensela.svg")
     shutil.copy2(BRAND / "tensela-256.png", APPDIR / "tensela.png")
     os.symlink("tensela.png", APPDIR / ".DirIcon")
-    say("launcher, icons and file type")
+    (share / "metainfo").mkdir(parents=True, exist_ok=True)
+    shutil.copy2(METAINFO, share / "metainfo" / METAINFO.name)
+    if shutil.which("appstreamcli"):                  # what the catalogue of AppImages checks: valid, or no build
+        done = subprocess.run(["appstreamcli", "validate-tree", "--no-net", str(APPDIR)], capture_output=True,
+                              text=True)
+        if done.returncode:
+            raise Refused("the AppStream description does not validate:\n" + done.stdout + done.stderr)
+    say("launcher, icons, file type and AppStream description")
 
 
 def size(path: Path) -> float:

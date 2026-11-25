@@ -407,3 +407,15 @@ def test_the_wheel_zooms_back_from_a_canvas_framed_very_far():
                      Qt.KeyboardModifier.NoModifier, Qt.ScrollPhase.NoScrollPhase, False)
     e.wheelEvent(ev)
     assert e.transform().m11() > 0.08                     # it zooms in: not stuck
+
+
+def test_the_theme_is_light_unless_the_desktop_asks_for_dark(monkeypatch):
+    """A desktop that says nothing (a plain X session) gets the light theme, as the catalogues of AppImages expect."""
+    from PySide6.QtCore import Qt
+    from PySide6.QtGui import QGuiApplication
+    from tensela.ui import theme
+    for scheme, expected in ((Qt.ColorScheme.Dark, "dark"), (Qt.ColorScheme.Light, "light"),
+                             (Qt.ColorScheme.Unknown, "light")):
+        hints = type("Hints", (), {"colorScheme": staticmethod(lambda s=scheme: s)})()
+        monkeypatch.setattr(QGuiApplication, "styleHints", staticmethod(lambda h=hints: h))
+        assert theme.mode_system() == expected, scheme
