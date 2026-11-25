@@ -51,6 +51,7 @@ jobs:
           glxinfo -B 2>/dev/null | grep -E "renderer|version" || true
           python3 -m pip install --quiet --user py-spy==0.4.1   # where a running Python is, without stopping it
           echo "PYSPY=$HOME/.local/bin/py-spy" >> "$GITHUB_ENV"
+          sudo sysctl -q kernel.yama.ptrace_scope=0   # py-spy as the same user (root cannot read the FUSE mount)
 
       - name: Open it, as it is and inside firejail
         run: |
@@ -71,7 +72,9 @@ jobs:
                 import -window root "out/$name-$second.png" || true
                 xwininfo -root -tree > "out/$name-$second-windows.txt" 2>&1 || true
                 python=$(pgrep -f "tensela.ui.launch" | head -n 1)
-                [ -n "$python" ] && sudo "$PYSPY" dump --pid "$python" > "out/$name-$second-python.txt" 2>&1
+                if [ -n "$python" ]; then
+                  "$PYSPY" dump --native --pid "$python" > "out/$name-$second-python.txt" 2>&1 || true
+                fi
                 echo "$name: nothing visible after $second s" | tee -a out/summary.txt
               fi
             done
