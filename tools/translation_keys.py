@@ -54,7 +54,7 @@ def from_components() -> set[str]:
     keys = set(viewer.STYLE_NAMES.values()) | set(viewer.HELP_TEXTS_STYLE_NAME.values())
     keys |= {text for _, text, _ in dialogs.DialogDxf.VIEWS} | set(dialogs.DialogDxf.HELP_TEXTS_VIEW.values())
     keys |= set(dialogs.DialogDxf.UNITS) | set(dialogs.DialogDxf.HELP_TEXTS_VIEW)
-    keys |= {"Sober", "Vivid", "Like the system", "Light", "Dark", "3D, the model", "2D, plan or elevation",
+    keys |= {"Sober", "Vivid", "Like the system", "Light", "Dark", "3D, the model", "2D, a view of it",
                "White", "Transparent", "Tensela", "Dots",
                "Square grid", "Plain", "Recommended",
                "Neutral node cards, with a strip of colour",

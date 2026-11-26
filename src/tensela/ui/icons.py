@@ -89,6 +89,11 @@ ICONS = {
     "from_below": '<rect x="6" y="6" width="12" height="12" rx="1.5" stroke-dasharray="2 2"/><circle cx="12" cy="12" r="2.2"/>',
     "isometric": '<path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M12 12l8-4.5M12 12v9M12 12L4 7.5"/>',
     "from_west": '<rect x="10.5" y="6" width="10" height="12" rx="1.5"/><path d="M2.5 12h5M5 9.5l2.5 2.5-2.5 2.5"/>',
+    # The isometrics: the plan, and the eye coming from above one of its corners.
+    "from_southwest": '<rect x="8" y="3" width="13" height="13" rx="1.5"/><path d="M2.5 21.5l4-4M3.6 17.5h2.9v2.9"/>',
+    "from_southeast": '<rect x="3" y="3" width="13" height="13" rx="1.5"/><path d="M21.5 21.5l-4-4M20.4 17.5h-2.9v2.9"/>',
+    "from_northeast": '<rect x="3" y="8" width="13" height="13" rx="1.5"/><path d="M21.5 2.5l-4 4M20.4 6.5h-2.9V3.6"/>',
+    "from_northwest": '<rect x="8" y="8" width="13" height="13" rx="1.5"/><path d="M2.5 2.5l4 4M3.6 6.5h2.9V3.6"/>',
 
     # --- Panels and areas -------------------------------------------------------------
     "view3d": '<path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M12 12l8-4.5M12 12v9M12 12L4 7.5" stroke-dasharray="2 2.2"/>',

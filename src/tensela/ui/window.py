@@ -49,7 +49,7 @@ from .. import values as values
 from ..values import label_input, read_value, text_value
 from . import icons as icons, theme as theme
 from .. import language as language
-from ..language import tr
+from ..language import comma, tr
 from .widgets import NAME_LIMIT, Panel, DockablePanel, TableDataItems, ask_text, button_icon, set_icon
 from .menus import MenusPainter, text_shortcut
 from .tooltips import TipWrapper
@@ -2499,15 +2499,27 @@ class Window(QMainWindow):
         dialog = DialogDxf(self, settings.value("dxf/unit", "millimetres"),
                              settings.value("dxf/compatible", False, type=bool),
                              settings.value("dxf/mode", 0, type=int), settings.value("dxf/view", "plan"),
-                             settings.value("dxf/visible", True, type=bool))
+                             settings.value("dxf/visible", True, type=bool),
+                             settings.value("dxf/cut", False, type=bool),
+                             settings.value("dxf/cut_height", 1.2, type=float))
         self._display_dialog(dialog, lambda d: self._export_dxf(d, objects))
+
+    def _camera_view(self):
+        """The camera of the 3D view as it is now, for a 2D DXF «as seen now»."""
+        from ..connectors.dxf import CameraView
+        camera = self.viewer.view.camera
+        return CameraView(eye=tuple(camera.position), target=tuple(camera.focal_point), up=tuple(camera.up),
+                          perspective=not camera.parallel_projection, angle=float(camera.view_angle))
 
     def _export_dxf(self, dialog, objects) -> None:
         settings = QSettings()
-        unit, compatible, view, visible_only = dialog.choice()
+        unit, compatible, view, visible_only, cut = dialog.choice()
+        height = dialog.cut_height.value()   # now: the dialog is deleted while «Save as» is open
         base = self.filepath.stem if self.filepath else "project"
         folder = self.filepath.parent if self.filepath else Path.cwd()
-        suggested = str(folder / (f"{base} {view}.dxf" if view else f"{base}.dxf"))
+        shown = tr('as seen now') if view == "camera" else tr(view) if view else ""
+        named = f"{base} {shown}" + (f" {comma(f'{cut:g}')} m" if cut is not None else "") if view else base
+        suggested = str(folder / f"{named}.dxf")
         filepath, _ = QFileDialog.getSaveFileName(self, tr('Export DXF'), suggested, tr('DXF drawing (*.dxf)'))
         if not filepath:
             return
@@ -2517,7 +2529,8 @@ class Window(QMainWindow):
             self._aside(tr('Removing hidden lines and saving the DXF…') if view and visible_only
                         else tr('Saving the DXF…'),
                         lambda: export_dxf(filepath, objects, unit=DialogDxf.UNITS[unit], compatible=compatible,
-                                           view=view, visible_only=visible_only))
+                                           view=self._camera_view() if view == "camera" else view,
+                                           visible_only=visible_only, cut=cut))
         except (ShapeError, OSError) as error:
             QMessageBox.warning(self, tr('Export DXF'), str(error))
             return
@@ -2527,7 +2540,12 @@ class Window(QMainWindow):
         if view:
             settings.setValue("dxf/view", view)
             settings.setValue("dxf/visible", visible_only)
-        what = tr('in 2D, {view}').format(view=tr(view)) if view else tr('in 3D')
+        if view == "plan":
+            settings.setValue("dxf/cut", cut is not None)
+            settings.setValue("dxf/cut_height", height)
+        what = tr('in 2D, {view}').format(view=shown) if view else tr('in 3D')
+        if cut is not None:
+            what += ", " + tr("cut at {height} m").format(height=comma(f"{cut:g}"))
         self.statusBar().showMessage(tr('Exported: {path} ({what}, one layer per node, in {unit})').format(
             path=filepath, what=what, unit=tr(unit)))
 

@@ -25,7 +25,7 @@ from .connectors.dxf import OLD_VIEWS, VIEWS, export_dxf
 from .connectors.ingetrazo import export_igz
 from .connectors.obj import UNITS, export_obj
 from .data import ShapeError
-from .language import tr
+from .language import comma, tr
 from .values import text_value
 
 
@@ -54,6 +54,9 @@ def main(argv: list[str] | None = None) -> int:
                         help=tr("2D DXF: {views} (without this, in 3D)").format(views=", ".join(VIEWS)))
     parser.add_argument("--dxf-visible", action="store_true",
                         help=tr("2D DXF: only what is seen (removes the hidden lines)"))
+    parser.add_argument("--dxf-cut", "--dxf-corte", type=float, metavar=tr("HEIGHT"),
+                        help=tr("2D DXF in plan, cut at this height in metres: what is above is not drawn, and the "
+                                "cut goes in a layer of its own per node, thicker (without --dxf-view, in plan)"))
     parser.add_argument("--dxf-compatible", action="store_true",
                         help=tr("DXF with classic meshes, for old programs or SketchUp (slower)"))
     parser.add_argument("--blend", metavar=tr("PATH"), help=tr("also save a Blender .blend (needs Blender)"))
@@ -107,10 +110,13 @@ def main(argv: list[str] | None = None) -> int:
             filepath = export_blend(args.blend, project.visible_objects(), Path(args.file).stem)
             print(tr("Written: {path} (Blender: one object per node, in metres, Z up)").format(path=filepath))
         if args.dxf:
+            view = args.dxf_view or ("plan" if args.dxf_cut is not None else None)
             filepath = export_dxf(args.dxf, project.visible_objects(), unit=args.unit,
-                                compatible=args.dxf_compatible, view=args.dxf_view,
-                                visible_only=args.dxf_visible)
-            what = (tr("in 2D, {view}").format(view=tr(args.dxf_view)) if args.dxf_view else tr("in 3D, Z up"))
+                                compatible=args.dxf_compatible, view=view,
+                                visible_only=args.dxf_visible, cut=args.dxf_cut)
+            what = (tr("in 2D, {view}").format(view=tr(view)) if view else tr("in 3D, Z up"))
+            if args.dxf_cut is not None:
+                what += ", " + tr("cut at {height} m").format(height=comma(f"{args.dxf_cut:g}"))
             print(tr("Written: {path} (DXF {what}: one layer per node, in {unit})").format(
                 path=filepath, what=what, unit=args.unit))
         if args.igz:

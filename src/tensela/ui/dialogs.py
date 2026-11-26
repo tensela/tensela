@@ -109,7 +109,7 @@ class DialogImage(_Form):
 
 
 class DialogDxf(_Form):
-    """How the DXF is exported: in 3D (the model) or in 2D (a plan or an elevation), and in what unit."""
+    """How the DXF is exported: in 3D (the model) or in 2D (a plan, an elevation or an isometric), and in what unit."""
 
     UNITS = {"metres": "m", "centimetres": "cm", "millimetres": "mm", "inches": "in", "feet": "ft"}
     #: The units as the preferences kept them before the move to English.
@@ -117,20 +117,49 @@ class DialogDxf(_Form):
                  "pies": "feet"}
     VIEWS = [("plan", 'Top', "from_above"), ("south elevation", 'South', "from_south"),
               ("north elevation", 'North', "from_north"), ("east elevation", 'East', "from_east"),
-              ("west elevation", 'West', "from_west")]
+              ("west elevation", 'West', "from_west"),
+              ("southwest isometric", 'Southwest', "from_southwest"),
+              ("southeast isometric", 'Southeast', "from_southeast"),
+              ("northeast isometric", 'Northeast', "from_northeast"),
+              ("northwest isometric", 'Northwest', "from_northwest"),
+              ("camera", 'As seen now', "eye")]
     HELP_TEXTS_VIEW = {"plan": 'From above', "south elevation": 'South elevation: looking from the south (−Y)',
                     "north elevation": 'North elevation: looking from the north (+Y)',
                     "east elevation": 'East elevation: looking from the east (+X)',
-                    "west elevation": 'West elevation: looking from the west (−X)'}
+                    "west elevation": 'West elevation: looking from the west (−X)',
+                    "southwest isometric": 'Isometric from above the southwest corner (−X, −Y)',
+                    "southeast isometric": 'Isometric from above the southeast corner (+X, −Y)',
+                    "northeast isometric": 'Isometric from above the northeast corner (+X, +Y)',
+                    "northwest isometric": 'Isometric from above the northwest corner (−X, +Y)',
+                    "camera": 'As the 3D view is seen now: from its camera, in parallel or in perspective'}
 
     def __init__(self, parent, unit: str = "millimetres", compatible: bool = False,
-                 mode: int = 0, view: str = "plan", visible_only: bool = True):
+                 mode: int = 0, view: str = "plan", visible_only: bool = True, cut: bool = False,
+                 cut_height: float = 1.2):
         super().__init__(parent, tr('Export DXF'))
         from ..connectors.dxf import OLD_VIEWS
         unit, view = self.OLD_UNITS.get(unit, unit), OLD_VIEWS.get(view, view)
         self.mode = self.row(tr('Drawing'), Segmented(
-            [(0, '3D, the model', "obj"), (1, '2D, plan or elevation', "dxf")], mode if mode in (0, 1) else 0))
+            [(0, '3D, the model', "obj"), (1, '2D, a view of it', "dxf")], mode if mode in (0, 1) else 0))
         self.view = self.row(tr('View'), Cards(self.VIEWS, view, columns=5, side=28, help_texts=self.HELP_TEXTS_VIEW))
+        # The plan, cut at a height as architects draw it (the height in metres, as the model).
+        self.cut = QWidget()
+        line = QHBoxLayout(self.cut)
+        line.setContentsMargins(0, 0, 0, 0)
+        self.cut_on = Switch(tr('Cut at a height'), cut)
+        from .window import CellNumber           # the number box of Tensela (decimal comma in Spanish)
+        self.cut_height = CellNumber()
+        self.cut_height.setRange(-10000.0, 10000.0)
+        self.cut_height.setDecimals(2)
+        self.cut_height.setSingleStep(0.1)
+        self.cut_height.setSuffix(" m")
+        self.cut_height.setValue(cut_height)
+        line.addWidget(self.cut_on)
+        line.addWidget(self.cut_height)
+        line.addStretch(1)
+        self.cut_on.setToolTip(tr('What is above is not drawn; where the plane cuts goes in a layer of its own per '
+                                  'node, with a thicker line. About 1.20 m: the height of a usual plan.'))
+        self.row(tr('Plan cut'), self.cut)
         self.unit = self.row(tr('Unit'), Segmented(
             [(k, v, None) for k, v in self.UNITS.items()], unit if unit in self.UNITS else "millimetres",
             help_texts={k: k for k in self.UNITS}))
@@ -139,26 +168,37 @@ class DialogDxf(_Form):
         self.visible = self.row("", Switch(tr('Only what is visible'), visible_only))
         self.visible.setToolTip(tr('Removes hidden lines: what is behind is not drawn.'))
         self.mode.change.connect(lambda _: self._by_mode())
+        self.view.change.connect(lambda _: self._by_mode())
         self.visible.toggled.connect(lambda _: self._by_mode())
+        self.cut_on.toggled.connect(lambda _: self._by_mode())
         self._by_mode()
         self.finish()
 
     def _by_mode(self) -> None:
         in_2d = self.mode.value() == 1
+        in_plan = in_2d and self.view.value() == "plan"
         self.display_row(self.view, in_2d)
+        self.display_row(self.cut, in_plan)
+        self.cut_height.setEnabled(self.cut_on.isChecked())
         self.display_row(self.compatible, not in_2d)   # in 2D they are lines: anyone reads them
         self.display_row(self.visible, in_2d)
         if in_2d:
+            camera = self.view.value() == "camera"
             self.note.setText(tr('At real size (the scale is set when printing). One layer per node, with its colour.')
-                              + ("" if self.visible.isChecked() else " " + tr('All edges come out, also those behind.')))
+                              + (" " + tr('In perspective, at real size on the plane of what the view looks at.')
+                                 if camera else "")
+                              + ("" if self.visible.isChecked() else " " + tr('All edges come out, also those behind.'))
+                              + (" " + tr('The cut, in a layer of its own per node, thicker.')
+                                 if in_plan and self.cut_on.isChecked() else ""))
         else:
             self.note.setText(tr('One layer per node, with its colour; each piece, a separate object. Z up.'))
         self.adjustSize()
 
-    def choice(self) -> tuple[str, bool, str | None, bool]:
-        """(unit, compatible, view, visible only); the view is None in 3D."""
+    def choice(self) -> tuple[str, bool, str | None, bool, float | None]:
+        """(unit, compatible, view, visible only, cut); the view is None in 3D, the cut None if there is none."""
         view = self.view.value() if self.mode.value() == 1 else None
-        return self.unit.value(), self.compatible.isChecked(), view, self.visible.isChecked()
+        cut = self.cut_height.value() if view == "plan" and self.cut_on.isChecked() else None
+        return self.unit.value(), self.compatible.isChecked(), view, self.visible.isChecked(), cut
 
 
 class _Page(QWidget):
