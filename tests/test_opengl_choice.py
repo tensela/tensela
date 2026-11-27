@@ -50,3 +50,15 @@ def test_the_probe_says_no_when_it_cannot_ask(monkeypatch):
         raise OSError("no")
     monkeypatch.setattr(O.subprocess, "run", broken)
     assert O.system_is_enough() is False
+
+
+def test_the_probe_itself_runs_to_the_end():
+    """The probe draws its cube and answers, without breaking (a source freed at once broke it: then every computer
+    seemed to have no OpenGL, or the one of Windows Server seemed good)."""
+    import os
+    import subprocess
+    pytest.importorskip("vtkmodules")
+    done = subprocess.run([sys.executable, "-I", "-c", O.PROBE], capture_output=True, text=True, timeout=60,
+                          env={**os.environ, "TENSELA_OPENGL": "system"})
+    assert done.returncode == 0, done.stderr[-2000:]
+    assert done.stdout.splitlines()[0] in ("yes", "no")

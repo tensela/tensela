@@ -16,10 +16,27 @@ import subprocess
 import sys
 from pathlib import Path
 
-#: Asks for OpenGL 3.2 the way the 3D view will (VTK), without a window: «yes» or «no». If it breaks, it is «no».
-PROBE = ("import vtkmodules.vtkRenderingOpenGL2, vtkmodules.vtkRenderingCore as r\n"
-         "w = r.vtkRenderWindow(); w.SetOffScreenRendering(1)\n"
-         "print('yes' if w.SupportsOpenGL() else 'no', flush=True)\n")
+#: Asks for OpenGL 3.2 the way the 3D view will (VTK), without a window, and draws a cube with it: «yes» only if the
+#: cube came out. Some systems say they have it and cannot draw (Windows Server translates OpenGL to Direct3D, and
+#: VTK breaks there); if the probe breaks, it is «no» too. The second line says which OpenGL it was.
+PROBE = """
+import vtkmodules.vtkRenderingOpenGL2
+from vtkmodules.vtkFiltersSources import vtkCubeSource
+from vtkmodules.vtkRenderingCore import (vtkActor, vtkPolyDataMapper, vtkRenderWindow, vtkRenderer,
+                                         vtkWindowToImageFilter)
+w = vtkRenderWindow(); w.SetOffScreenRendering(1); w.SetSize(48, 48)
+if not w.SupportsOpenGL():
+    print("no"); raise SystemExit
+r = vtkRenderer(); r.SetBackground(0, 0, 0); w.AddRenderer(r)
+c = vtkCubeSource()                                  # (kept: a source freed at once leaves the mapper empty)
+m = vtkPolyDataMapper(); m.SetInputConnection(c.GetOutputPort())
+a = vtkActor(); a.SetMapper(m); r.AddActor(a); r.ResetCamera()
+w.Render()
+f = vtkWindowToImageFilter(); f.SetInput(w); f.Update()
+s = f.GetOutput().GetPointData().GetScalars()
+print("yes" if any(max(s.GetTuple(i)) > 0 for i in range(s.GetNumberOfTuples())) else "no")
+print(next((x for x in w.ReportCapabilities().splitlines() if "renderer string" in x), "").strip(), flush=True)
+"""
 PROBE_SECONDS = 30
 
 
@@ -34,7 +51,8 @@ def system_is_enough(timeout: float = PROBE_SECONDS) -> bool:
                               creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0))
     except (OSError, subprocess.TimeoutExpired):
         return False
-    return done.returncode == 0 and done.stdout.strip() == "yes"
+    lines = done.stdout.splitlines()
+    return done.returncode == 0 and bool(lines) and lines[0].strip() == "yes"
 
 
 def load_mesa(folder: Path) -> None:
