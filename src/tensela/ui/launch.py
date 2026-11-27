@@ -4,8 +4,9 @@ If Tensela is already open (for the same person and preferences), a second start
 hands its projects to the window that is open (a `.tela` opened with a double click arrives there as a new tab) and
 ends. It is quick because it does not load the rest of Tensela to find out.
 
-The open window listens on a local socket (`$XDG_RUNTIME_DIR/tensela-<key>.sock`, only for this person); the key
-comes from the preferences folder, so a Tensela started with other preferences (a test) is a window of its own.
+The open window listens on a local socket (`$XDG_RUNTIME_DIR/tensela-<key>.sock`, or `/tmp/tensela-<uid>/…` made only
+for this person when the session has no folder of its own); the key comes from the preferences folder, so a Tensela
+started with other preferences (a test) is a window of its own.
 """
 from __future__ import annotations
 
@@ -13,19 +14,51 @@ import hashlib
 import json
 import os
 import socket
+import stat
 import sys
 import tempfile
 from pathlib import Path
 
 
+def own_folder() -> Path | None:
+    """A folder of this person in the temporary one (/tmp/tensela-<uid>), made only for them (mode 700), for when the
+    session has no folder of its own ($XDG_RUNTIME_DIR: some minimal sessions, su, a remote shell). None if it exists
+    and is not only theirs: someone else could have left a socket there to receive what Tensela hands over."""
+    folder = Path(tempfile.gettempdir()) / f"tensela-{os.getuid()}"
+    try:
+        folder.mkdir(mode=0o700)
+    except FileExistsError:
+        pass
+    except OSError:
+        return None
+    try:
+        found = os.lstat(folder)
+    except OSError:
+        return None
+    if not stat.S_ISDIR(found.st_mode) or found.st_uid != os.getuid() or found.st_mode & 0o077:
+        return None
+    return folder
+
+
 def address() -> str:
-    """Where the open window listens."""
+    """Where the open window listens: in the folder of the session, which only this person can open, or in a folder of
+    their own (`own_folder`). Never loose in the shared temporary folder: if there is no folder of their own, an address
+    nobody else knows (then a second start opens a window of its own, which is safe)."""
     config = os.environ.get("XDG_CONFIG_HOME") or str(Path.home() / ".config")
     key = hashlib.sha1(f"{os.getuid()}:{Path(config).resolve()}".encode("utf-8")).hexdigest()[:12]
-    path = Path(os.environ.get("XDG_RUNTIME_DIR") or tempfile.gettempdir()) / f"tensela-{key}.sock"
-    if len(str(path).encode("utf-8")) > 100:          # a local socket's address has room for about 100 characters
-        path = Path(tempfile.gettempdir()) / f"tensela-{os.getuid()}-{key}.sock"
-    return str(path)
+    runtime = os.environ.get("XDG_RUNTIME_DIR")
+    for folder in ((Path(runtime),) if runtime and Path(runtime).is_dir() else ()) + (own_folder(),):
+        if folder is not None:
+            path = folder / f"tensela-{key}.sock"
+            if len(str(path).encode("utf-8")) <= 100:   # a local socket's address has room for about 100 characters
+                return str(path)
+    global _NOBODY_KNOWS
+    if _NOBODY_KNOWS is None:                          # the same one all along this process
+        _NOBODY_KNOWS = Path(tempfile.mkdtemp(prefix="tensela-"))
+    return str(_NOBODY_KNOWS / f"tensela-{key}.sock")
+
+
+_NOBODY_KNOWS: Path | None = None
 
 
 def hand_over(files: list[str], timeout: float = 2.0) -> bool:

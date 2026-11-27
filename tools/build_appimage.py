@@ -23,7 +23,9 @@ The result, in build/appimage/:
 - `Tensela-<version>-x86_64.AppImage`, the file most people download;
 - `Tensela-<version>-x86_64.tar.gz`, the same folder as a portable archive: unpacked anywhere (also /opt), it opens
   with `./tensela`, for whoever cannot or does not want to use an AppImage;
-- `SHA256SUMS`, the fingerprints of both, as `sha256sum -c SHA256SUMS` reads them (signed afterwards with
+- `Tensela-<version>-x86_64.AppImage.zsync`, for the update tools (the AppImage carries where to find it: the
+  newest release on GitHub; it needs zsyncmake, of the package zsync);
+- `SHA256SUMS`, the fingerprints of the three, as `sha256sum -c SHA256SUMS` reads them (signed afterwards with
   tools/sign_release.py);
 - `release.json`, what the Download page of the site shows (version, files, sizes, fingerprints), also copied into
   the site (src/data/release.json) when it is beside.
@@ -61,6 +63,9 @@ APPDIR = BUILD / "Tensela.AppDir"
 BRAND = ROOT / "src" / "tensela" / "ui" / "brand"
 #: What the software centres show of Tensela (AppStream), in the AppImage at usr/share/metainfo.
 METAINFO = ROOT / "packaging" / "com.tensela.Tensela.metainfo.xml"
+#: Where the update tools (AppImageUpdate, Gear Lever…) look for a newer Tensela: the .zsync of the newest release of
+#: tensela/tensela on GitHub, which lets them download only what changed.
+UPDATE_INFORMATION = "gh-releases-zsync|tensela|tensela|latest|Tensela-*-x86_64.AppImage.zsync"
 PYVER = "3.13"
 
 #: Where the libraries start from; the rest are what these need, found in the environment.
@@ -430,15 +435,22 @@ def build(args) -> int:
     output.unlink(missing_ok=True)                    # if packing fails, no old AppImage is left looking like the new one
     tool = args.appimagetool.resolve()
     tool.chmod(tool.stat().st_mode | stat.S_IXUSR)
+    if not shutil.which("zsyncmake"):
+        raise Refused("zsyncmake is missing (the package zsync): without it appimagetool does not write the .zsync "
+                      "that the update tools read. sudo apt install zsync")
     env = {**os.environ, "ARCH": "x86_64"}
-    done = subprocess.run([str(tool), "--appimage-extract-and-run", "--no-appstream", str(APPDIR), str(output)],
-                          env=env, capture_output=True, text=True)
+    zsync = output.with_name(output.name + ".zsync")
+    zsync.unlink(missing_ok=True)
+    done = subprocess.run([str(tool), "--appimage-extract-and-run", "--no-appstream", "-u", UPDATE_INFORMATION,
+                           str(APPDIR), str(output)], env=env, capture_output=True, text=True, cwd=BUILD)
     if done.returncode:
         print(done.stdout[-3000:], done.stderr[-3000:])
         return done.returncode
-    say(f"{output} ({output.stat().st_size / 1e6:.0f} MB)")
+    if not zsync.is_file():
+        raise Refused(f"appimagetool did not write {zsync.name}")
+    say(f"{output} ({output.stat().st_size / 1e6:.0f} MB), with its update information and {zsync.name}")
     portable = archive(version)
-    fingerprints(version, [output, portable])
+    fingerprints(version, [output, portable], [zsync])
     return 0
 
 
@@ -479,13 +491,14 @@ def archive(version: str) -> Path:
     return target
 
 
-def fingerprints(version: str, files: list[Path]) -> None:
-    """SHA256SUMS beside the files, and release.json for the Download page of the site."""
+def fingerprints(version: str, files: list[Path], more: list[Path] = ()) -> None:
+    """SHA256SUMS beside the files (and of `more`, the .zsync: signed with them, not offered on the page), and
+    release.json for the Download page of the site."""
     import datetime
     import hashlib
     import json
     sums = {}
-    for f in files:
+    for f in [*files, *more]:
         h = hashlib.sha256()
         with open(f, "rb") as stream:
             for block in iter(lambda: stream.read(1 << 20), b""):

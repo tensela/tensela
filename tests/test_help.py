@@ -81,3 +81,18 @@ def test_a_language_without_its_manual_opens_the_english_one(tmp_path, monkeypat
     monkeypatch.setattr(language, "LANGUAGE", "fr")
     assert H.manual_url().toLocalFile().endswith("tensela-manual-en.html")
     assert H.online_manual().toString() == "https://tensela.com/manual/"
+
+
+def test_check_for_updates_opens_download_told_which_version_this_is():
+    """Help → Check for updates: the Download page in the language of the window, with this version, so that the
+    page says whether there is a newer one (Tensela does not connect by itself)."""
+    from tensela import __version__, language
+    from tensela.ui import help as module_help
+    before = language.LANGUAGE
+    try:
+        language.LANGUAGE = "es"
+        assert module_help.LINKS["updates"]() == f"https://tensela.com/es/download/?version={__version__}"
+        language.LANGUAGE = "en"
+        assert module_help.LINKS["updates"]() == f"https://tensela.com/download/?version={__version__}"
+    finally:
+        language.LANGUAGE = before

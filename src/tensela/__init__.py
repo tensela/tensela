@@ -2,7 +2,7 @@
 
 import os
 
-__version__ = "0.9.4"
+__version__ = "0.9.5"
 
 # AppRun may add libraries for systems that lack them (usr/lib/fallback of the AppImage). This process already has
 # them (the loader reads LD_LIBRARY_PATH when it starts); the programs Tensela opens get back the path they would

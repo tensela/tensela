@@ -112,3 +112,20 @@ def test_booleans():
         meshes.boolean(a, geo.move(geo.box(1, 1, 1), (10, 0, 0)), 'intersection')
 
 
+
+
+
+def test_a_body_that_folds_over_itself_is_refused_before_the_boolean():
+    """A box morphed into corners in the wrong order pinches through itself, its side faces turned into «bow ties»:
+    with forty of them the boolean library never ended, or broke (a wall of cells with its block at 0).
+    Now it says so first; a healthy body, and a twisted panel that does not fold, still pass."""
+    pytest.importorskip("manifold3d")
+    from tensela.data import Data
+    corners = [(0.04, -0.2, 0.04), (-0.04, -0.2, 0.04), (-0.02, 0.2, -0.1), (-0.1, 0.2, -0.1),
+               (0.04, -0.2, -0.04), (-0.04, -0.2, -0.04), (-0.02, 0.2, -0.02), (-0.1, 0.2, -0.02)]
+    folded = geo.morph(geo.box(1, 1, 1), Data(np.array(corners, dtype=float), ("corner",), "corners", kind=geo.POINT))
+    with pytest.raises(ShapeError, match="se dobla sobre sí mismo"):
+        meshes.boolean(geo.box(1, 1, 1), folded)
+    twisted = [(0, 0, 0), (1, 0, 0), (1, 1, 0.3), (0, 1, 0), (0, 0, 1), (1, 0, 1), (1, 1, 1), (0, 1, 1.2)]
+    leaning = geo.morph(geo.box(1, 1, 1), Data(np.array(twisted, dtype=float), ("corner",), "corners", kind=geo.POINT))
+    assert measures.volume(meshes.boolean(leaning, geo.box(0.2, 0.2, 0.2), 'difference')).values > 0

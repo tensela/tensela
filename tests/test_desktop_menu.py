@@ -96,6 +96,51 @@ def test_other_preferences_listen_somewhere_else(tmp_path, monkeypatch):
     assert len(launch.address()) <= 100                    # too long for a socket: a short one in the temporary folder
 
 
+@pytest.fixture
+def short_temporary(monkeypatch):
+    """A temporary folder with a short path (a socket's address has room for about 100 characters)."""
+    import shutil
+    import tempfile
+    from pathlib import Path
+    folder = Path(tempfile.mkdtemp(prefix="ts-", dir="/tmp"))
+    monkeypatch.setattr(tempfile, "tempdir", str(folder))
+    monkeypatch.setattr(launch, "_NOBODY_KNOWS", None)
+    yield folder
+    shutil.rmtree(folder, ignore_errors=True)
+
+
+def test_without_a_folder_of_the_session_the_socket_goes_in_a_folder_only_of_this_person(tmp_path, monkeypatch,
+                                                                                         short_temporary):
+    """Without $XDG_RUNTIME_DIR, not loose in the shared temporary folder (another user could leave a socket there
+    and receive what a second start hands over): in /tmp/tensela-<uid>, made with mode 700."""
+    import os
+    import stat
+    monkeypatch.delenv("XDG_RUNTIME_DIR", raising=False)
+    monkeypatch.setenv("XDG_CONFIG_HOME", str(tmp_path / "config"))
+    own = short_temporary / f"tensela-{os.getuid()}"
+    assert launch.address().startswith(str(own) + "/")
+    assert stat.S_IMODE(os.stat(own).st_mode) == 0o700
+
+
+@pytest.mark.parametrize("spoiled", ["open to others", "a link"])
+def test_a_folder_that_is_not_only_of_this_person_is_not_used(tmp_path, monkeypatch, spoiled, short_temporary):
+    """If /tmp/tensela-<uid> was left by someone else (open to others, or a link elsewhere), it is not used: an address
+    nobody knows (then a second start opens a window of its own), the same one along the process."""
+    import os
+    monkeypatch.delenv("XDG_RUNTIME_DIR", raising=False)
+    monkeypatch.setenv("XDG_CONFIG_HOME", str(tmp_path / "config"))
+    own = short_temporary / f"tensela-{os.getuid()}"
+    if spoiled == "a link":
+        (short_temporary / "elsewhere").mkdir(mode=0o700)
+        own.symlink_to(short_temporary / "elsewhere")
+    else:
+        own.mkdir()
+        own.chmod(0o777)
+    first = launch.address()
+    assert not first.startswith(str(own)) and not first.startswith(str(short_temporary / "elsewhere"))
+    assert launch.address() == first
+
+
 SCRIPT = r'''
 import os, sys
 from PySide6.QtCore import QTimer

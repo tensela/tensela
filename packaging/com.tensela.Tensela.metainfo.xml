@@ -113,6 +113,14 @@
   <content_rating type="oars-1.1"/>
 
   <releases>
+    <release version="0.9.5" date="2026-11-27">
+      <description>
+        <p>The 2D DXF export draws isometric views, a plan cut at a height and the view as the 3D camera sees it.
+          Help → Check for updates says whether there is a newer version, and Linux update tools can update the
+          AppImage. Clearer notices for sun hours outside the day and for bodies that fold over themselves in a
+          boolean.</p>
+      </description>
+    </release>
     <release version="0.9.4" date="2026-11-25">
       <description>
         <p>Opens its window in seconds also on computers without a graphics card, where it took close to a minute.</p>

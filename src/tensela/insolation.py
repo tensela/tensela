@@ -106,6 +106,8 @@ def cumulative_sky(location, latitude, longitude, time_zone, period, month, day,
     d, m = _days(period, int(month), int(day), lat)
     if not len(d):
         raise ShapeError(tr('The period has no days: check the month and the day.'))
+    if not 0.0 <= from_hour < to_hour <= 24.0:          # (a climate file has 24 a day: hour 30 is not in it)
+        raise ShapeError(tr('The hours go from «from hour» to «to hour», between 0 and 24, the first smaller.'))
     hours = np.arange(np.floor(from_hour), np.ceil(to_hour)) + 0.5
     hours = hours[(hours > from_hour) & (hours < to_hour)]
     if not len(hours):

@@ -134,6 +134,9 @@ LINKS = {
     "community": lambda: f"{REPOSITORY}/discussions",
     "report": lambda: f"{REPOSITORY}/issues/new",
     "donate": lambda: link("/donate/"),
+    # The Download page, told which version this is: it says whether there is a newer one (Tensela does not connect
+    # by itself to find out).
+    "updates": lambda: link("/download/") + f"?version={__version__}",
 }
 
 

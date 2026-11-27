@@ -82,3 +82,11 @@ def test_what_it_says():
         I.insolation(_square(), show='faces')
 
 
+
+
+@pytest.mark.parametrize("from_hour, to_hour", [(0.0, 100000.0), (-3.0, 12.0), (14.0, 10.0), (12.0, 12.0)])
+def test_hours_outside_the_day_say_so(from_hour, to_hour):
+    """«to hour» = 100 000 broke it with a climate file (its year has 8760 hours): the hours go from 0 to 24, the
+    first smaller (found by the review with odd values, 2026-11-26)."""
+    with pytest.raises(ShapeError, match="between 0 and 24"):
+        I.insolation(_square(), from_hour=from_hour, to_hour=to_hour)

@@ -571,6 +571,30 @@ def pipe(curves: Data, radius=0.5, sides=SIDES_PIPE, name: str | None = None, se
 OPERATIONS_BOOLEANS = ('union', 'difference', 'intersection')
 
 
+def _folded(kind, p: np.ndarray) -> bool:
+    """Whether a face of the element folds over itself: its triangles (a fan from its first corner) face opposite
+    ways, as in a «bow tie». The boolean library takes such a body without complaint and then never ends, or breaks
+    and takes the calculation with it (a wall of cells with its block at 0: the cores, morphed into corners in the
+    wrong order, pinched through themselves)."""
+    from .measures import real_faces
+    faces = real_faces(kind, p) if kind.polygon else kind.faces
+    by_length: dict[int, list] = {}
+    for face in faces:
+        if len(face) >= 4:
+            by_length.setdefault(len(face), []).append(face)
+    size_ = float(np.ptp(p.reshape(-1, 3), axis=0).max()) if p.size else 0.0
+    smallest = (size_ * 1e-6) ** 2
+    for length, group in by_length.items():
+        corners = p.reshape(-1, 3)[np.array(group, dtype=np.int64)]          # (faces, length, 3)
+        normals = np.cross(corners[:, 1:-1] - corners[:, :1], corners[:, 2:] - corners[:, :1])
+        sizes = np.linalg.norm(normals, axis=2)
+        largest = normals[np.arange(len(group)), sizes.argmax(axis=1)]
+        cosine = np.einsum("ftk,fk->ft", normals, largest) / np.maximum(sizes * sizes.max(axis=1)[:, None], 1e-300)
+        if ((sizes > smallest) & (cosine < -0.5)).any():
+            return True
+    return False
+
+
 def _body(geometry: Data, role: str):
     """All the elements of a data (boxes, prisms, extrusions with caps, tubes…) as a single manifold3d body (joined)."""
     from manifold3d import Manifold, Mesh64
@@ -591,6 +615,10 @@ def _body(geometry: Data, role: str):
         _, first, indices = np.unique(keys, axis=0, return_index=True, return_inverse=True)
         vertices = t.reshape(-1, 3)[first]
         triangles = indices.reshape(-1, 3)
+        if _folded(kind, p):
+            raise ShapeError(tr('“{name}” folds over itself: some of its faces turn inside out (corners in the wrong '
+                                'order, a negative size), and a boolean cannot tell its inside from its outside.'
+                                ).format(name=geometry._name()))
         # Outwards (manifold requires it): if the volume comes out negative, they are flipped.
         a, b, c = (vertices[triangles[:, k]] for k in range(3))
         if np.einsum("ij,ij->i", a, np.cross(b, c)).sum() < 0:

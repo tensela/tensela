@@ -1104,6 +1104,9 @@ class Window(QMainWindow):
         item('&Report a problem or send a comment', lambda: module_help.open_url(module_help.LINKS["report"]()),
              tip='Opens the page to write it; nothing is sent by itself')
         menu.addSeparator()
+        item('Check for &updates', lambda: module_help.open_url(module_help.LINKS["updates"]()),
+             tip='Opens the Download page of tensela.com, which says whether there is a newer version (Tensela does '
+                 'not connect by itself)')
         item('&Support Tensela', lambda: module_help.open_url(module_help.LINKS["donate"]()))
         item('&About Tensela', self.about)
 
