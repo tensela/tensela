@@ -191,17 +191,33 @@ def test_software_rendering_is_told_by_the_renderer_name():
     assert software_rendering(SimpleNamespace(ReportCapabilities=lambda: 1 / 0)) is None
 
 
-def test_without_a_graphics_card_every_style_smooths_with_fxaa():
+def test_without_a_graphics_card_every_style_smooths_with_fxaa(monkeypatch):
     """Drawn by the processor, SSAA made the line styles three times slower while orbiting."""
     from types import SimpleNamespace
-    from tensela.ui.viewer import Viewer
+    from tensela.ui import viewer
     chosen = []
-    view = SimpleNamespace(disable_anti_aliasing=lambda: None, enable_anti_aliasing=chosen.append)
+    monkeypatch.setattr(viewer, "smooth_edges", lambda view, kind: chosen.append(kind))
+    view = SimpleNamespace(disable_anti_aliasing=lambda: None)
     for software, style, expected in ((False, "wireframe", "ssaa"), (False, "solid", "fxaa"),
                                       (True, "wireframe", "fxaa"), (True, "hidden lines", "fxaa"),
                                       (None, "x-ray", "ssaa")):
-        Viewer._smooth_edges(SimpleNamespace(view=view, style_name=style, software=software))
+        viewer.Viewer._smooth_edges(SimpleNamespace(view=view, style_name=style, software=software))
         assert chosen[-1] == expected, (software, style)
+
+
+def test_fxaa_goes_straight_to_vtk():
+    """pyvista takes VTK on Windows for a build without windows and changes FXAA for SSAA, which broke drawing with
+    Mesa: FXAA is turned on in each renderer, without asking pyvista."""
+    from types import SimpleNamespace
+    from tensela.ui.viewer import smooth_edges
+    asked, renderers = [], [SimpleNamespace(on=None, SetUseFXAA=None, Modified=lambda: None) for _ in range(2)]
+    for r in renderers:
+        r.SetUseFXAA = lambda yes, r=r: setattr(r, "on", yes)
+    plotter = SimpleNamespace(renderers=renderers, enable_anti_aliasing=asked.append)
+    smooth_edges(plotter, "fxaa")
+    assert all(r.on is True for r in renderers) and asked == []
+    smooth_edges(plotter, "ssaa")
+    assert asked == ["ssaa"]
 
 
 def test_a_renderer_that_never_says_counts_as_a_graphics_card():

@@ -125,13 +125,25 @@ def colours_table(gradient: str) -> pv.LookupTable:
     return table
 
 
+def smooth_edges(plotter, kind: str) -> None:
+    """The smoothing of the edges: «fxaa» (light, on the finished image) or «ssaa» (the image drawn larger). FXAA goes
+    straight to VTK: pyvista takes VTK on Windows for a build without windows (EGL, as it has no X11 window) and
+    changes FXAA for SSAA, which breaks drawing with Mesa (llvmpipe)."""
+    if kind == "fxaa":
+        for renderer in plotter.renderers:
+            renderer.SetUseFXAA(True)
+            renderer.Modified()
+    else:
+        plotter.enable_anti_aliasing(kind)
+
+
 def prepare(plotter: pv.Plotter, axes: bool = True) -> None:
     """Background, axes and lights: a sun from front-left-above and a soft light from the camera.
 
     So each face of a block has a different tone and the depth reads.
     """
     plotter.set_background(COLOR_DEPTH)
-    plotter.enable_anti_aliasing("fxaa")
+    smooth_edges(plotter, "fxaa")
     if axes:
         plotter.add_axes(interactive=False, line_width=2, labels_off=False)
     studio.put_sky(plotter)
@@ -1035,7 +1047,7 @@ class Viewer(QWidget):
         three times slower while orbiting."""
         light = self.style_name in ("occlusion", "matcap", "solid", "model") or bool(self.software)
         self.view.disable_anti_aliasing()
-        self.view.enable_anti_aliasing("fxaa" if light else "ssaa")
+        smooth_edges(self.view, "fxaa" if light else "ssaa")
 
     def _learn_renderer(self) -> None:
         """After the first image: whether a graphics card draws. If it is the processor, the edges change at once."""
