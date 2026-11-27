@@ -17,16 +17,16 @@ The folder:
         README.txt
         python/              the portable Python, the libraries, Tensela, and mesa/
 
-The two .exe are the launchers pip uses for the programs of a library (from distlib, inside pip), with the path of
-Python written relative to themselves: the folder works wherever it is unpacked.
+The two .exe are our launcher (packaging/windows/launcher.c, compiled here with the icon of Tensela): each starts
+python/pythonw.exe (or python.exe) beside itself, in isolated mode, so the folder works wherever it is unpacked.
 
     python tools/build_windows.py            # → build/windows/Tensela-<version>-windows-x64.zip
 """
 from __future__ import annotations
 
 import hashlib
-import io
 import json
+import os
 import re
 import shutil
 import subprocess
@@ -49,9 +49,6 @@ STDLIB_OUT = ["test", "idlelib", "tkinter", "turtledemo", "ensurepip", "lib2to3"
 TRIM = ["PySide6/*.exe", "PySide6/qml", "PySide6/include", "PySide6/typesystems", "PySide6/glue", "PySide6/*.pyi",
         "PySide6/metatypes", "PySide6/scripts", "shiboken6/*.pyi", "pip", "pip-*.dist-info"]
 KEEP_TRANSLATIONS = re.compile(r"^qt(base)?_(es|en)\.qm$")
-
-GUI_MAIN = "import sys\nfrom tensela.ui.launch import main\nsys.exit(main())\n"
-CLI_MAIN = "import sys\nfrom tensela.cli import run\nsys.exit(run())\n"
 
 README = """Tensela {version} for Windows (portable, a first version for testing)
 
@@ -146,16 +143,30 @@ def mesa(home: Path) -> None:
 
 
 def launchers(folder: Path, home: Path) -> None:
-    """Tensela.exe and tensela-cli.exe: pip's launchers, Python written relative to them, and the code to run."""
-    distlib = home / "Lib" / "site-packages" / "pip" / "_vendor" / "distlib"
-    for name, launcher, python_exe, main in (("Tensela.exe", "w64.exe", "pythonw.exe", GUI_MAIN),
-                                              ("tensela-cli.exe", "t64.exe", "python.exe", CLI_MAIN)):
-        code = io.BytesIO()
-        with zipfile.ZipFile(code, "w") as z:
-            z.writestr("__main__.py", main)
-        shebang = f"#!python\\{python_exe}\r\n".encode()
-        (folder / name).write_bytes((distlib / launcher).read_bytes() + shebang + code.getvalue())
-    say("Tensela.exe and tensela-cli.exe")
+    """Tensela.exe and tensela-cli.exe: our launcher (packaging/windows/launcher.c), with the icon of Tensela,
+    compiled with the compiler of Visual Studio (found with vswhere, as on the machines of GitHub)."""
+    work = BUILD / "launcher"
+    shutil.rmtree(work, ignore_errors=True)
+    work.mkdir(parents=True)
+    for name in ("launcher.c", "launcher.rc"):
+        shutil.copy2(ROOT / "packaging" / "windows" / name, work / name)
+    subprocess.run([str(home / "python.exe"), "-I", "-c",
+                    "import sys; from PIL import Image; Image.open(sys.argv[1]).save(sys.argv[2], "
+                    "sizes=[(16, 16), (24, 24), (32, 32), (48, 48), (64, 64), (128, 128), (256, 256)])",
+                    str(ROOT / "src" / "tensela" / "ui" / "brand" / "tensela-512.png"), str(work / "tensela.ico")],
+                   check=True)
+    vswhere = Path(os.environ["ProgramFiles(x86)"]) / "Microsoft Visual Studio" / "Installer" / "vswhere.exe"
+    studio = subprocess.run([str(vswhere), "-latest", "-products", "*", "-requires",
+                             "Microsoft.VisualStudio.Component.VC.Tools.x86.x64", "-property", "installationPath"],
+                            capture_output=True, text=True, check=True).stdout.strip()
+    vcvars = Path(studio) / "VC" / "Auxiliary" / "Build" / "vcvars64.bat"
+    steps = [f'call "{vcvars}" >nul', "rc /nologo /fo icon.res launcher.rc",
+             "cl /nologo /O2 /W3 /Fe:Tensela.exe launcher.c icon.res user32.lib /link /SUBSYSTEM:WINDOWS",
+             "cl /nologo /O2 /W3 /DCONSOLE /Fe:tensela-cli.exe launcher.c icon.res /link /SUBSYSTEM:CONSOLE"]
+    subprocess.run(["cmd", "/c", " && ".join(steps)], cwd=work, check=True)
+    for name in ("Tensela.exe", "tensela-cli.exe"):
+        shutil.copy2(work / name, folder / name)
+    say("Tensela.exe and tensela-cli.exe, with the icon of Tensela")
 
 
 def trim(site: Path) -> None:

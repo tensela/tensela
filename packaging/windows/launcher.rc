@@ -1,0 +1,2 @@
+/* The icon of Tensela.exe and tensela-cli.exe (tools/build_windows.py writes tensela.ico). */
+1 ICON "tensela.ico"
