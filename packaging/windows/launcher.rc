@@ -1,2 +1,42 @@
-/* The icon of Tensela.exe and tensela-cli.exe (tools/build_windows.py writes tensela.ico). */
+/* The icon and the program data of Tensela.exe and tensela-cli.exe (name, version, author), as Windows shows them in
+   Properties → Details. tools/build_windows.py writes tensela.ico and version.h; /DCONSOLE for tensela-cli.exe. */
+#include <winver.h>
+#include "version.h"
+
 1 ICON "tensela.ico"
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION VERSION_NUMBERS
+ PRODUCTVERSION VERSION_NUMBERS
+ FILEFLAGSMASK VS_FFI_FILEFLAGSMASK
+ FILEFLAGS 0
+ FILEOS VOS_NT_WINDOWS32
+ FILETYPE VFT_APP
+ FILESUBTYPE 0
+BEGIN
+  BLOCK "StringFileInfo"
+  BEGIN
+    BLOCK "040904B0"
+    BEGIN
+      VALUE "CompanyName", "Tensela"
+#ifdef CONSOLE
+      VALUE "FileDescription", "Tensela (terminal)"
+      VALUE "InternalName", "tensela-cli"
+      VALUE "OriginalFilename", "tensela-cli.exe"
+#else
+      VALUE "FileDescription", "Tensela"
+      VALUE "InternalName", "Tensela"
+      VALUE "OriginalFilename", "Tensela.exe"
+#endif
+      VALUE "FileVersion", VERSION_TEXT
+      VALUE "ProductName", "Tensela"
+      VALUE "ProductVersion", VERSION_TEXT
+      VALUE "LegalCopyright", "Victor Crespo. Free software, GPL-3.0-or-later"
+      VALUE "Comments", "Parametric design an architect understands. https://tensela.com"
+    END
+  END
+  BLOCK "VarFileInfo"
+  BEGIN
+    VALUE "Translation", 0x0409, 1200
+  END
+END

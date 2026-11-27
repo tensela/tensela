@@ -142,7 +142,7 @@ def mesa(home: Path) -> None:
     say("Mesa, for computers without OpenGL 3.2")
 
 
-def launchers(folder: Path, home: Path) -> None:
+def launchers(folder: Path, home: Path, version: str) -> None:
     """Tensela.exe and tensela-cli.exe: our launcher (packaging/windows/launcher.c), with the icon of Tensela,
     compiled with the compiler of Visual Studio (found with vswhere, as on the machines of GitHub)."""
     work = BUILD / "launcher"
@@ -155,20 +155,24 @@ def launchers(folder: Path, home: Path) -> None:
                     "sizes=[(16, 16), (24, 24), (32, 32), (48, 48), (64, 64), (128, 128), (256, 256)])",
                     str(ROOT / "src" / "tensela" / "ui" / "brand" / "tensela-512.png"), str(work / "tensela.ico")],
                    check=True)
+    numbers = ",".join((re.findall(r"\d+", version) + ["0"] * 4)[:4])
+    (work / "version.h").write_text(f'#define VERSION_NUMBERS {numbers}\n#define VERSION_TEXT "{version}"\n',
+                                    encoding="ascii")
     vswhere = Path(os.environ["ProgramFiles(x86)"]) / "Microsoft Visual Studio" / "Installer" / "vswhere.exe"
     studio = subprocess.run([str(vswhere), "-latest", "-products", "*", "-requires",
                              "Microsoft.VisualStudio.Component.VC.Tools.x86.x64", "-property", "installationPath"],
                             capture_output=True, text=True, check=True).stdout.strip()
     vcvars = Path(studio) / "VC" / "Auxiliary" / "Build" / "vcvars64.bat"
-    steps = [f'call "{vcvars}" >nul', "rc /nologo /fo icon.res launcher.rc",
-             "cl /nologo /O2 /W3 /Fe:Tensela.exe launcher.c icon.res user32.lib /link /SUBSYSTEM:WINDOWS",
-             "cl /nologo /O2 /W3 /DCONSOLE /Fe:tensela-cli.exe launcher.c icon.res /link /SUBSYSTEM:CONSOLE"]
+    steps = [f'call "{vcvars}" >nul', "rc /nologo /fo window.res launcher.rc",
+             "rc /nologo /DCONSOLE /fo terminal.res launcher.rc",
+             "cl /nologo /O2 /W3 /Fe:Tensela.exe launcher.c window.res user32.lib /link /SUBSYSTEM:WINDOWS",
+             "cl /nologo /O2 /W3 /DCONSOLE /Fe:tensela-cli.exe launcher.c terminal.res /link /SUBSYSTEM:CONSOLE"]
     (work / "build.bat").write_text("@echo off\r\n" + "\r\n".join(f"{step} || exit /b 1" for step in steps) + "\r\n",
                                     encoding="ascii")                   # (cmd and Python quote differently)
     subprocess.run(["cmd", "/c", "build.bat"], cwd=work, check=True)
     for name in ("Tensela.exe", "tensela-cli.exe"):
         shutil.copy2(work / name, folder / name)
-    say("Tensela.exe and tensela-cli.exe, with the icon of Tensela")
+    say(f"Tensela.exe and tensela-cli.exe, with the icon and the data of Tensela {version}")
 
 
 def trim(site: Path) -> None:
@@ -197,7 +201,7 @@ def main() -> int:
     libraries(home)
     version = tensela(site)
     mesa(home)
-    launchers(staging, home)
+    launchers(staging, home, version)
     trim(site)
     shutil.rmtree(home / "Scripts", ignore_errors=True)        # pip's programs, gone with pip
     subprocess.run([str(home / "python.exe"), "-m", "compileall", "-q", "-j", "0", str(home / "Lib")],

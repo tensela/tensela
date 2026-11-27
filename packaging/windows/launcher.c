@@ -5,8 +5,8 @@
    from), with Tensela and the same arguments, waits for it and gives back its code. Nothing else: no job object, no
    console of its own for the window. Built by tools/build_windows.py with the compiler of Visual Studio:
 
-       cl /O2 launcher.c icon.res /link /SUBSYSTEM:WINDOWS                       -> Tensela.exe
-       cl /O2 /DCONSOLE launcher.c icon.res /link /SUBSYSTEM:CONSOLE             -> tensela-cli.exe
+       cl /O2 launcher.c window.res /link /SUBSYSTEM:WINDOWS                     -> Tensela.exe
+       cl /O2 /DCONSOLE launcher.c terminal.res /link /SUBSYSTEM:CONSOLE         -> tensela-cli.exe
 */
 #include <windows.h>
 #include <stdio.h>
