@@ -2,6 +2,7 @@
 a clear notice; the theme's images go to a folder of the user's own; the Code node stays closed in."""
 import os
 import stat
+import sys
 from pathlib import Path
 
 import pytest
@@ -58,7 +59,8 @@ def test_the_theme_images_go_to_a_folder_of_the_user(tmp_path, monkeypatch):
     from tensela.ui.theme import _own_folder
     folder = _own_folder()
     assert folder == tmp_path / "cache" / "tensela" / "theme"
-    assert stat.S_IMODE(os.stat(folder).st_mode) == 0o700           # only its owner reads and writes there
+    if sys.platform != "win32":                                     # (Windows: the folder of the user is theirs)
+        assert stat.S_IMODE(os.stat(folder).st_mode) == 0o700       # only its owner reads and writes there
 
 
 @pytest.mark.parametrize("code", [

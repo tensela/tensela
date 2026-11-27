@@ -11,6 +11,7 @@ import appimage_lock  # noqa: E402
 import build_appimage as B  # noqa: E402
 
 SRC = Path(__file__).resolve().parent.parent / "src"
+pytestmark = __import__("pytest").mark.skipif(sys.platform == "win32", reason="the AppImage and its AppRun are of Linux")
 
 
 def _apprun(tmp_path: Path, present: list[str]) -> dict:

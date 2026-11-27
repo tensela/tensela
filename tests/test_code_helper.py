@@ -136,5 +136,7 @@ def test_closed_in_nothing_leaves_even_with_all_of_python_at_hand(tmp_path):
     assert results.pop("plain computing") == "RAN"                   # computing is all that is left
     assert len(results) >= 25
     for what, happened in results.items():
+        if sys.platform == "win32" and happened.startswith("AttributeError: module 'os' has no attribute"):
+            continue                                                 # (os.fork and the like: not on Windows)
         assert happened != "RAN" and ("_Outside" in happened or "MemoryError" in happened), (what, happened)
     assert victim.read_text() == "still here" and sorted(p.name for p in tmp_path.iterdir()) == ["victim.txt"]

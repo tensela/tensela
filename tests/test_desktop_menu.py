@@ -11,6 +11,8 @@ import pytest
 from tensela.ui import desktop, launch
 
 SRC = Path(__file__).resolve().parent.parent / "src"
+#: The applications menu and the folders in /tmp are of Linux (on Windows, the installer and a named pipe).
+only_linux = pytest.mark.skipif(sys.platform == "win32", reason="Linux only")
 
 
 def test_the_exec_line_quotes_the_path():
@@ -40,6 +42,7 @@ def home(tmp_path, monkeypatch):
     return tmp_path, image
 
 
+@only_linux
 def test_into_the_menu_and_out_again(home):
     tmp, image = home
     assert desktop.appimage() == image and desktop.installed_for() is None
@@ -55,6 +58,7 @@ def test_into_the_menu_and_out_again(home):
     assert desktop.installed_for() is None
 
 
+@only_linux
 def test_the_portable_folder_goes_to_the_menu_too(tmp_path, monkeypatch):
     monkeypatch.setenv("XDG_DATA_HOME", str(tmp_path / "share"))
     monkeypatch.delenv("APPIMAGE", raising=False)
@@ -68,6 +72,7 @@ def test_the_portable_folder_goes_to_the_menu_too(tmp_path, monkeypatch):
     assert f'Exec="{launcher}" %F' in desktop.entry_path().read_text(encoding="utf-8")
 
 
+@only_linux
 def test_the_launcher_follows_a_moved_appimage(home, monkeypatch):
     tmp, image = home
     desktop.install(image)
@@ -91,6 +96,9 @@ def test_other_preferences_listen_somewhere_else(tmp_path, monkeypatch):
     monkeypatch.setenv("XDG_CONFIG_HOME", str(tmp_path / "one"))
     one = launch.address()
     monkeypatch.setenv("XDG_CONFIG_HOME", str(tmp_path / "two"))
+    if launch.WINDOWS:                                     # the name of a pipe
+        assert launch.address() != one and launch.address().startswith("tensela-")
+        return
     assert launch.address() != one and launch.address().startswith(str(tmp_path))
     monkeypatch.setenv("XDG_RUNTIME_DIR", str(tmp_path / ("long folder " * 10)))
     assert len(launch.address()) <= 100                    # too long for a socket: a short one in the temporary folder
@@ -109,6 +117,7 @@ def short_temporary(monkeypatch):
     shutil.rmtree(folder, ignore_errors=True)
 
 
+@only_linux
 def test_without_a_folder_of_the_session_the_socket_goes_in_a_folder_only_of_this_person(tmp_path, monkeypatch,
                                                                                          short_temporary):
     """Without $XDG_RUNTIME_DIR, not loose in the shared temporary folder (another user could leave a socket there
@@ -122,6 +131,7 @@ def test_without_a_folder_of_the_session_the_socket_goes_in_a_folder_only_of_thi
     assert stat.S_IMODE(os.stat(own).st_mode) == 0o700
 
 
+@only_linux
 @pytest.mark.parametrize("spoiled", ["open to others", "a link"])
 def test_a_folder_that_is_not_only_of_this_person_is_not_used(tmp_path, monkeypatch, spoiled, short_temporary):
     """If /tmp/tensela-<uid> was left by someone else (open to others, or a link elsewhere), it is not used: an address
@@ -169,6 +179,7 @@ app.exec()
 '''
 
 
+@only_linux
 def test_a_second_start_opens_its_project_in_the_open_window(tmp_path, monkeypatch):
     pytest.importorskip("PySide6")
     image = tmp_path / "Tensela.AppImage"
@@ -196,33 +207,48 @@ def test_a_second_start_opens_its_project_in_the_open_window(tmp_path, monkeypat
 
 def test_the_permission_to_come_forward_travels_with_the_projects(tmp_path, monkeypatch):
     """The activation token the desktop gave the second start goes to the open window (ui/activate.py), so that
-    GNOME lets it come to the front instead of saying «Tensela is ready»."""
+    GNOME lets it come to the front instead of saying «Tensela is ready». Through the same server the window listens
+    with (QLocalServer: a local socket on Linux, a named pipe on Windows)."""
     import json
-    import socket
     import threading
+    pytest.importorskip("PySide6")
+    from PySide6.QtCore import QCoreApplication
+    from PySide6.QtNetwork import QLocalServer
     monkeypatch.setenv("XDG_RUNTIME_DIR", str(tmp_path))
     monkeypatch.setenv("XDG_CONFIG_HOME", str(tmp_path / "config"))
     monkeypatch.setenv("XDG_ACTIVATION_TOKEN", "token-123")
     monkeypatch.setenv("DESKTOP_STARTUP_ID", "token-123")
-    got = {}
-    server = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
-    server.bind(launch.address())
-    server.listen(1)
+    app = QCoreApplication.instance() or QCoreApplication([])
+    server = QLocalServer()
+    server.setSocketOptions(QLocalServer.SocketOption.UserAccessOption)
+    assert server.listen(launch.address()), server.errorString()
+    got, handed = {}, {}
+    data = bytearray()
 
-    def answer():
-        connection, _ = server.accept()
-        data = b""
-        while b"\n" not in data:
-            data += connection.recv(4096)
-        got.update(json.loads(data))
-        connection.sendall(b"ok\n")
-        connection.close()
+    def arrived():
+        connection = server.nextPendingConnection()
 
-    thread = threading.Thread(target=answer)
-    thread.start()
+        def read():
+            data.extend(bytes(connection.readAll()))
+            if b"\n" in data:
+                got.update(json.loads(bytes(data).split(b"\n", 1)[0]))
+                connection.write(b"ok\n")
+                connection.flush()
+                connection.disconnectFromServer()
+        connection.readyRead.connect(read)
+        if connection.bytesAvailable():
+            read()
+
+    server.newConnection.connect(arrived)
+    second = threading.Thread(target=lambda: handed.update(ok=launch.hand_over(["/a/roof.tela"])))
+    second.start()
     try:
-        assert launch.hand_over(["/a/roof.tela"])
-        thread.join(5)
+        for _ in range(500):
+            app.processEvents()
+            if not second.is_alive() and got:
+                break
+            second.join(0.01)
     finally:
         server.close()
+    assert handed == {"ok": True}
     assert got == {"files": ["/a/roof.tela"], "XDG_ACTIVATION_TOKEN": "token-123", "DESKTOP_STARTUP_ID": "token-123"}

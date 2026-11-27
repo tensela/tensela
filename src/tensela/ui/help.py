@@ -125,8 +125,10 @@ def jump_page(target: QUrl) -> Path:
 
 
 def link(path: str) -> str:
-    """An address of the site in the language of the window («/donate/» → «https://tensela.com/es/donate/»)."""
-    return f"{SITE}/es{path}" if _lang() == "es" else f"{SITE}{path}"
+    """An address of the site in the language of the window («/donate/» → «https://tensela.com/es/donate/»). The
+    site has its pages in Spanish whether or not the manual inside Tensela is there (a copy from the repository does
+    not carry it: the AppImage builds it)."""
+    return f"{SITE}/es{path}" if language.LANGUAGE == "es" else f"{SITE}{path}"
 
 
 LINKS = {
