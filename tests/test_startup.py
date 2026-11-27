@@ -20,4 +20,5 @@ def test_the_window_starts_from_its_command(options, tmp_path):
     done = subprocess.run([sys.executable, "-c", code, str(EXAMPLES / "caso_01.json"), *options], env=env,
                           capture_output=True, text=True, timeout=120)
     assert done.returncode == 0, done.stderr[-2000:]
-    assert (tmp_path / "Tensela" / "Tensela.conf").exists()        # the preferences went there
+    name = "Tensela.ini" if sys.platform == "win32" else "Tensela.conf"   # (Windows: a file too, not the registry)
+    assert (tmp_path / "Tensela" / name).exists()                  # the preferences went there

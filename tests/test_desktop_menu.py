@@ -212,13 +212,13 @@ def test_the_permission_to_come_forward_travels_with_the_projects(tmp_path, monk
     import json
     import threading
     pytest.importorskip("PySide6")
-    from PySide6.QtCore import QCoreApplication
     from PySide6.QtNetwork import QLocalServer
+    from PySide6.QtWidgets import QApplication
     monkeypatch.setenv("XDG_RUNTIME_DIR", str(tmp_path))
     monkeypatch.setenv("XDG_CONFIG_HOME", str(tmp_path / "config"))
     monkeypatch.setenv("XDG_ACTIVATION_TOKEN", "token-123")
     monkeypatch.setenv("DESKTOP_STARTUP_ID", "token-123")
-    app = QCoreApplication.instance() or QCoreApplication([])
+    app = QApplication.instance() or QApplication([])     # (a full one: the end of the run asks it for the clipboard)
     server = QLocalServer()
     server.setSocketOptions(QLocalServer.SocketOption.UserAccessOption)
     assert server.listen(launch.address()), server.errorString()
