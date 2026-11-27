@@ -64,3 +64,19 @@ def test_the_probe_itself_runs_to_the_end():
         return                                    # (Windows Server: its OpenGL breaks VTK, and that is a «no»)
     assert done.returncode == 0, done.stderr[-2000:]
     assert done.stdout.splitlines()[0] in ("yes", "no")
+
+
+def test_the_complaints_of_the_probe_stay_inside():
+    """On Windows VTK shows its errors in a window of its own: on a computer without a card the probe would open it
+    («failed to get wglChoosePixelFormatARB») before Tensela, for an expected «no». Here they would go to the
+    terminal: neither one nor the other."""
+    import os
+    import subprocess
+    pytest.importorskip("vtkmodules")
+    quiet = O.PROBE.split("import vtkmodules.vtkRenderingOpenGL2")[0]
+    complaint = ("from vtkmodules.vtkIOXML import vtkXMLPolyDataReader\n"
+                 "r = vtkXMLPolyDataReader(); r.SetFileName('no-such-file.vtp'); r.Update()\nprint('done')\n")
+    done = subprocess.run([sys.executable, "-I", "-c", quiet + complaint], capture_output=True, text=True,
+                          timeout=60, env=os.environ)
+    assert done.stdout.strip() == "done"
+    assert "vtk" not in done.stderr.lower(), done.stderr[-2000:]

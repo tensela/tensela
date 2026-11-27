@@ -18,8 +18,12 @@ from pathlib import Path
 
 #: Asks for OpenGL 3.2 the way the 3D view will (VTK), without a window, and draws a cube with it: «yes» only if the
 #: cube came out. Some systems say they have it and cannot draw (Windows Server translates OpenGL to Direct3D, and
-#: VTK breaks there); if the probe breaks, it is «no» too. The second line says which OpenGL it was.
+#: VTK breaks there); if the probe breaks, it is «no» too. The second line says which OpenGL it was. Its complaints
+#: stay inside: on Windows VTK shows them in a window of its own («failed to get wglChoosePixelFormatARB»), and a
+#: «no» is the expected answer on a computer without a card, not an error to show.
 PROBE = """
+from vtkmodules.vtkCommonCore import vtkObject, vtkOutputWindow, vtkStringOutputWindow
+quiet = vtkStringOutputWindow(); vtkOutputWindow.SetInstance(quiet); vtkObject.GlobalWarningDisplayOff()
 import vtkmodules.vtkRenderingOpenGL2
 from vtkmodules.vtkFiltersSources import vtkCubeSource
 from vtkmodules.vtkRenderingCore import (vtkActor, vtkPolyDataMapper, vtkRenderWindow, vtkRenderer,
@@ -38,6 +42,9 @@ print("yes" if any(max(s.GetTuple(i)) > 0 for i in range(s.GetNumberOfTuples()))
 print(next((x for x in w.ReportCapabilities().splitlines() if "renderer string" in x), "").strip(), flush=True)
 """
 PROBE_SECONDS = 30
+#: Without OpenGL 3.2, VTK tries OSMesa next (a library the folder does not carry): the probe asks for the system's
+#: window only, and a «no» comes at once.
+ONLY_THE_SYSTEM = {"VTK_DEFAULT_OPENGL_WINDOW": "vtkWin32OpenGLRenderWindow"} if sys.platform == "win32" else {}
 
 
 def mesa_folder() -> Path:
@@ -47,7 +54,7 @@ def mesa_folder() -> Path:
 def system_is_enough(timeout: float = PROBE_SECONDS) -> bool:
     try:
         done = subprocess.run([sys.executable, "-I", "-c", PROBE], capture_output=True, text=True, timeout=timeout,
-                              env={**os.environ, "TENSELA_OPENGL": "system"},
+                              env={**os.environ, "TENSELA_OPENGL": "system", **ONLY_THE_SYSTEM},
                               creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0))
     except (OSError, subprocess.TimeoutExpired):
         return False
