@@ -33,27 +33,38 @@ jobs:
           python -m pip install --quiet --no-deps -e .
           python -c "import vtk, PySide6, manifold3d; print('VTK', vtk.vtkVersion.GetVTKVersion(), 'Qt', PySide6.__version__)"
 
-      - name: The tests
+      - name: The tests, file by file (a crash of the 3D view does not hide the rest)
         shell: bash
         continue-on-error: true
         run: |
-          python -m pytest -q -rfE -p no:cacheprovider --junitxml=report.xml \
-            -o junit_family=xunit2 2>&1 | tee tests.log || true
+          mkdir -p logs
+          : > summary.txt
+          for f in tests/test_*.py; do
+            name=$(basename "$f" .py)
+            code=0
+            python -m pytest -q -rfE -p no:cacheprovider "$f" > "logs/$name.log" 2>&1 || code=$?
+            last=$(grep -E "passed|failed|error|skipped|no tests ran" "logs/$name.log" | tail -1 || true)
+            if grep -q "Windows fatal exception" "logs/$name.log"; then last="CRASHED (code $code) $last"; fi
+            echo "$name: $last" >> summary.txt
+          done
+          cat summary.txt
 
-      - name: What failed, grouped
+      - name: What failed
         if: always()
         shell: bash
         run: |
-          grep -E "^(FAILED|ERROR) " tests.log | sed -E 's/ - .*//' | sort | uniq > failed.txt || true
-          echo "Failed or with errors: $(wc -l < failed.txt)"
-          tail -3 tests.log
-          cut -d: -f1 failed.txt | sed -E 's/^(FAILED|ERROR) //' | sort | uniq -c | sort -rn | head -40
+          echo "Files with a crash: $(grep -c CRASHED summary.txt || true)"
+          echo "Files with failures: $(grep -cE 'failed|error' summary.txt || true)"
+          grep -hE "^(FAILED|ERROR) " logs/*.log | sed -E 's/ - (.{0,160}).*/ - \1/' | sort | uniq > failed.txt || true
+          echo "Tests failed: $(wc -l < failed.txt)"
+          cat failed.txt
+          grep -h -A3 "Windows fatal exception" logs/*.log | grep -E "File .*tensela" | sort | uniq -c | head -20 || true
 
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: windows-tests
           path: |
-            tests.log
+            summary.txt
             failed.txt
-            report.xml
+            logs/
