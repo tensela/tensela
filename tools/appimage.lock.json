@@ -173,6 +173,17 @@
       "soname": "libxcb-glx.so.0",
       "published": "2022-04-21",
       "checked": "2026-11-25: the SHA-256 in the Packages index of jammy main, whose own SHA-256 is in its InRelease, signed by Ubuntu (checked with gpgv and ubuntu-archive-keyring); no newer version in jammy-updates or jammy-security"
+    },
+    "mesa_windows": {
+      "what": "Mesa 26.2.5 for Windows (mesa-dist-win by pal1000, MSVC build, MIT): the OpenGL drawn by the processor (llvmpipe), beside Tensela on Windows, for computers and virtual machines without a graphics card. Only its two 64-bit files of OpenGL are used. 26.2.6 left OpenGL out of its MSVC build (a known issue there)",
+      "url": "https://github.com/pal1000/mesa-dist-win/releases/download/26.2.5/mesa3d-26.2.5-release-msvc.7z",
+      "sha256": "997123ef4ce8896204ab912d5b54f19372c487ff9835bcefafa2fca23b8953c2",
+      "files": {
+        "x64/opengl32.dll": "c8511461ba71a0288750467e3be2f5c1c2bbbceaaf0ab5d8c496b0ba7302daa8",
+        "x64/libgallium_wgl.dll": "700e1fb7b9487d9d1c53752b03aeb040d22f3731b46aa254d88830b6279474de"
+      },
+      "published": "2026-10-30",
+      "checked": "2026-11-27: the SHA-256 GitHub gives for the asset (uploaded by pal1000 on 2026-10-30) matches the download; the project does not sign its packages"
     }
   },
   "libraries": {

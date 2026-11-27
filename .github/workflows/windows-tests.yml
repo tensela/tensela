@@ -31,7 +31,30 @@ jobs:
           python -m pip install --quiet --upgrade pip
           python -m pip install --quiet --only-binary=:all: -r windows-requirements.txt pytest
           python -m pip install --quiet --no-deps -e .
-          python -c "import vtk, PySide6, manifold3d; print('VTK', vtk.vtkVersion.GetVTKVersion(), 'Qt', PySide6.__version__)"
+          python -c "import vtk, PySide6, manifold3d; print(vtk.vtkVersion.GetVTKVersion(), PySide6.__version__)"
+
+      - name: The OpenGL drawn by the processor (Mesa llvmpipe), pinned in the lock, beside Python
+        shell: bash
+        run: |
+          python - <<'PY'
+          import hashlib, json, os, pathlib, subprocess, sys, urllib.request
+          lock = json.loads(pathlib.Path("tools/appimage.lock.json").read_text(encoding="utf-8"))
+          pinned = lock["downloads"]["mesa_windows"]
+          archive = pathlib.Path("mesa.7z")
+          urllib.request.urlretrieve(pinned["url"], archive)
+          assert hashlib.sha256(archive.read_bytes()).hexdigest() == pinned["sha256"], "Mesa: not the pinned file"
+          subprocess.run(["7z", "e", "-y", "-omesa", str(archive), *pinned["files"]], check=True,
+                         stdout=subprocess.DEVNULL)
+          beside = pathlib.Path(sys.executable).parent       # Windows looks for opengl32.dll beside the program first
+          for name, fingerprint in pinned["files"].items():
+              data = (pathlib.Path("mesa") / pathlib.Path(name).name).read_bytes()
+              assert hashlib.sha256(data).hexdigest() == fingerprint, name
+              (beside / pathlib.Path(name).name).write_bytes(data)
+          print("Mesa beside", beside)
+          PY
+          echo "GALLIUM_DRIVER=llvmpipe" >> "$GITHUB_ENV"
+          export GALLIUM_DRIVER=llvmpipe
+          python -c "import pyvista as pv; print(pv.Report())" | grep -iE "render|opengl" || true
 
       - name: The tests, file by file (a crash of the 3D view does not hide the rest)
         shell: bash
@@ -58,7 +81,8 @@ jobs:
           grep -hE "^(FAILED|ERROR) " logs/*.log | sed -E 's/ - (.{0,160}).*/ - \1/' | sort | uniq > failed.txt || true
           echo "Tests failed: $(wc -l < failed.txt)"
           cat failed.txt
-          grep -h -A3 "Windows fatal exception" logs/*.log | grep -E "File .*tensela" | sort | uniq -c | head -20 || true
+          grep -h -A3 "Windows fatal exception" logs/*.log | grep -E "File .*tensela" | sort | uniq -c \
+            | head -20 || true
 
       - uses: actions/upload-artifact@v4
         if: always()
