@@ -33,7 +33,7 @@ jobs:
           python -m pip install --quiet --no-deps -e .
           python -c "import vtk, PySide6, manifold3d; print(vtk.vtkVersion.GetVTKVersion(), PySide6.__version__)"
 
-      - name: The OpenGL drawn by the processor (Mesa llvmpipe), pinned in the lock, beside Python
+      - name: The OpenGL drawn by the processor (Mesa llvmpipe), pinned in the lock, in mesa/ beside Python
         shell: bash
         run: |
           python - <<'PY'
@@ -45,16 +45,15 @@ jobs:
           assert hashlib.sha256(archive.read_bytes()).hexdigest() == pinned["sha256"], "Mesa: not the pinned file"
           subprocess.run(["7z", "e", "-y", "-omesa", str(archive), *pinned["files"]], check=True,
                          stdout=subprocess.DEVNULL)
-          beside = pathlib.Path(sys.executable).parent       # Windows looks for opengl32.dll beside the program first
+          beside = pathlib.Path(sys.executable).parent / "mesa"   # as in the folder for Windows (ui/opengl_choice.py)
+          beside.mkdir(exist_ok=True)
           for name, fingerprint in pinned["files"].items():
               data = (pathlib.Path("mesa") / pathlib.Path(name).name).read_bytes()
               assert hashlib.sha256(data).hexdigest() == fingerprint, name
               (beside / pathlib.Path(name).name).write_bytes(data)
           print("Mesa beside", beside)
           PY
-          echo "GALLIUM_DRIVER=llvmpipe" >> "$GITHUB_ENV"
-          export GALLIUM_DRIVER=llvmpipe
-          python -c "import pyvista as pv; print(pv.Report())" | grep -iE "render|opengl" || true
+          python -c "from tensela.ui import opengl_choice as O; print('OpenGL:', O.choose())"
 
       - name: The tests, file by file (a crash of the 3D view does not hide the rest)
         shell: bash

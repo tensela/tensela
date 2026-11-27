@@ -1,0 +1,55 @@
+# The folder of Tensela for Windows (stage 4 of the plan for Windows): built from the lock, opened as a person would
+# (Tensela.exe and tensela-cli.exe, from another folder), and kept as an artifact to try it. By hand.
+
+name: Folder for Windows
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  folder:
+    runs-on: windows-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Build it (every download checked against the lock)
+        shell: bash
+        run: python tools/build_windows.py
+
+      - name: The portable Python, also by the provenance of its release (Sigstore)
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh attestation verify build/windows/downloads/cpython-*-windows-msvc-install_only.tar.gz
+               --repo astral-sh/python-build-standalone
+
+      - name: Open it from another folder, as a person would
+        shell: bash
+        env:
+          QT_QPA_PLATFORM: offscreen
+        run: |
+          folder=$(ls -d "$PWD"/build/windows/Tensela-*-windows-x64)
+          templates="$PWD/src/tensela/templates"
+          mkdir -p "$RUNNER_TEMP/try" && cd "$RUNNER_TEMP/try"
+          "$folder/tensela-cli.exe" "$templates/twisting-tower.tela" --obj tower.obj --png tower.png
+          ls -l tower.obj tower.png
+          export XDG_CONFIG_HOME="$RUNNER_TEMP/config"
+          "$folder/Tensela.exe" "$templates/hypar-roof.tela" --seconds 5
+          ls -l "$XDG_CONFIG_HOME/Tensela/Tensela.ini"
+          "$folder/python/python.exe" -c "from tensela.ui import opengl_choice as O; print('OpenGL:', O.choose())"
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: tensela-windows-folder
+          path: |
+            build/windows/Tensela-*-windows-x64.zip
+            ${{ runner.temp }}/try/tower.png

@@ -21,6 +21,10 @@ The rules it keeps:
 
     .venv/bin/python tools/appimage_lock.py                   # checks the environment against the lock (offline)
     .venv/bin/python tools/appimage_lock.py --update          # writes the lock again (asks PyPI for the wheels)
+    .venv/bin/python tools/appimage_lock.py --windows         # the same versions, their wheels for Windows
+
+For Windows (the portable folder), each library keeps under «windows» the wheel of the same version for 64-bit
+Windows, and `tools/windows-requirements.txt` lists them with their hashes.
 """
 from __future__ import annotations
 
@@ -36,6 +40,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 LOCK = ROOT / "tools" / "appimage.lock.json"
 REQUIREMENTS = ROOT / "tools" / "appimage-requirements.txt"
+WINDOWS_REQUIREMENTS = ROOT / "tools" / "windows-requirements.txt"
 COOL_DOWN_DAYS = 14
 #: Files that pip writes when it installs (not part of the wheel): its launchers and its own notes.
 WRITTEN_BY_PIP = {"INSTALLER", "REQUESTED", "direct_url.json", "RECORD"}
@@ -145,6 +150,66 @@ def pypi(name: str, version: str, wanted: list[str]) -> dict:
     raise LookupError(f"{name} {version}: no wheel on PyPI with the tags {wanted}")
 
 
+def _for_windows(filename: str) -> bool:
+    """Whether a wheel installs on the Python of Tensela for 64-bit Windows (CPython 3.13)."""
+    for tag in wheel_tags(filename):
+        python, abi, platform = tag.split("-")
+        if platform not in ("win_amd64", "any"):
+            continue
+        if abi == "cp313" and python == "cp313":
+            return True
+        if abi == "abi3" and python.startswith("cp3") and int(python[3:]) <= 13:
+            return True
+        if abi == "none" and python in ("py3", "py2", "cp313"):
+            return True
+    return False
+
+
+def windows_wheel(name: str, version: str) -> dict:
+    """The wheel of PyPI of that version for 64-bit Windows (a pure one serves both systems)."""
+    request = urllib.request.Request(f"https://pypi.org/pypi/{name}/{version}/json",
+                                     headers={"User-Agent": "tensela-build", "Accept": "application/json"})
+    with urllib.request.urlopen(request, timeout=30) as answer:
+        files = json.load(answer)["urls"]
+    wheels = [f for f in files if f["packagetype"] == "bdist_wheel" and _for_windows(f["filename"])]
+    wheels.sort(key=lambda f: "win_amd64" not in f["filename"])      # the one built for Windows first
+    if not wheels:
+        raise LookupError(f"{name} {version}: no wheel on PyPI for 64-bit Windows")
+    item = wheels[0]
+    return {"wheel": item["filename"], "sha256": item["digests"]["sha256"],
+            "published": item["upload_time_iso_8601"][:10]}
+
+
+def windows(allow_young: bool) -> int:
+    """The wheels for Windows of the versions in the lock (the versions themselves do not change here)."""
+    lock = read()
+    today = dt.date.today()
+    young, missing = [], []
+    for name, info in lock["libraries"].items():
+        try:
+            info["windows"] = windows_wheel(name, info["version"])
+        except LookupError as error:
+            missing.append(str(error))
+            continue
+        age = (today - dt.date.fromisoformat(info["windows"]["published"])).days
+        if age < COOL_DOWN_DAYS:
+            young.append(f"{name} {info['version']}: its wheel for Windows published {info['windows']['published']}")
+    if missing:
+        print("\n".join(missing))
+        return 1
+    if young and not allow_young:
+        print("Younger than {} days:\n  {}\nNot written.".format(COOL_DOWN_DAYS, "\n  ".join(young)))
+        return 1
+    LOCK.write_text(json.dumps(lock, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    lines = ["# The libraries of Tensela for Windows, with the hashes of their wheels (tools/appimage_lock.py).",
+             "# pip install --require-hashes --only-binary=:all: --no-deps -r tools/windows-requirements.txt"]
+    lines += [f"{name}=={info['version']} --hash=sha256:{info['windows']['sha256']}"
+              for name, info in lock["libraries"].items()]
+    WINDOWS_REQUIREMENTS.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    print(f"{WINDOWS_REQUIREMENTS.relative_to(ROOT)}: {len(lock['libraries'])} libraries")
+    return 0
+
+
 def update(allow_young: bool) -> int:
     libraries, problems = current(verify=True)
     if problems:
@@ -182,7 +247,10 @@ def main() -> int:
     parser.add_argument("--update", action="store_true", help="write the lock again (asks PyPI)")
     parser.add_argument("--allow-young", action="store_true",
                         help=f"accept versions published less than {COOL_DOWN_DAYS} days ago")
+    parser.add_argument("--windows", action="store_true", help="the wheels for Windows of the versions in the lock")
     args = parser.parse_args()
+    if args.windows:
+        return windows(args.allow_young)
     if args.update:
         return update(args.allow_young)
     found = check(verify=True)

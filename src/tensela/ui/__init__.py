@@ -9,3 +9,7 @@ if sys.platform == "win32":
     QSettings.setDefaultFormat(QSettings.Format.IniFormat)
     if os.environ.get("XDG_CONFIG_HOME"):
         QSettings.setPath(QSettings.Format.IniFormat, QSettings.Scope.UserScope, os.environ["XDG_CONFIG_HOME"])
+    # The OpenGL of the 3D view: the graphics card's, or Mesa beside Python when the system cannot give 3.2 (a virtual
+    # machine, a remote desktop). Before the 3D view loads (ui/opengl_choice.py).
+    from .opengl_choice import choose
+    choose()
