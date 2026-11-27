@@ -31,6 +31,34 @@ jobs:
         run: gh attestation verify build/windows/downloads/cpython-*-windows-msvc-install_only.tar.gz
                --repo astral-sh/python-build-standalone
 
+      - name: Which OpenGL the folder loads (diagnosis)
+        shell: bash
+        continue-on-error: true
+        env:
+          QT_QPA_PLATFORM: offscreen
+          PYTHONFAULTHANDLER: "1"
+        run: |
+          folder=$(ls -d "$PWD"/build/windows/Tensela-*-windows-x64)
+          cat > "$RUNNER_TEMP/which.py" <<'PY'
+          import ctypes, sys
+          from tensela.ui import opengl_choice as O
+          print("choice:", O.choose(), flush=True)
+          k = ctypes.WinDLL("kernel32")
+          k.GetModuleHandleW.restype = ctypes.c_void_p
+          def where(name):
+              h = k.GetModuleHandleW(name)
+              buffer = ctypes.create_unicode_buffer(600)
+              k.GetModuleFileNameW(ctypes.c_void_p(h), buffer, 600)
+              return buffer.value if h else "(not loaded)"
+          print("before pyvista:", where("opengl32.dll"), "|", where("libgallium_wgl.dll"), flush=True)
+          import pyvista as pv
+          print("after pyvista:", where("opengl32.dll"), flush=True)
+          p = pv.Plotter(off_screen=True); p.add_mesh(pv.Sphere()); p.screenshot("sphere.png")
+          print("pyvista drew", flush=True)
+          print(next(x for x in p.ren_win.ReportCapabilities().splitlines() if "renderer string" in x), flush=True)
+          PY
+          "$folder/python/python.exe" "$RUNNER_TEMP/which.py"
+
       - name: Open it from another folder, as a person would
         shell: bash
         env:
