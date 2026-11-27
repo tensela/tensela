@@ -25,7 +25,6 @@ import json
 import os
 import pickle
 import queue
-import select
 import signal
 import struct
 import subprocess
@@ -139,11 +138,43 @@ def fingerprints(graph, message: dict) -> dict[str, str]:
 
 # --- The process ---------------------------------------------------------------------------------------------------
 
+class _Inbox:
+    """The messages from the window, read by a thread of its own as they arrive, so the computation can ask whether a
+    newer one is there without waiting (`select` on a pipe is only for Unix: on Windows it takes sockets only). None
+    when the window closed its side."""
+
+    def __init__(self, fd: int):
+        self._queue: queue.Queue = queue.Queue()
+        threading.Thread(target=self._read, args=(fd,), daemon=True, name="window requests").start()
+
+    def _read(self, fd: int) -> None:
+        while True:
+            try:
+                message = _read(fd)
+            except Exception:                                   # a broken message: as if the window had closed
+                message = None
+            self._queue.put(message)
+            if message is None:
+                return
+
+    def get(self):
+        return self._queue.get()
+
+    def arrived(self) -> list:
+        """The messages already there, taken out (none: an empty list)."""
+        out = []
+        while True:
+            try:
+                out.append(self._queue.get_nowait())
+            except queue.Empty:
+                return out
+
+
 class _Process:
     """The state of the process: the results remembered and the messages that arrived while it computed."""
 
     def __init__(self, fd_in: int, fd_out: int):
-        self.fd_in, self.fd_out = fd_in, fd_out
+        self.inbox, self.fd_out = _Inbox(fd_in), fd_out
         self.results: dict[str, object] = {}                   # fingerprint → result
         self.projects: OrderedDict = OrderedDict()             # project → fingerprints with a result
         self.waiting: list = []
@@ -153,8 +184,9 @@ class _Process:
         """(Before each node.) It says which node it starts (if the process ends there, the window knows where); if
         another message arrived, this computation no longer serves."""
         from .graph import Cancelled
-        if select.select([self.fd_in], [], [], 0)[0]:
-            self.waiting.append(_read(self.fd_in))
+        arrived = self.inbox.arrived()
+        if arrived:
+            self.waiting.extend(arrived)
             raise Cancelled()
         _write(self.fd_out, {"op": "at", "turn": self.turn, "node": node.name})
 
@@ -265,8 +297,10 @@ class _Process:
         stopped = []
 
         def stop() -> bool:
-            if not stopped and select.select([self.fd_in], [], [], 0)[0]:
-                stopped.append(_read(self.fd_in))
+            if not stopped:
+                arrived = self.inbox.arrived()
+                stopped.extend(arrived[:1])                     # the first one stops it; the rest, for later
+                self.waiting.extend(arrived[1:])
             return bool(stopped)
 
         def at_node(node) -> None:
@@ -307,7 +341,7 @@ class _Process:
 
     def run(self) -> None:
         while True:
-            message = self.waiting.pop(0) if self.waiting else _read(self.fd_in)
+            message = self.waiting.pop(0) if self.waiting else self.inbox.get()
             if message is None or message.get("op") == "quit":
                 return
             if message.get("op") == "search":
@@ -318,6 +352,7 @@ class _Process:
                 continue
             if message.get("op") != "compute":
                 continue                                        # («stop»: it only cut what was being computed)
+            self.waiting.extend(self.inbox.arrived())
             if any(m is None or m.get("op") in ("compute", "quit") for m in self.waiting):
                 _write(self.fd_out, {"turn": message["turn"], "cancelled": True})     # a newer one is waiting
                 continue
@@ -382,8 +417,8 @@ class _Worker:
         self.killed = True
         self._outbox.put(None)
         try:                                                    # with what it started (the helper of the Code nodes)
-            os.killpg(self.process.pid, signal.SIGKILL)
-        except OSError:
+            os.killpg(self.process.pid, signal.SIGKILL)         # (Unix only: on Windows, AttributeError)
+        except (OSError, AttributeError):
             try:
                 self.process.kill()
             except OSError:
