@@ -163,7 +163,9 @@ def launchers(folder: Path, home: Path) -> None:
     steps = [f'call "{vcvars}" >nul', "rc /nologo /fo icon.res launcher.rc",
              "cl /nologo /O2 /W3 /Fe:Tensela.exe launcher.c icon.res user32.lib /link /SUBSYSTEM:WINDOWS",
              "cl /nologo /O2 /W3 /DCONSOLE /Fe:tensela-cli.exe launcher.c icon.res /link /SUBSYSTEM:CONSOLE"]
-    subprocess.run(["cmd", "/c", " && ".join(steps)], cwd=work, check=True)
+    (work / "build.bat").write_text("@echo off\r\n" + "\r\n".join(f"{step} || exit /b 1" for step in steps) + "\r\n",
+                                    encoding="ascii")                   # (cmd and Python quote differently)
+    subprocess.run(["cmd", "/c", "build.bat"], cwd=work, check=True)
     for name in ("Tensela.exe", "tensela-cli.exe"):
         shutil.copy2(work / name, folder / name)
     say("Tensela.exe and tensela-cli.exe, with the icon of Tensela")
